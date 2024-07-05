@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:kohatian_foundation/perals.dart';
 import 'package:kohatian_foundation/widget-export.dart';
 
 class AppBarWidget extends ConsumerWidget {
@@ -12,16 +14,36 @@ class AppBarWidget extends ConsumerWidget {
         color: Colors.green,
         child: Center(
             child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
           runSpacing: 10,
           spacing: 150,
           children: [
-            TextButton(child: Text('Vision'), onPressed: () {}),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                child: Image.asset(
+                  'assets/images/kf-logo.png',
+                  width: 200,
+                  height: 80,
+                ),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(),));
+                },
+              ),
+            ),
+            TextButton(child: const Text('Vision'), onPressed: () {}),
 
-            TextButton(child: Text('Mission'), onPressed: () {}),
+            TextButton(child: const Text('Mission'), onPressed: () {}),
 
-            TextButton(child: Text('Function'), onPressed: () {}),
+            TextButton(child: const Text('Function'), onPressed: () {}),
 
-            TextButton(child: Text('Pearls of CCK'), onPressed: () {}),
+            TextButton(
+                child: const Text('Pearls of CCK'),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const PearlsPage(),
+                  ));
+                }),
 
             // Text('AppBar'),
           ],

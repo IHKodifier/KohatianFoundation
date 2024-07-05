@@ -1,4 +1,5 @@
 import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widgets/banner.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -20,22 +21,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: 
-    
-         Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ),
-      
-      );
+    return Center(
+     child: BannerImage(),
+            );
     
   }
 }

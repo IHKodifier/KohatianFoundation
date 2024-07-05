@@ -15,10 +15,17 @@ class MyApp extends StatelessWidget {
       ),
       home: CustomScrollView(
         slivers: [
-const MyHomePage(title: 'Home | Kohatian Foundation ')
-        ],
+          SliverToBoxAdapter(
+            child: Stack(children: [
+              const MyHomePage(title: 'Home | Kohatian Foundation '),
+                AppBarWidget(),
+            ],),
+          ),
         
-        ),
+                    
+
+        ],
+      ),
     );
   }
 }
