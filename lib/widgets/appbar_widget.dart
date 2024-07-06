@@ -27,16 +27,15 @@ class AppBarWidget extends ConsumerWidget {
                   height: 80,
                 ),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(),));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => MyApp(),
+                  ));
                 },
               ),
             ),
             TextButton(child: const Text('Vision'), onPressed: () {}),
-
             TextButton(child: const Text('Mission'), onPressed: () {}),
-
             TextButton(child: const Text('Function'), onPressed: () {}),
-
             TextButton(
                 child: const Text('Pearls of CCK'),
                 onPressed: () {
@@ -44,11 +43,19 @@ class AppBarWidget extends ConsumerWidget {
                     builder: (context) => const PearlsPage(),
                   ));
                 }),
-
-            // Text('AppBar'),
+            IconButton(
+              onPressed: () => navigatetoSignInPage(context),
+              icon: CircleAvatar(
+                child: Icon(Icons.person_2_rounded),
+              ),
+            ),
           ],
         )),
       ),
     );
+  }
+
+  void navigatetoSignInPage(context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInPage(),));
   }
 }
