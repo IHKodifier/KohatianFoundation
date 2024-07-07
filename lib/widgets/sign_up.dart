@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kohatian_foundation/widget-export.dart';
 
 class SignupForm extends ConsumerStatefulWidget {
@@ -67,7 +69,6 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
   Widget emailForm() {
-    //TODO  update this
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -122,9 +123,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                           }
                           return null;
                         },
-                        onFieldSubmitted: (value) {
-                          //TODO implement this
-                        },
+                        onFieldSubmitted: (value) {},
                       ),
                     ),
                   ),
@@ -169,9 +168,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                           }
                           return null;
                         },
-                        onFieldSubmitted: (value) {
-                          //TODO implement this
-                        },
+                        onFieldSubmitted: (value) {},
                       ),
                     ),
                   ),
@@ -201,9 +198,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     }
                     return null;
                   },
-                  onFieldSubmitted: (value) {
-                    //TODO implement this
-                  },
+                  onFieldSubmitted: (value) {},
                 ),
               ),
               //Domicile
@@ -230,9 +225,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     }
                     return null;
                   },
-                  onFieldSubmitted: (value) {
-                    //TODO implement this
-                  },
+                  onFieldSubmitted: (value) {},
                 ),
               ),
               //mobile number
@@ -261,9 +254,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     }
                     return null;
                   },
-                  onFieldSubmitted: (value) {
-                    //TODO implement this
-                  },
+                  onFieldSubmitted: (value) {},
                 ),
               ),
             ],
@@ -292,16 +283,55 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       ),
     );
   }
-
+// replace code below this line
   Widget signUpWithGoogleButton() {
     return SizedBox(
       height: 50,
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           if (cadetFormKey.currentState!.validate()) {
             print('cadet Form is valid');
 
-            //TODO implement FirebaseAuth code
+            // Create an instance of GoogleSignIn here
+            final googleSignIn = GoogleSignIn(
+              clientId:
+                  '239392991522-arev04me39i54824423japuftoon0goc.apps.googleusercontent.com', // Your client ID
+            );
+
+            try {
+              // Initiate Google Sign-In
+              final googleUser = await googleSignIn.signIn();
+
+              if (googleUser != null) {
+                // Get the authentication credentials
+                final googleAuth = await googleUser.authentication;
+
+                // Create a Firebase credential
+                final credential = GoogleAuthProvider.credential(
+                  accessToken: googleAuth.accessToken,
+                  idToken: googleAuth.idToken,
+                );
+
+                // Sign in with Firebase
+                final userCredential = await FirebaseAuth.instance
+                    .signInWithCredential(credential);
+
+                // Get the user's data from Firebase
+                final user = userCredential.user;
+
+                // Store the user's data in your database
+                // ...
+
+                // Navigate to the next screen
+                // ...
+              } else {
+                // Handle the case where the user canceled the sign-in
+                print('User canceled Google Sign-In');
+              }
+            } catch (error) {
+              // Handle any errors during the sign-in process
+              print('Error during Google Sign-In: $error');
+            }
           }
         },
         child: const Text('Signup with Google '),
@@ -309,6 +339,52 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     );
   }
 
+// replace code above  this line
+
+  Widget signUpWithEmailButton() {
+    return SizedBox(
+      height: 50,
+      child: ElevatedButton(
+        onPressed: () async {
+          if (cadetFormKey.currentState!.validate() &&
+              emailFormKey.currentState!.validate()) {
+            print('cadet Form is valid');
+            print('Email Form is valid');
+
+            // Get email and password
+            final emailValue = email.text.trim();
+            final passwordValue = password.text.trim();
+
+            try {
+              // Create user with email and password
+              final userCredential =
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                email: emailValue,
+                password: passwordValue,
+              );
+
+              // User created successfully
+              print('User created: ${userCredential.user}');
+
+              // You can now redirect the user to a different screen or perform other actions.
+            } on FirebaseAuthException catch (e) {
+              // Handle errors during sign-up
+              if (e.code == 'weak-password') {
+                print('The password provided is too weak.');
+              } else if (e.code == 'email-already-in-use') {
+                print('The account already exists for that email.');
+              }
+            } catch (e) {
+              print('Error during sign-up: $e');
+            }
+          }
+        },
+        child: const Text('Signup with Email '),
+      ),
+    );
+  }
+
+//replace code above
   Widget emailButtonBar() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -319,26 +395,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     );
   }
 
-  Widget signUpWithEmailButton() {
-    return SizedBox(
-      height: 50,
-      child: ElevatedButton(
-        onPressed: () {
-          if (cadetFormKey.currentState!.validate()) {
-            print('cadet Form is valid');
-          }
-          if (emailFormKey.currentState!.validate()) {
-            print('Email Form is valid');
-          }
-          // if (password.text != confirmpassword.text) {
-          //   return 'passwords do not match';
-          // }
-          //TODO implement FirebaseAuth code
-        },
-        child: const Text('Signup with Email '),
-      ),
-    );
-  }
+
 
   Widget emailDetails() {
     return Form(
@@ -410,15 +467,13 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           label: const Text('Confirm Password'),
         ),
         validator: (value) {
-  if (password.text != confirmpassword.text) {
+          if (password.text != confirmpassword.text) {
             return 'passwords do not macth';
           }
 
           return confirmpassword.text == ''
               ? 'confirm password is required'
               : '';
-
-        
         },
       ),
     );

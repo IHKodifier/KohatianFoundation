@@ -5,9 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "kohatian_foundation",
+            "name": "kF fixed port",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+        // "--web-hostname=localhost",
+        "--web-port=29240"
+            ],
         },
         {
             "name": "kohatian_foundation (profile mode)",
