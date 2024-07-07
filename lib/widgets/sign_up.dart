@@ -1,8 +1,7 @@
-
 // ignore_for_file: avoid_print
 
-import 'package:kohatian_foundation/widget-export.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:kohatian_foundation/widget-export.dart';
 
 class SignupForm extends ConsumerStatefulWidget {
   const SignupForm({super.key});
@@ -42,7 +41,19 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     mobileNumber.text = '';
   }
 
- 
+  @override
+  void dispose() {
+    kitno.dispose();
+    name.dispose();
+    house.dispose();
+    email.dispose();
+    password.dispose();
+    confirmpassword.dispose();
+    domicile.dispose();
+    mobileNumber.dispose();
+    super.dispose();
+  }
+
   Widget gForm() {
     return Column(
       children: [
@@ -109,6 +120,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                           if (value == '') {
                             return 'Valid Kit Number is required';
                           }
+                          return null;
                         },
                         onFieldSubmitted: (value) {
                           //TODO implement this
@@ -153,8 +165,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                                   value == 'AH' ||
                                   value == 'MH' ||
                                   value == 'RH')) {
-                            return 'e.g. KH,JH,IH,MH,RH';
+                            return 'valid input = KH,JH,IH,MH,RH';
                           }
+                          return null;
                         },
                         onFieldSubmitted: (value) {
                           //TODO implement this
@@ -186,6 +199,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     if (value == '') {
                       return 'Name is required';
                     }
+                    return null;
                   },
                   onFieldSubmitted: (value) {
                     //TODO implement this
@@ -214,6 +228,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     if (value == '') {
                       return 'Domicile is required';
                     }
+                    return null;
                   },
                   onFieldSubmitted: (value) {
                     //TODO implement this
@@ -244,6 +259,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                         value.length != 11) {
                       return 'invalid mobile number';
                     }
+                    return null;
                   },
                   onFieldSubmitted: (value) {
                     //TODO implement this
@@ -268,7 +284,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
   Widget formRestButton() {
-    return Container(
+    return SizedBox(
       height: 50,
       child: ElevatedButton(
         onPressed: () {},
@@ -278,13 +294,13 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
   Widget signUpWithGoogleButton() {
-    return Container(
+    return SizedBox(
       height: 50,
       child: ElevatedButton(
         onPressed: () {
           if (cadetFormKey.currentState!.validate()) {
             print('cadet Form is valid');
-      
+
             //TODO implement FirebaseAuth code
           }
         },
@@ -304,20 +320,20 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
   Widget signUpWithEmailButton() {
-    return Container(
+    return SizedBox(
       height: 50,
       child: ElevatedButton(
         onPressed: () {
           if (cadetFormKey.currentState!.validate()) {
             print('cadet Form is valid');
-           
-      
-            //TODO implement FirebaseAuth code
           }
- if (emailFormKey.currentState!.validate()) {
-              print('Email Form is valid');
-            }
-
+          if (emailFormKey.currentState!.validate()) {
+            print('Email Form is valid');
+          }
+          // if (password.text != confirmpassword.text) {
+          //   return 'passwords do not match';
+          // }
+          //TODO implement FirebaseAuth code
         },
         child: const Text('Signup with Email '),
       ),
@@ -343,10 +359,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       child: TextFormField(
         controller: email,
         validator: (value) {
-          final isValid =  EmailValidator.validate(value!);
-          if (!isValid) { 
+          final isValid = EmailValidator.validate(value!);
+          if (!isValid) {
             return 'badly formatted email';
           }
+          return null;
         },
         decoration: InputDecoration(
           hintStyle: Theme.of(context)
@@ -376,8 +393,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               .labelSmall
               ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
           labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold),
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold,
+              ),
           suffixIcon: IconButton(
             icon: Icon(
                 passwordIsHidden ? Icons.visibility_off : Icons.visibility),
@@ -391,6 +409,17 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           border: const OutlineInputBorder(),
           label: const Text('Confirm Password'),
         ),
+        validator: (value) {
+  if (password.text != confirmpassword.text) {
+            return 'passwords do not macth';
+          }
+
+          return confirmpassword.text == ''
+              ? 'confirm password is required'
+              : '';
+
+        
+        },
       ),
     );
   }
@@ -399,30 +428,32 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        obscureText: passwordIsHidden,
-        controller: password,
-        decoration: InputDecoration(
-          hintStyle: Theme.of(context)
-              .textTheme
-              .labelSmall
-              ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
-          labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.bold),
-          hintText: 'at least 8 characters',
-          border: const OutlineInputBorder(),
-          label: const Text('Password'),
-          suffixIcon: IconButton(
-            icon: Icon(
-                passwordIsHidden ? Icons.visibility_off : Icons.visibility),
-            onPressed: () {
-              setState(() {
-                passwordIsHidden = !passwordIsHidden;
-              });
-            },
+          obscureText: passwordIsHidden,
+          controller: password,
+          decoration: InputDecoration(
+            hintStyle: Theme.of(context)
+                .textTheme
+                .labelSmall
+                ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
+            labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold),
+            hintText: 'at least 8 characters',
+            border: const OutlineInputBorder(),
+            label: const Text('Password'),
+            suffixIcon: IconButton(
+              icon: Icon(
+                  passwordIsHidden ? Icons.visibility_off : Icons.visibility),
+              onPressed: () {
+                setState(() {
+                  passwordIsHidden = !passwordIsHidden;
+                });
+              },
+            ),
           ),
-        ),
-      ),
+          validator: (value) {
+            return password.text == '' ? ' password is required' : '';
+          }),
     );
   }
 
@@ -433,7 +464,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       child: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         width: double.infinity,
-        height: MediaQuery.of(context).size.height + 250,
+        height: MediaQuery.of(context).size.height + 350,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -505,15 +536,15 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 
   Text signupSubHeaderText(BuildContext context) {
     return Text(
-              'As an ex Cadet, you are welcome to Sign up for the Kohatian Band of Brothers. Your signup will be reviewed by your "Entry Coordinator". Once validated, you will also receive aconfirmation  email on your email. ',
-              style: Theme.of(context).textTheme.bodyLarge,
-            );
+      'As an ex Cadet, you are welcome to Sign up for the Kohatian Band of Brothers. Your signup will be reviewed by your "Entry Coordinator". Once validated, you will also receive aconfirmation  email on your email. ',
+      style: Theme.of(context).textTheme.bodyLarge,
+    );
   }
 
   Text signUpHeaderText(BuildContext context) {
     return Text(
-            'Sign Up',
-            style: Theme.of(context).textTheme.displayLarge,
-          );
+      'Sign Up',
+      style: Theme.of(context).textTheme.displayLarge,
+    );
   }
 }
