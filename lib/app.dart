@@ -13,17 +13,19 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CustomScrollView(
+      home: const CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Stack(children: [
-              const MyHomePage(title: 'Home | Kohatian Foundation '),
+            child: Stack(
+              children: [
+                MyHomePage(title: 'Home | Kohatian Foundation '),
                 AppBarWidget(),
-            ],),
+              ],
+            ),
           ),
-        
-                    
-
+          SliverToBoxAdapter(
+            child: SiteFooter(),
+          ),
         ],
       ),
     );

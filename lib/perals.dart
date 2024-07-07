@@ -29,12 +29,7 @@ class PearlsPage extends ConsumerWidget {
         ),
 
         SliverToBoxAdapter(
-            child: SizedBox(
-          height: 200,
-          child: Container(
-            color: Colors.white,
-          ),
-        )),
+            child:SiteFooter()),
       ],
     );
   }

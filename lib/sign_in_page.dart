@@ -9,6 +9,9 @@ class SignInPage extends ConsumerWidget {
       slivers: <Widget>[
         SliverToBoxAdapter(child: AppBarWidget()),
         SignupForm(),
+        SliverToBoxAdapter(
+          child: SiteFooter(),
+        ),
       ],
     );
     // child: Text('Sign In'),
