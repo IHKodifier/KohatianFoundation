@@ -5,4 +5,5 @@ class AppUser {
    String? password;
 
   AppUser({required this.uuid, required this.name, required this.email});
+  //need to fix git merge
 }
