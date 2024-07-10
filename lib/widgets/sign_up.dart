@@ -284,7 +284,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       ),
     );
   }
+
 // replace code below this line
+
   Widget signUpWithGoogleButton() {
     return SizedBox(
       height: 50,
@@ -292,47 +294,16 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         onPressed: () async {
           if (cadetFormKey.currentState!.validate()) {
             print('cadet Form is valid');
-
-            // Create an instance of GoogleSignIn here
-            final googleSignIn = GoogleSignIn(
-              clientId:
-                  '239392991522-arev04me39i54824423japuftoon0goc.apps.googleusercontent.com', // Your client ID
-            );
-
+            final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
             try {
-              // Initiate Google Sign-In
-              final googleUser = await googleSignIn.signIn();
-
-              if (googleUser != null) {
-                // Get the authentication credentials
-                final googleAuth = await googleUser.authentication;
-
-                // Create a Firebase credential
-                final credential = GoogleAuthProvider.credential(
-                  accessToken: googleAuth.accessToken,
-                  idToken: googleAuth.idToken,
-                );
-
-                // Sign in with Firebase
-                final userCredential = await FirebaseAuth.instance
-                    .signInWithCredential(credential);
-
-                // Get the user's data from Firebase
-                final user = userCredential.user;
-
-                // Store the user's data in your database
-                // ...
-
-                // Navigate to the next screen
-                // ...
-              } else {
-                // Handle the case where the user canceled the sign-in
-                print('User canceled Google Sign-In');
+              await FirebaseAuth.instance.signInWithPopup(googleAuthProvider);
+            } on FirebaseAuthException catch (e) {
+              if (e.code == 'account-exists-with-different-credential') {
+                print('The account already exists with a different credential');
+              } else if (e.code == 'invalid-credential') {
+                print('Invalid credential');
               }
-            } catch (error) {
-              // Handle any errors during the sign-in process
-              print('Error during Google Sign-In: $error');
-            }
+            } catch (e) {}
           }
         },
         child: const Text('Signup with Google '),
@@ -395,8 +366,6 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       ],
     );
   }
-
-
 
   Widget emailDetails() {
     return Form(
