@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/services/widget-export.dart';
 
 class SignupForm extends ConsumerStatefulWidget {
   const SignupForm({super.key});
@@ -303,7 +303,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               } else if (e.code == 'invalid-credential') {
                 print('Invalid credential');
               }
-            } catch (e) {}
+            } catch (e) {
+              print(e);
+            }
           }
         },
         child: const Text('Signup with Google '),

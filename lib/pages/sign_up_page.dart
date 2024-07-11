@@ -1,4 +1,4 @@
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/services/widget-export.dart';
 
 class SignInPage extends ConsumerWidget {
   const SignInPage({super.key});

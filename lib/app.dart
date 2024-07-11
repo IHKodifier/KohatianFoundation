@@ -1,4 +1,5 @@
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/services/widget-export.dart';
+import 'package:kohatian_foundation/widgets/banner.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
           SliverToBoxAdapter(
             child: Stack(
               children: [
-                MyHomePage(title: 'Home | Kohatian Foundation '),
+              
+                BannerImage(),
                 AppBarWidget(),
               ],
             ),

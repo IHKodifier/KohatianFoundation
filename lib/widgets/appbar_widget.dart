@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kohatian_foundation/perals.dart';
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/pages/perals.dart';
+import 'package:kohatian_foundation/services/widget-export.dart';
 
 class AppBarWidget extends ConsumerWidget {
   const AppBarWidget({super.key});

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:kohatian_foundation/main.dart';
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/services/widget-export.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

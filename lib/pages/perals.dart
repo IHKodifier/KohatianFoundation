@@ -1,4 +1,4 @@
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/services/widget-export.dart';
 
 class PearlsPage extends ConsumerWidget {
   const PearlsPage({super.key});
