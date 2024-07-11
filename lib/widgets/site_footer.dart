@@ -1,4 +1,4 @@
-import 'package:kohatian_foundation/services/widget-export.dart';
+import 'package:kohatian_foundation/services/widget_export.dart';
 
 class SiteFooter extends ConsumerWidget {
   const SiteFooter({super.key});

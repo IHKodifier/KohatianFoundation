@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:kohatian_foundation/services/widget-export.dart';
+import 'package:kohatian_foundation/services/widget_export.dart';
 
 class SignupForm extends ConsumerStatefulWidget {
   const SignupForm({super.key});
@@ -14,6 +14,7 @@ class SignupForm extends ConsumerStatefulWidget {
 }
 
 class _SignupFormState extends ConsumerState<SignupForm> {
+  final AuthService authService = AuthService();
   bool signupWithGoogle = false;
   bool signUpWithEmail = false;
   TextEditingController kitno = TextEditingController();
@@ -294,17 +295,22 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         onPressed: () async {
           if (cadetFormKey.currentState!.validate()) {
             print('cadet Form is valid');
-            final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
-            try {
-              await FirebaseAuth.instance.signInWithPopup(googleAuthProvider);
-            } on FirebaseAuthException catch (e) {
-              if (e.code == 'account-exists-with-different-credential') {
-                print('The account already exists with a different credential');
-              } else if (e.code == 'invalid-credential') {
-                print('Invalid credential');
-              }
-            } catch (e) {
-              print(e);
+
+            final userCredential = await authService.signupWithGoogle();
+
+            if (userCredential != null) {
+              print('User created: ${userCredential.user}');
+
+              final result = await authService.createAppUser(
+                userCredential: userCredential,
+                name: name.text,
+                kitno: kitno.text,
+                house: house.text,
+                domicile: domicile.text,
+                mobileNumber: mobileNumber.text,
+              );
+            } else {
+              print('cadet Form is not valid');
             }
           }
         },
