@@ -5,18 +5,23 @@ class SignUpSuccess extends ConsumerWidget {
 
   @override
   @override
-   Widget build(BuildContext context, WidgetRef ref) {
-     final user = ref.watch(currentLoggedInUserProvider); 
-   return Material(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(loggedInUserProvider);
+    return Material(
       child: Container(
         color: Colors.purple,
         child: Center(
           child: user != null
               ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('welcome ${user.name} ${user.email} ${user.uuid}'),
+                    Text('welcome ${user.name}'),
+                    Text('welcome ${user.email}'),
                     ElevatedButton(
-                        onPressed: () => AuthService().signOut(),
+                        onPressed: () {
+                          ref.read(loggedInUserProvider.notifier).signOutUser();
+                        },
                         child: const Text('Log out')),
                   ],
                 )
@@ -26,4 +31,3 @@ class SignUpSuccess extends ConsumerWidget {
     );
   }
 }
-

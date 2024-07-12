@@ -3,14 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kohatian_foundation/services/widget_export.dart';
 
-class AuthenticatedUser {
+class AuthenticatedFirebaseUser {
   final User? user;
 
-  AuthenticatedUser({this.user});
+  AuthenticatedFirebaseUser({this.user});
 }
 
-class CurrentLoggedInUserNotifier extends StateNotifier<AppUser?> {
-  CurrentLoggedInUserNotifier() : super(null);
+class loggedInUserNotifier extends StateNotifier<AppUser?> {
+  loggedInUserNotifier() : super(null);
 
   void updateAuthState(User? user) async {
     if (user != null) {
@@ -27,6 +27,8 @@ class CurrentLoggedInUserNotifier extends StateNotifier<AppUser?> {
           // Handle case where AppUser document doesn't exist
           if (kDebugMode) {
             print('AppUser document not found for user: ${user.uid}');
+          } else if (user == null) {
+            state = null;
           }
         }
       } catch (e) {
@@ -35,18 +37,26 @@ class CurrentLoggedInUserNotifier extends StateNotifier<AppUser?> {
           print('Error fetching AppUser: $e');
         }
       }
-    } else {
-      state = null;
     }
+  }
+
+  void signOutUser() {
+    state = null;
+    ;
   }
 }
 
-// Provider for the currently logged-in user
-final currentLoggedInUserProvider =
-    StateNotifierProvider<CurrentLoggedInUserNotifier, AppUser?>((ref) {
-  final auth = FirebaseAuth.instance;
-  final authUserNotifier = CurrentLoggedInUserNotifier();
 
+// Provider for the currently logged-in user
+final loggedInUserProvider =
+    StateNotifierProvider<loggedInUserNotifier, AppUser?>((ref) {
+  final auth = FirebaseAuth.instance;
+  final authUserNotifier = loggedInUserNotifier();
+
+  // Check for logged-in user at app startup
+  if (auth.currentUser != null) {
+    authUserNotifier.updateAuthState(auth.currentUser);
+  }
   // Listen to auth state changes
   auth.authStateChanges().listen((user) {
     authUserNotifier.updateAuthState(user);
@@ -158,6 +168,11 @@ class AuthService {
   }
 
   Future<void> signOut() async {
+    final loggedInUserNotifier _authUserNotifier;
     await FirebaseAuth.instance.signOut();
+    // final authUserNotifier=
+    if (kDebugMode) {
+      print('you hasve been signed out');
+    }
   }
 }

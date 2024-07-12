@@ -5,9 +5,14 @@ class UserFeedWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      height: 250,
-      color: Colors.yellow,
+    return Material(
+      child: Container(
+        height: 250,
+        color: Colors.yellow,
+        child: const Center(
+          child: Text('User Feed'),
+        ),  
+      ),
     );
   }
 }

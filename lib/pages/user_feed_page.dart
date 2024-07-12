@@ -1,5 +1,5 @@
 import 'package:kohatian_foundation/services/widget_export.dart';
-import 'package:kohatian_foundation/widgets/user_feed.dart';
+import 'package:kohatian_foundation/widgets/user_feed_widget.dart';
 
 class UserFeedPage extends ConsumerWidget {
   const UserFeedPage({super.key});
@@ -12,7 +12,7 @@ class UserFeedPage extends ConsumerWidget {
           child: const Stack(
             children: [
               // BannerImage),
-              UserFeedWidget(),
+              // UserFeedWidget(),
               AppBarWidget(),
             ],
           ),

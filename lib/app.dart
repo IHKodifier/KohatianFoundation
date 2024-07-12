@@ -1,12 +1,14 @@
+import 'package:kohatian_foundation/pages/user_feed_page.dart';
 import 'package:kohatian_foundation/services/widget_export.dart';
-import 'package:kohatian_foundation/widgets/banner.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loggedInUser = ref.watch(loggedInUserProvider);
+    print('Material page detected $loggedInUser');
     return MaterialApp(
       title: 'Kohatian Foundation',
       debugShowCheckedModeBanner: false,
@@ -14,13 +16,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CustomScrollView(
+      home: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Stack(
               children: [
                 BannerImage(),
                 AppBarWidget(),
+                loggedInUser != null ? const UserFeedPage() : Container(),
               ],
             ),
           ),
