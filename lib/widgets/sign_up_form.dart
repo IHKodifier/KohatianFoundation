@@ -2,6 +2,7 @@
 
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kohatian_foundation/pages/sign_up_success.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:kohatian_foundation/services/widget_export.dart';
@@ -309,6 +310,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 domicile: domicile.text,
                 mobileNumber: mobileNumber.text,
               );
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const SignUpSuccess(),
+              ));
             } else {
               print('cadet Form is not valid');
             }

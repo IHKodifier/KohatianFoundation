@@ -10,7 +10,7 @@ class SocialLinks {
   final String email;
 
   SocialLinks({
-    this.facebook='not available',
+    this.facebook = 'not available',
     this.instagram = 'not available',
     this.twitter = 'not available',
     this.youtube = 'not available',
@@ -18,8 +18,6 @@ class SocialLinks {
     required this.whatsapp,
     required this.email,
   });
-  
-  
 
   SocialLinks copyWith({
     String? facebook,
@@ -43,25 +41,25 @@ class SocialLinks {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
-    if(facebook != null){
+
+    if (facebook != null) {
       result.addAll({'facebook': facebook});
     }
-    if(instagram != null){
+    if (instagram != null) {
       result.addAll({'instagram': instagram});
     }
-    if(twitter != null){
+    if (twitter != null) {
       result.addAll({'twitter': twitter});
     }
-    if(youtube != null){
+    if (youtube != null) {
       result.addAll({'youtube': youtube});
     }
-    if(linkedin != null){
+    if (linkedin != null) {
       result.addAll({'linkedin': linkedin});
     }
     result.addAll({'whatsapp': whatsapp});
     result.addAll({'email': email});
-  
+
     return result;
   }
 
@@ -79,7 +77,8 @@ class SocialLinks {
 
   String toJson() => json.encode(toMap());
 
-  factory SocialLinks.fromJson(String source) => SocialLinks.fromMap(json.decode(source));
+  factory SocialLinks.fromJson(String source) =>
+      SocialLinks.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -89,25 +88,25 @@ class SocialLinks {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is SocialLinks &&
-      other.facebook == facebook &&
-      other.instagram == instagram &&
-      other.twitter == twitter &&
-      other.youtube == youtube &&
-      other.linkedin == linkedin &&
-      other.whatsapp == whatsapp &&
-      other.email == email;
+        other.facebook == facebook &&
+        other.instagram == instagram &&
+        other.twitter == twitter &&
+        other.youtube == youtube &&
+        other.linkedin == linkedin &&
+        other.whatsapp == whatsapp &&
+        other.email == email;
   }
 
   @override
   int get hashCode {
     return facebook.hashCode ^
-      instagram.hashCode ^
-      twitter.hashCode ^
-      youtube.hashCode ^
-      linkedin.hashCode ^
-      whatsapp.hashCode ^
-      email.hashCode;
+        instagram.hashCode ^
+        twitter.hashCode ^
+        youtube.hashCode ^
+        linkedin.hashCode ^
+        whatsapp.hashCode ^
+        email.hashCode;
   }
 }

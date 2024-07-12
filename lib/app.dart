@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
           SliverToBoxAdapter(
             child: Stack(
               children: [
-              
                 BannerImage(),
                 AppBarWidget(),
               ],

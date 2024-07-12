@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:347816522023:android:4ef7404cea74a16bef3902",
+        "android_client_info": {
+          "package_name": "com.enigmatek.pk.kohatianFoundation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347816522023-is6tapu14qph5vq2e1ir8f6q4fm5sbbt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB60evtaaCEnRiUeZn3U-eWY5pDMGOBP64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347816522023-is6tapu14qph5vq2e1ir8f6q4fm5sbbt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "347816522023-r38lvl7baqr429ghf6dfvtr8vdanh0mg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.enigmatek.pk.kohatianFoundation"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:347816522023:android:93a8c6e53b44050eef3902",
         "android_client_info": {
           "package_name": "com.enigmatek.pk.kohatian_foundation"

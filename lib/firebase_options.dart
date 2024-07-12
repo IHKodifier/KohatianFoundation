@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB60evtaaCEnRiUeZn3U-eWY5pDMGOBP64',
-    appId: '1:347816522023:android:93a8c6e53b44050eef3902',
+    appId: '1:347816522023:android:4ef7404cea74a16bef3902',
     messagingSenderId: '347816522023',
     projectId: 'kohatian-foundation',
     storageBucket: 'kohatian-foundation.appspot.com',
@@ -64,6 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '347816522023',
     projectId: 'kohatian-foundation',
     storageBucket: 'kohatian-foundation.appspot.com',
+    androidClientId: '347816522023-3um0qb82sf01nthsgn8tik97kuct767g.apps.googleusercontent.com',
+    iosClientId: '347816522023-r38lvl7baqr429ghf6dfvtr8vdanh0mg.apps.googleusercontent.com',
     iosBundleId: 'com.enigmatek.pk.kohatianFoundation',
   );
 
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '347816522023',
     projectId: 'kohatian-foundation',
     storageBucket: 'kohatian-foundation.appspot.com',
+    androidClientId: '347816522023-3um0qb82sf01nthsgn8tik97kuct767g.apps.googleusercontent.com',
+    iosClientId: '347816522023-r38lvl7baqr429ghf6dfvtr8vdanh0mg.apps.googleusercontent.com',
     iosBundleId: 'com.enigmatek.pk.kohatianFoundation',
   );
 

@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
 import 'package:kohatian_foundation/models/social_links.dart';
 import 'package:kohatian_foundation/services/widget_export.dart';
 
 class Cadet {
   final String kitNo;
-  final bool hasSignedUp=false;
+  final bool hasSignedUp = false;
   final String? email;
   final String house;
   final String name;
@@ -17,8 +16,16 @@ class Cadet {
   final List<Qualification>? professionalQualifications;
   final List<Achievements>? achievements;
 
-  Cadet(this.kitNo, this.email, this.house, this.name, this.domicile, this.mobileNumber, this.socialLinks, this.professionalQualifications, this.achievements);
-
+  Cadet(
+      this.kitNo,
+      this.email,
+      this.house,
+      this.name,
+      this.domicile,
+      this.mobileNumber,
+      this.socialLinks,
+      this.professionalQualifications,
+      this.achievements);
 
   Cadet copyWith({
     String? kitNo,
@@ -46,25 +53,29 @@ class Cadet {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'kitNo': kitNo});
-    if(email != null){
+    if (email != null) {
       result.addAll({'email': email});
     }
     result.addAll({'house': house});
     result.addAll({'name': name});
     result.addAll({'domicile': domicile});
     result.addAll({'mobileNumber': mobileNumber});
-    if(socialLinks != null){
+    if (socialLinks != null) {
       result.addAll({'socialLinks': socialLinks!.toMap()});
     }
-    if(professionalQualifications != null){
-      result.addAll({'professionalQualifications': professionalQualifications!.map((x) => x.toMap()).toList()});
+    if (professionalQualifications != null) {
+      result.addAll({
+        'professionalQualifications':
+            professionalQualifications!.map((x) => x.toMap()).toList()
+      });
     }
-    if(achievements != null){
-      result.addAll({'achievements': achievements!.map((x) => x.toMap()).toList()});
+    if (achievements != null) {
+      result.addAll(
+          {'achievements': achievements!.map((x) => x.toMap()).toList()});
     }
-  
+
     return result;
   }
 
@@ -76,9 +87,17 @@ class Cadet {
       map['name'] ?? '',
       map['domicile'] ?? '',
       map['mobileNumber'] ?? '',
-      map['socialLinks'] != null ? SocialLinks.fromMap(map['socialLinks']) : null,
-      map['professionalQualifications'] != null ? List<Qualification>.from(map['professionalQualifications']?.map((x) => Qualification.fromMap(x))) : null,
-      map['achievements'] != null ? List<Achievements>.from(map['achievements']?.map((x) => Achievements.fromMap(x))) : null,
+      map['socialLinks'] != null
+          ? SocialLinks.fromMap(map['socialLinks'])
+          : null,
+      map['professionalQualifications'] != null
+          ? List<Qualification>.from(map['professionalQualifications']
+              ?.map((x) => Qualification.fromMap(x)))
+          : null,
+      map['achievements'] != null
+          ? List<Achievements>.from(
+              map['achievements']?.map((x) => Achievements.fromMap(x)))
+          : null,
     );
   }
 
@@ -94,29 +113,30 @@ class Cadet {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Cadet &&
-      other.kitNo == kitNo &&
-      other.email == email &&
-      other.house == house &&
-      other.name == name &&
-      other.domicile == domicile &&
-      other.mobileNumber == mobileNumber &&
-      other.socialLinks == socialLinks &&
-      listEquals(other.professionalQualifications, professionalQualifications) &&
-      listEquals(other.achievements, achievements);
+        other.kitNo == kitNo &&
+        other.email == email &&
+        other.house == house &&
+        other.name == name &&
+        other.domicile == domicile &&
+        other.mobileNumber == mobileNumber &&
+        other.socialLinks == socialLinks &&
+        listEquals(
+            other.professionalQualifications, professionalQualifications) &&
+        listEquals(other.achievements, achievements);
   }
 
   @override
   int get hashCode {
     return kitNo.hashCode ^
-      email.hashCode ^
-      house.hashCode ^
-      name.hashCode ^
-      domicile.hashCode ^
-      mobileNumber.hashCode ^
-      socialLinks.hashCode ^
-      professionalQualifications.hashCode ^
-      achievements.hashCode;
+        email.hashCode ^
+        house.hashCode ^
+        name.hashCode ^
+        domicile.hashCode ^
+        mobileNumber.hashCode ^
+        socialLinks.hashCode ^
+        professionalQualifications.hashCode ^
+        achievements.hashCode;
   }
 }

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-
-
 class Qualification {
   final String title;
   final String institution;
@@ -27,11 +25,11 @@ class Qualification {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'title': title});
     result.addAll({'institution': institution});
     result.addAll({'year': year});
-  
+
     return result;
   }
 
@@ -45,19 +43,21 @@ class Qualification {
 
   String toJson() => json.encode(toMap());
 
-  factory Qualification.fromJson(String source) => Qualification.fromMap(json.decode(source));
+  factory Qualification.fromJson(String source) =>
+      Qualification.fromMap(json.decode(source));
 
   @override
-  String toString() => 'Qualification(title: $title, institution: $institution, year: $year)';
+  String toString() =>
+      'Qualification(title: $title, institution: $institution, year: $year)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Qualification &&
-      other.title == title &&
-      other.institution == institution &&
-      other.year == year;
+        other.title == title &&
+        other.institution == institution &&
+        other.year == year;
   }
 
   @override
