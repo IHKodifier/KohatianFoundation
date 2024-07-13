@@ -8,7 +8,7 @@ class BannerImage extends ConsumerWidget {
     return Material(
       child: Container(
           width: double.infinity,
-          height: 600,
+          height: 500,
           color: Colors.deepOrange,
           child: Center(child: Text('Banner Image'))),
     );

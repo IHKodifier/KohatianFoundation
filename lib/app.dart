@@ -1,4 +1,5 @@
 import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widgets/start_up.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,19 +14,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Stack(children: [
-              const MyHomePage(title: 'Home | Kohatian Foundation '),
-                AppBarWidget(),
-            ],),
-          ),
-        
-                    
-
-        ],
-      ),
+      home: Material(child: StartUp()),
     );
   }
 }
