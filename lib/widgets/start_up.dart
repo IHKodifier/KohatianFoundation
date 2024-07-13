@@ -8,7 +8,7 @@ class StartUp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 //check if the app has a logged in User
-    bool loggedInUser = true;
+    bool loggedInUser = false;
 
     return loggedInUser ? UserHome() : PublicHome();
   }
