@@ -6,6 +6,8 @@ export 'package:firebase_core/firebase_core.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:google_sign_in/google_sign_in.dart';
+export 'package:font_awesome_flutter/font_awesome_flutter.dart';
+export 'package:email_validator/email_validator.dart';
 
 //utils
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widgets/signup_form.dart';
 
 class SignupCenter extends ConsumerStatefulWidget {
   const SignupCenter({super.key});
@@ -45,9 +46,9 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                           ElevatedButton.icon(
                             label:
                                 const Text('Sign In for Kohatian Foundation'),
-                            icon: const Icon(
+                            icon: const FaIcon(
                               Icons.person_2_rounded,
-                              size: 50,
+                              size: 40,
                             ),
                             onPressed: () => setState(() {
                               showSignUpForm = false;
@@ -55,22 +56,27 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                           ),
                           SizedBox(width: 40),
                           //Sign Out Button
-                          ElevatedButton.icon(
-                            label: const Text('Sign Out'),
-                            icon: const Icon(Icons.person_2_rounded),
-                            onPressed: () => print('Sign out'),
+                          Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: ElevatedButton.icon(
+                              label: const Text('Sign Out'),
+                              icon: const Icon(Icons.person_2_rounded,size: 40,),
+                              onPressed: () => print('Sign out'),
+                            ),
                           ),
                         ]),
                   ),
+
+
                   // Sign In / Sign Up Form
                   (showSignUpForm)
                       ? Container(
-                          height: 250,
+                          // height: 250,
                           width: 500,
                           // color: Colors.red,
                           child: Card(
                             elevation: 15,
-                            child: Text('Sign Up Form'),
+                            child: SignupForm(),
                           ),
                         )
                       : signInForm,
