@@ -45,7 +45,7 @@ class AppBarWidget extends ConsumerWidget {
                   ));
                 }),
 
-            // Text('AppBar'),
+            UserPicker(),
           ],
         )),
       ),

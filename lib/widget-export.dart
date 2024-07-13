@@ -8,9 +8,13 @@ export 'package:flutter_riverpod/flutter_riverpod.dart';
 //models
 
 
-//screens
+//pages
 export 'package:kohatian_foundation/pages/public_home.dart';
 export 'package:kohatian_foundation/pages/user_home.dart';
+export 'package:kohatian_foundation/pages/sign_up_center.dart';
+export 'package:kohatian_foundation/pages/sign_up_page.dart';
+
+
 
 
 //widgets
@@ -21,4 +25,5 @@ export 'package:kohatian_foundation/widgets/appbar_widget.dart';
 export 'package:kohatian_foundation/widgets/banner_image.dart';
 export 'package:kohatian_foundation/widgets/site_footer.dart';
 export 'package:kohatian_foundation/widgets/user_feed_widget.dart';
+export 'package:kohatian_foundation/widgets/user_picker.dart';
   
