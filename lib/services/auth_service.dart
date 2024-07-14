@@ -9,7 +9,7 @@ try {
         userCredential = await FirebaseAuth.instance.signInWithPopup(
       GoogleAuthProvider(),    );
 } on FirebaseException  catch (e) {
-  print(e); 
+ print(e);
   userCredential=null;
 } catch (e) {
   print(e);

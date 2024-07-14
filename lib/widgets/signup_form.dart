@@ -431,6 +431,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         ),
         onPressed: () async {
           //TODO  add autho code here
+
           if (cadetFormKey.currentState!.validate()) {
             if (kDebugMode) {
               print('cadet Form is valid');
@@ -442,13 +443,31 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               if (kDebugMode) {
                 print('User created: ${userCredential.user}');
               }
-
-              final result = await authService.createAppUserInDb(AppUser(
-                  uuid: userCredential.user!.uid,
-                  name: name.text,
-                  email: email.text,
-                  isValidated: false,
-                  roles: [UserRole.cadet()]));
+              try {
+                final result = await authService.createAppUserInDb(AppUser(
+                    uuid: userCredential.user!.uid,
+                    name: name.text,
+                    kitNo: kitno.text,
+                    house: house.text,
+                    domicile: domicile.text,
+                    mobileNumber: mobileNumber.text,
+                    
+                    email: userCredential.user!.email!,
+                    isValidated: false,
+                    roles: [UserRole.cadet()]));
+              } on FirebaseException catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(e.message!),
+                  ),
+                );
+              } catch (e) {
+                ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                  SnackBar(
+                    content: Text(e.toString()),
+                  ),
+                );
+              }
 
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const SignUpSucess(),
