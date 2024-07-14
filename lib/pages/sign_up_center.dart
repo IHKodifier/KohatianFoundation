@@ -31,68 +31,70 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
           SliverToBoxAdapter(
             child: Container(
               height: 920,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    //Sign In/Sign Out Buttons
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //Sign In Button
-                          ElevatedButton.icon(
-                            label:
-                                const Text('Sign In for Kohatian Foundation'),
-                            icon: const FaIcon(
-                              Icons.person_2_rounded,
-                              size: 40,
-                            ),
-                            onPressed: () => setState(() {
-                              showSignUpForm = false;
-                            }),
-                          ),
-                          const SizedBox(width: 40),
-                          //Sign Out Button
-                          Padding(
-                            padding: const EdgeInsets.all(32.0),
-                            child: ElevatedButton.icon(
-                              label: const Text('Sign Out'),
-                              icon: const Icon(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      //Sign In/Sign Out Buttons
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //Sign In Button
+                            ElevatedButton.icon(
+                              label:
+                                  const Text('Sign In for Kohatian Foundation'),
+                              icon: const FaIcon(
                                 Icons.person_2_rounded,
                                 size: 40,
                               ),
-                              onPressed: () => print('Sign out'),
+                              onPressed: () => setState(() {
+                                showSignUpForm = false;
+                              }),
                             ),
-                          ),
-                        ]),
-                  ),
-
-                  // Sign In / Sign Up Form
-                  (showSignUpForm)
-                      ? Container(
-                          // height: 250,
-                          width: 500,
-                          // color: Colors.red,
-                          child: const Card(
-                            elevation: 15,
-                            child: SignupForm(),
-                          ),
-                        )
-                      : signInForm,
-
-                  //Sign Up Button
-                  Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: ElevatedButton.icon(
-                      label: const Text('Sign Up for Kohatian Foundation'),
-                      icon: const Icon(Icons.person_add_alt_1_rounded),
-                      onPressed: () => setState(() {
-                        showSignUpForm = true;
-                      }),
+                            const SizedBox(width: 40),
+                            //Sign Out Button
+                            Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: ElevatedButton.icon(
+                                label: const Text('Sign Out'),
+                                icon: const Icon(
+                                  Icons.person_2_rounded,
+                                  size: 40,
+                                ),
+                                onPressed: () => print('Sign out'),
+                              ),
+                            ),
+                          ]),
                     ),
-                  ),
-                ],
+                
+                    // Sign In / Sign Up Form
+                    (showSignUpForm)
+                        ? Container(
+                            // height: 250,
+                            width: 500,
+                            // color: Colors.red,
+                            child: const Card(
+                              elevation: 15,
+                              child: SignupForm(),
+                            ),
+                          )
+                        : signInForm,
+                
+                    //Sign Up Button
+                    Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: ElevatedButton.icon(
+                        label: const Text('Sign Up for Kohatian Foundation'),
+                        icon: const Icon(Icons.person_add_alt_1_rounded),
+                        onPressed: () => setState(() {
+                          showSignUpForm = true;
+                        }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

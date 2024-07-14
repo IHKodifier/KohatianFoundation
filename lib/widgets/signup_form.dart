@@ -65,11 +65,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                    Spacer(),
+                  Spacer(),
                   //Kit No Form Field
                   SizedBox(
                     // width: constraints.maxWidth / 2,
-                    width: 200,
+                    width: 210,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
@@ -101,11 +101,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                       ),
                     ),
                   ),
-              
+
                   //House FormField
                   SizedBox(
                     // width: constraints.maxWidth / 2,
-                    width: 200,
+                    width: 210,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
@@ -148,7 +148,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                       ),
                     ),
                   ),
-                   Spacer(),
+                  Spacer(),
                 ],
               ),
               // Name FormField
@@ -327,7 +327,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               label: const Text('Password'),
               suffixIcon: IconButton(
                 icon: Icon(
-                    passwordIsHidden ? Icons.visibility_off : Icons.visibility),
+                    passwordIsHidden ? Icons.visibility : Icons.visibility_off),
                 onPressed: () {
                   setState(() {
                     passwordIsHidden = !passwordIsHidden;
@@ -362,7 +362,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 ),
             suffixIcon: IconButton(
               icon: Icon(
-                  passwordIsHidden ? Icons.visibility_off : Icons.visibility),
+                  passwordIsHidden ? Icons.visibility : Icons.visibility_off),
               onPressed: () {
                 setState(() {
                   passwordIsHidden = !passwordIsHidden;
@@ -377,7 +377,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             if (password.text != confirmpassword.text) {
               return 'passwords do not macth';
             }
-        
+
             return confirmpassword.text == ''
                 ? 'confirm password is required'
                 : '';
@@ -430,6 +430,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           // color: Colors.red,
         ),
         onPressed: () async {
+          //TODO  add autho code here
           if (cadetFormKey.currentState!.validate()) {
             if (kDebugMode) {
               print('cadet Form is valid');
@@ -480,7 +481,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             // Get email and password
             final emailValue = email.text.trim();
             final passwordValue = password.text.trim();
-
+//TODO write code for this
             try {
               // Create user with email and password
               final userCredential =
