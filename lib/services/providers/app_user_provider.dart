@@ -1,6 +1,6 @@
 //Provider
 // Provider for the AppUserNotifier
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widget_export.dart';
 
 final appUserProvider = StateNotifierProvider<AppUserNotifier, AppUser?>(
     (ref) => AppUserNotifier());

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widget_export.dart';
 
 
 class AppUser {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widget_export.dart';
 import 'package:kohatian_foundation/widgets/signup_form.dart';
 
 class SignupCenter extends ConsumerStatefulWidget {
@@ -15,24 +15,22 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
   @override
   Widget build(BuildContext context) {
     var signInForm = Container(
-      // color: Colors.blue,
-      height: 250,
+      height: 420, 
       width: 500,
-      // color: Colors.blue,
-      child: Card(
+      child: const Card(
         elevation: 15,
-        child: Text('Sign In Form'),
+        child: Center(child: Text('Sign In Form will be shown by default')),
       ),
     );
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           //App Bar
-          SliverToBoxAdapter(child: AppBarWidget()),
+          const SliverToBoxAdapter(child: AppBarWidget()),
 
           SliverToBoxAdapter(
             child: Container(
-              height: 550,
+              height: 920,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -54,19 +52,21 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                               showSignUpForm = false;
                             }),
                           ),
-                          SizedBox(width: 40),
+                          const SizedBox(width: 40),
                           //Sign Out Button
                           Padding(
                             padding: const EdgeInsets.all(32.0),
                             child: ElevatedButton.icon(
                               label: const Text('Sign Out'),
-                              icon: const Icon(Icons.person_2_rounded,size: 40,),
+                              icon: const Icon(
+                                Icons.person_2_rounded,
+                                size: 40,
+                              ),
                               onPressed: () => print('Sign out'),
                             ),
                           ),
                         ]),
                   ),
-
 
                   // Sign In / Sign Up Form
                   (showSignUpForm)
@@ -74,7 +74,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                           // height: 250,
                           width: 500,
                           // color: Colors.red,
-                          child: Card(
+                          child: const Card(
                             elevation: 15,
                             child: SignupForm(),
                           ),

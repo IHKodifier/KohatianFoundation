@@ -1,4 +1,4 @@
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widget_export.dart';
 import 'package:kohatian_foundation/widgets/start_up.dart';
 
 class MyApp extends StatelessWidget {

@@ -1,6 +1,6 @@
 // ignore_for_file: dead_code
 
-import 'package:kohatian_foundation/widget-export.dart';
+import 'package:kohatian_foundation/widget_export.dart';
 
 class StartUp extends ConsumerWidget {
   const StartUp({super.key});
