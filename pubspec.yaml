@@ -45,6 +45,9 @@ flutter:
   assets:
     - assets/images/
   #   - images/a_dot_ham.jpeg
+  # entrypoint: web/main.dart
+  # port: 29240 # Here's the port setting
+
 
 
   # fonts:
@@ -59,4 +62,5 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-
+google_sign_in_web:
+    redirect_uri: 'http://localhost:29240/'  

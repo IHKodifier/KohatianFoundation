@@ -14,14 +14,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
 
   @override
   Widget build(BuildContext context) {
-    var signInForm = const SizedBox(
-      height: 420,
-      width: 500,
-      child: Card(
-        elevation: 15,
-        child: Center(child: Text('Sign In Form will be shown by default')),
-      ),
-    );
+    var signInForm = SignInForm();
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -92,7 +85,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                     (showSignUpForm)
                         ? const SizedBox(
                             // height: 250,
-                            width: 500,
+                            width: 300,
                             // color: Colors.red,
                             child: Card(
                               elevation: 15,

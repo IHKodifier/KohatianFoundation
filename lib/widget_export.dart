@@ -26,8 +26,7 @@ export 'package:kohatian_foundation/models/qualification_model.dart';
 export 'package:kohatian_foundation/models/achievements_model.dart';
 export 'package:kohatian_foundation/models/social_links_model.dart';
 
-//widgets
-export 'package:kohatian_foundation/widgets/signup_form.dart';
+
 
 
 //pages
@@ -47,3 +46,7 @@ export 'package:kohatian_foundation/widgets/banner_image.dart';
 export 'package:kohatian_foundation/widgets/site_footer.dart';
 export 'package:kohatian_foundation/widgets/user_feed_widget.dart';
 export 'package:kohatian_foundation/widgets/user_picker.dart';
+export 'package:kohatian_foundation/widgets/signup_form.dart';
+export 'package:kohatian_foundation/widgets/sign_in_form.dart';
+
+
