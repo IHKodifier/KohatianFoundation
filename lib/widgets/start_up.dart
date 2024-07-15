@@ -8,9 +8,12 @@ class StartUp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
   
-//check if the app has a logged in User
-    bool hasLoggedInUser = AuthService().hasLoggedInUser; 
+    // Use ref.watch to access the AsyncValue from userProfileProvider
+    final userAsyncValue = ref.watch(userProfileProvider);
 
-    return hasLoggedInUser ? UserHome() : PublicHome();
+    return userAsyncValue.when(
+      data: (user) => user != null ? UserHome() : PublicHome(),
+      error: (error, stackTrace) => Text('Error: $error'),
+      loading: () => const Center(child: CircularProgressIndicator()));
   }
 }

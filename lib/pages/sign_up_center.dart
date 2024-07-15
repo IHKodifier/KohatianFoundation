@@ -64,7 +64,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                                   size: 40,
                                 ),
                                 onPressed: () {
-                                  ref.read(appUserProvider.notifier).signOut();
+                                  // ref.read(appUserProvider.notifier).signOut();
                                   print('Signing out ');
 
                                   Navigator.pop(context);

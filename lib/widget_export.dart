@@ -19,7 +19,7 @@ export 'package:equatable/equatable.dart';
 //utils
 
 //models
-export 'package:kohatian_foundation/models/appuser_model.dart';
+export 'package:kohatian_foundation/models/user_profile_model.dart';
 export 'package:kohatian_foundation/models/user_role.dart';
 export 'package:kohatian_foundation/models/cadet_model.dart';
 export 'package:kohatian_foundation/models/qualification_model.dart';
