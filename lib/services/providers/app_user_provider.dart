@@ -2,11 +2,11 @@
 // Provider for the AppUserNotifier
 import 'package:kohatian_foundation/widget_export.dart';
 
-final appUserProvider = StateNotifierProvider<AppUserNotifier, AppUser?>(
+final appUserProvider = StateNotifierProvider<AppUserNotifier, UserProfile?>(
     (ref) => AppUserNotifier());
 
 //AppUserNotifier
-class AppUserNotifier extends StateNotifier<AppUser?> {
+class AppUserNotifier extends StateNotifier<UserProfile?> {
   AppUserNotifier() : super(null) {
     _init();
   }
@@ -37,7 +37,7 @@ void signOut() async {
     try {
       final doc = await _firestore.collection('users').doc(user.uid).get();
       if (doc.exists) {
-        state = AppUser.fromMap(doc.data()!);
+        state = UserProfile.fromMap(doc.data()!);
       } else {
         // Handle user not found in Firestore
         // You might want to log an error or display an appropriate message

@@ -1,10 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
 import 'package:kohatian_foundation/widget_export.dart';
 
-class AppUser {
+class UserProfile {
   final String uuid;
   final String name;
   final String email;
@@ -17,7 +16,7 @@ class AppUser {
   List<UserRole> roles;
 
 
-  AppUser({
+  UserProfile({
     required this.uuid,
     required this.name,
     required this.email,
@@ -30,7 +29,7 @@ class AppUser {
     required this.roles,
   });
 
-  AppUser copyWith({
+  UserProfile copyWith({
     String? uuid,
     String? name,
     String? email,
@@ -42,7 +41,7 @@ class AppUser {
     bool? isValidated=false,
     List<UserRole>? roles,
   }) {
-    return AppUser(
+    return UserProfile(
       uuid: uuid ?? this.uuid,
       name: name ?? this.name,
       email: email ?? this.email,
@@ -75,8 +74,8 @@ class AppUser {
     return result;
   }
 
-  factory AppUser.fromMap(Map<String, dynamic> map) {
-    return AppUser(
+  factory UserProfile.fromMap(Map<String, dynamic> map) {
+    return UserProfile(
       uuid: map['uuid'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
@@ -92,8 +91,8 @@ class AppUser {
 
   String toJson() => json.encode(toMap());
 
-  factory AppUser.fromJson(String source) =>
-      AppUser.fromMap(json.decode(source));
+  factory UserProfile.fromJson(String source) =>
+      UserProfile.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -104,7 +103,7 @@ class AppUser {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
   
-    return other is AppUser &&
+    return other is UserProfile &&
       other.uuid == uuid &&
       other.name == name &&
       other.email == email &&

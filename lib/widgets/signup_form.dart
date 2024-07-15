@@ -444,7 +444,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 print('User created: ${userCredential.user}');
               }
               try {
-                final result = await authService.createAppUserInDb(AppUser(
+                final result = await authService.createAppUserInDb(UserProfile(
                     uuid: userCredential.user!.uid,
                     name: name.text,
                     kitNo: kitno.text,
