@@ -28,6 +28,10 @@ class AppUserNotifier extends StateNotifier<AppUser?> {
       }
     });
   }
+void signOut() async {
+  await _auth.signOut();
+  state = null;
+}
 
   Future<void> _fetchAndSetState(User user) async {
     try {

@@ -29,6 +29,8 @@ Future<void> signOut() async {
 Future<User?> getCurrentUser() async {
   return FirebaseAuth.instance.currentUser;
 }
+bool hasLoggedInUser=FirebaseAuth.instance.currentUser!=null;
+
 Future<void> createAppUserInDb(AppUser appUser) async {
   // Create a new user document in Firestore
   final firebaseInstance = FirebaseFirestore.instance;

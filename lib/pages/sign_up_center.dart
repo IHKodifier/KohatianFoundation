@@ -15,7 +15,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
   @override
   Widget build(BuildContext context) {
     var signInForm = Container(
-      height: 420, 
+      height: 420,
       width: 500,
       child: const Card(
         elevation: 15,
@@ -63,12 +63,17 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                                   Icons.person_2_rounded,
                                   size: 40,
                                 ),
-                                onPressed: () => print('Sign out'),
+                                onPressed: () {
+                                  ref.read(appUserProvider.notifier).signOut();
+                                  print('Signing out ');
+
+                                  Navigator.pop(context);
+                                },
                               ),
                             ),
                           ]),
                     ),
-                
+
                     // Sign In / Sign Up Form
                     (showSignUpForm)
                         ? Container(
@@ -81,7 +86,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                             ),
                           )
                         : signInForm,
-                
+
                     //Sign Up Button
                     Padding(
                       padding: const EdgeInsets.all(32.0),
