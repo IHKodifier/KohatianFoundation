@@ -51,8 +51,6 @@ import 'package:kohatian_foundation/widget_export.dart';
 //   }
 // }
 
-
-
 final authStateChangesProvider = StreamProvider<User?>((ref) {
   return FirebaseAuth.instance.authStateChanges();
 });
@@ -60,16 +58,13 @@ final firestoreProvider = Provider<FirebaseFirestore>((ref) {
   return FirebaseFirestore.instance;
 });
 
-
-
-
-
-
-
 // StreamProvider for real-time updates
 final userProfileProvider = StreamProvider<UserProfile?>((ref) async* {
   final user = ref.watch(authStateChangesProvider);
-  if (user != null) {
+
+ 
+    // Handle the case where the user is null
+  if (user.hasValue && user.asData!.value != null) {
     final docStream = ref
         .read(firestoreProvider)
         .collection('users')
@@ -82,7 +77,8 @@ final userProfileProvider = StreamProvider<UserProfile?>((ref) async* {
         print('User not found in Firestore');
       }
     }
+  } else {
+    // User is not logged in, yield a null UserProfile
+    yield null;
   }
 });
-
-

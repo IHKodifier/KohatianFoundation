@@ -11,9 +11,18 @@ class StartUp extends ConsumerWidget {
     // Use ref.watch to access the AsyncValue from userProfileProvider
     final userAsyncValue = ref.watch(userProfileProvider);
 
-    return userAsyncValue.when(
-      data: (user) => user != null ? UserHome() : PublicHome(),
-      error: (error, stackTrace) => Text('Error: $error'),
-      loading: () => const Center(child: CircularProgressIndicator()));
+     return userAsyncValue.when(
+      data: (user) {
+        // Check if user is not null before navigating
+        if (user != null) {
+          return UserHome();
+        } else {
+          return PublicHome();
+        }
+      },
+      error: (error, stackTrace) =>
+          Center(child: SelectableText('Errorrrrrrr: $error\n$stackTrace')),
+      loading: () => const Center(child: CircularProgressIndicator()),
+    );
   }
 }
