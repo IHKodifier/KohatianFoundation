@@ -14,10 +14,10 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
 
   @override
   Widget build(BuildContext context) {
-    var signInForm = Container(
+    var signInForm = const SizedBox(
       height: 420,
       width: 500,
-      child: const Card(
+      child: Card(
         elevation: 15,
         child: Center(child: Text('Sign In Form will be shown by default')),
       ),
@@ -29,7 +29,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
           const SliverToBoxAdapter(child: AppBarWidget()),
 
           SliverToBoxAdapter(
-            child: Container(
+            child: SizedBox(
               height: 920,
               child: SingleChildScrollView(
                 child: Column(
@@ -63,11 +63,25 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                                   Icons.person_2_rounded,
                                   size: 40,
                                 ),
-                                onPressed: () {
-                                  // ref.read(appUserProvider.notifier).signOut();
-                                  print('Signing out ');
-
-                                  Navigator.pop(context);
+                                onPressed: () async {
+                                 try {
+                                    await 
+                                        AuthService()
+                                        .signOut();
+                                    print('Signing out ');
+                                    // You might want to navigate back to the login screen
+                                    // or handle the sign-out in a different way
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PublicHome(),
+                                      ),
+                                      (route) => false,
+                                    );
+                                  } catch (e) {
+                                    print('Error signing out: $e');
+                                    // Handle the error appropriately
+                                  }
                                 },
                               ),
                             ),
@@ -76,11 +90,11 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
 
                     // Sign In / Sign Up Form
                     (showSignUpForm)
-                        ? Container(
+                        ? const SizedBox(
                             // height: 250,
                             width: 500,
                             // color: Colors.red,
-                            child: const Card(
+                            child: Card(
                               elevation: 15,
                               child: SignupForm(),
                             ),
