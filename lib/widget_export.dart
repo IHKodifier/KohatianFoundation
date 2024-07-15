@@ -3,7 +3,7 @@
 
 //services
 export 'package:kohatian_foundation/services/auth_service.dart';
-export 'package:kohatian_foundation/services/providers/app_user_provider.dart';
+export 'package:kohatian_foundation/services/providers/user_profile_provider.dart';
 
 
 // providers & Packages
