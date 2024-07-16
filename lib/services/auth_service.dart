@@ -80,6 +80,7 @@ class AuthService {
         idToken: googleAuth?.idToken,
       );
       return await _auth.signInWithCredential(credential);
+      
     } catch (e) {
       print(e);
       throw e;
