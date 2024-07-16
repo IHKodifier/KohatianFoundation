@@ -23,6 +23,11 @@ class _SignInFormState extends ConsumerState<SignInForm> {
   Widget build(BuildContext context) {
     final authService = ref.watch(authServiceProvider);
     final userProfile = ref.watch(userProfileProvider);
+        // Navigate to UserHome if userProfile is not null
+    if (userProfile.hasValue && userProfile.asData!.value != null) {
+      Navigator.pushReplacementNamed(context, '/userHome');
+    }
+
 
     return Form(
       key: _formKey,
@@ -45,7 +50,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                   return null;
                 },
               ),
-          
+
               // Password field
               TextFormField(
                 controller: _passwordController,
@@ -58,7 +63,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                   return null;
                 },
               ),
-          
+
               // Sign In with Email/Password button
               ElevatedButton(
                 onPressed: () {
@@ -68,7 +73,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                 },
                 child: const Text('Sign In with Email/Password'),
               ),
-          
+
               // Sign In with Google button
               ElevatedButton(
                 // onPressed: null,
