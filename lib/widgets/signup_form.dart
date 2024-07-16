@@ -10,8 +10,8 @@ class SignupForm extends ConsumerStatefulWidget {
 }
 
 class _SignupFormState extends ConsumerState<SignupForm> {
-  bool isSignupWithGoogle = false;
-  bool isSignUpWithEmail = false;
+  bool isSignupUsingGoogle = false;
+  bool isSignUpUdingEmail = false;
   TextEditingController kitno = TextEditingController();
   TextEditingController house = TextEditingController();
   TextEditingController domicile = TextEditingController();
@@ -29,8 +29,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isSignUpWithEmail = false;
-    isSignupWithGoogle = false;
+    isSignUpUdingEmail = false;
+    isSignupUsingGoogle = false;
     kitno.text = '';
     name.text = '';
     house.text = '';
@@ -60,199 +60,204 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       builder: (context, constraints) {
         return Form(
           key: cadetFormKey,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Spacer(),
-                  //Kit No Form Field
-                  SizedBox(
-                    // width: constraints.maxWidth / 2,
-                    width: 210,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: kitno,
-                        decoration: InputDecoration(
-                          hintText: 'e.g. 2924',
-                          border: const OutlineInputBorder(),
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.grey),
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold),
-                          label: const Text('Kit No'),
+          child: Card(
+            elevation: 15,
+            child: Column(
+              children: [
+                Text('Cadet Details',
+                style: Theme.of(context).textTheme.titleMedium,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Spacer(),
+                    //Kit No Form Field
+                    SizedBox(
+                      // width: constraints.maxWidth / 2,
+                      width: 210,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: kitno,
+                          decoration: InputDecoration(
+                            hintText: 'e.g. 2924',
+                            border: const OutlineInputBorder(),
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.grey),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold),
+                            label: const Text('Kit No'),
+                          ),
+                          validator: (value) {
+                            if (value == '') {
+                              return 'Valid Kit Number is required';
+                            }
+                            return null;
+                          },
+                          onFieldSubmitted: (value) {},
                         ),
-                        validator: (value) {
-                          if (value == '') {
-                            return 'Valid Kit Number is required';
-                          }
-                          return null;
-                        },
-                        onFieldSubmitted: (value) {},
                       ),
                     ),
-                  ),
-
-                  //House FormField
-                  SizedBox(
-                    // width: constraints.maxWidth / 2,
-                    width: 210,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextFormField(
-                        controller: house,
-                        // maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        decoration: InputDecoration(
-                          hintText: 'e.g. KH',
-                          border: const OutlineInputBorder(),
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.grey),
-                          labelStyle: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.bold),
-                          label: const Text('House'),
+            
+                    //House FormField
+                    SizedBox(
+                      // width: constraints.maxWidth / 2,
+                      width: 210,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: house,
+                          // maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          decoration: InputDecoration(
+                            hintText: 'e.g. KH',
+                            border: const OutlineInputBorder(),
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.grey),
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold),
+                            label: const Text('House'),
+                          ),
+                          validator: (value) {
+                            if (value != '') {
+                              value = value!.toUpperCase();
+                            }
+            
+                            if (value == '' ||
+                                !(value == 'JH' ||
+                                    value == 'KH' ||
+                                    value == 'IH' ||
+                                    value == 'AH' ||
+                                    value == 'MH' ||
+                                    value == 'RH')) {
+                              return 'valid input = KH,JH,IH,MH,RH';
+                            }
+                            return null;
+                          },
+                          onFieldSubmitted: (value) {},
                         ),
-                        validator: (value) {
-                          if (value != '') {
-                            value = value!.toUpperCase();
-                          }
-
-                          if (value == '' ||
-                              !(value == 'JH' ||
-                                  value == 'KH' ||
-                                  value == 'IH' ||
-                                  value == 'AH' ||
-                                  value == 'MH' ||
-                                  value == 'RH')) {
-                            return 'valid input = KH,JH,IH,MH,RH';
-                          }
-                          return null;
-                        },
-                        onFieldSubmitted: (value) {},
                       ),
                     ),
-                  ),
-                  Spacer(),
-                ],
-              ),
-              // Name FormField
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 400,
-                  child: TextFormField(
-                    controller: name,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. Imtiaz Hussain Baloch',
-                      border: const OutlineInputBorder(),
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(
-                              fontStyle: FontStyle.italic, color: Colors.grey),
-                      labelStyle: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold),
-                      label: const Text('Cadet Name'),
+                    Spacer(),
+                  ],
+                ),
+                // Name FormField
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: name,
+                      decoration: InputDecoration(
+                        hintText: 'e.g. Imtiaz Hussain Baloch',
+                        border: const OutlineInputBorder(),
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .labelSmall
+                            ?.copyWith(
+                                fontStyle: FontStyle.italic, color: Colors.grey),
+                        labelStyle: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold),
+                        label: const Text('Cadet Name'),
+                      ),
+                      validator: (value) {
+                        if (value == '') {
+                          return 'Name is required';
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (value) {},
                     ),
-                    validator: (value) {
-                      if (value == '') {
-                        return 'Name is required';
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (value) {},
                   ),
                 ),
-              ),
-              //Domicile
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 400,
-                  child: TextFormField(
-                    controller: domicile,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. Swat',
-                      border: const OutlineInputBorder(),
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(
-                              fontStyle: FontStyle.italic, color: Colors.grey),
-                      labelStyle: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold),
-                      label: const Text('Domicile'),
+                //Domicile
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: domicile,
+                      decoration: InputDecoration(
+                        hintText: 'e.g. Swat',
+                        border: const OutlineInputBorder(),
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .labelSmall
+                            ?.copyWith(
+                                fontStyle: FontStyle.italic, color: Colors.grey),
+                        labelStyle: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold),
+                        label: const Text('Domicile'),
+                      ),
+                      validator: (value) {
+                        if (value == '') {
+                          return 'Domicile is required';
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (value) {},
                     ),
-                    validator: (value) {
-                      if (value == '') {
-                        return 'Domicile is required';
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (value) {},
                   ),
                 ),
-              ),
-              //mobile number
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 400,
-                  child: TextFormField(
-                    controller: mobileNumber,
-                    decoration: InputDecoration(
-                      hintText: 'e.g. 0333 5364111',
-                      border: const OutlineInputBorder(),
-                      hintStyle: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(
-                              fontStyle: FontStyle.italic, color: Colors.grey),
-                      labelStyle: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold),
-                      label: const Text('Mobile (preferebaly WhatsApp)'),
+                //mobile number
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 400,
+                    child: TextFormField(
+                      controller: mobileNumber,
+                      decoration: InputDecoration(
+                        hintText: 'e.g. 0333 5364111',
+                        border: const OutlineInputBorder(),
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .labelSmall
+                            ?.copyWith(
+                                fontStyle: FontStyle.italic, color: Colors.grey),
+                        labelStyle: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold),
+                        label: const Text('Mobile (preferebaly WhatsApp)'),
+                      ),
+                      validator: (value) {
+                        if (value == '' ||
+                            RegExp(r'[a-zA-Z]').hasMatch(value!) ||
+                            value.length != 11) {
+                          return 'invalid mobile number';
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (value) {},
                     ),
-                    validator: (value) {
-                      if (value == '' ||
-                          RegExp(r'[a-zA-Z]').hasMatch(value!) ||
-                          value.length != 11) {
-                        return 'invalid mobile number';
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (value) {},
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -263,12 +268,20 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   Widget emailDetailsForm() {
     return Form(
       key: emailFormKey,
-      child: Column(
-        children: [
-          emailFormField(),
-          passwordFormField(),
-          confirmPasswordFormField(),
-        ],
+      child: Container(
+        width: 500,
+        child: Card(
+          elevation: 15,
+          child: Column(
+            children: [
+              Text('Email & Password Details',
+              style: Theme.of(context).textTheme.titleLarge,),
+              emailFormField(),
+              passwordFormField(),
+              confirmPasswordFormField(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -392,8 +405,16 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        signUpWithGoogleButton(),
+        Expanded (child: signUpWithGoogleButton()),
+        SizedBox(width: 10),
         formRestButton(),
+        SizedBox(width: 10),    
+        Expanded(
+          child: SizedBox(
+           
+            height:50,
+            child: ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: Text('Back'))),
+        ),
       ],
     );
   }
@@ -403,8 +424,18 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        signUpWithEmailButton(),
+        Expanded(child: signUpWithEmailButton()),
+        SizedBox(width: 10),
         formRestButton(),
+        SizedBox(width: 10),
+          
+          Expanded(
+          child: SizedBox(
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Back'))),
+        ),
       ],
     );
   }
@@ -477,7 +508,10 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             }
           }
         },
-        label: const Text('Signup with Google '),
+        label: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const Text('Signup  '),
+        ),
       ),
     );
   }
@@ -525,7 +559,10 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             }
           }
         },
-        label: const Text('Signup with Email '),
+        label: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: const Text('Signup '),
+        ),
       ),
     );
   }
@@ -540,8 +577,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         ),
         onPressed: () {
           setState(() {
-            isSignupWithGoogle = true;
-            isSignUpWithEmail = false;
+            isSignupUsingGoogle = true;
+            isSignUpUdingEmail = false;
           });
         },
         label: const Text('Signup Using Google '),
@@ -560,8 +597,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         ),
         onPressed: () {
           setState(() {
-            isSignupWithGoogle = false;
-            isSignUpWithEmail = true;
+            isSignupUsingGoogle = false;
+            isSignUpUdingEmail = true;
           });
         },
         label: const Text('Signup Using Email '),
@@ -573,7 +610,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   Widget gForm() {
     return Column(
       children: [
-        // const Text('Sign up using Gmail'),
+        SizedBox(height: 30),
         cadetDetailsForm(),
         const SizedBox(height: 30),
         gmailButtonBar(),
@@ -587,8 +624,10 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const Text('Sign up using Email/Password'),
+                   const SizedBox(height: 30),
+
           cadetDetailsForm(),
+          const SizedBox(height: 30),
           emailDetailsForm(),
           const SizedBox(height: 30),
           emailButtonBar(),
@@ -600,31 +639,37 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        //Signup Mode selector Gmailvs Email mode
-        SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            //Signup with Google Button
-            signUpUsingGoogleButton(),
-            //Signup with Email Button
-            signUpUsingEmailButton(),
-          ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          width: 500,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 30,),
+              Text('Sign Up',
+              style: Theme.of(context).textTheme.titleLarge),
+              //Signup Mode selector Gmail vs Email mode
+              SizedBox(height: 8),
+              signUpUsingGoogleButton(),
+              SizedBox(height: 8),
+          
+              //Signup with Email Button
+              signUpUsingEmailButton(),
+          
+              isSignupUsingGoogle ? gForm() : SizedBox.shrink(),
+          
+              //Signup with Email Button
+              isSignUpUdingEmail ? emailForm() : SizedBox.shrink(),
+              // cadetDetailsForm(),
+          
+              SizedBox(
+                height: 8,
+              ),
+            ],
+          ),
         ),
-
-        isSignupWithGoogle ? gForm() : Container(),
-
-        //Signup with Email Button
-        isSignUpWithEmail ? emailForm() : Container(),
-        // cadetDetailsForm(),
-
-        SizedBox(
-          height: 8,
-        ),
-      ],
+      ),
     );
   }
 }

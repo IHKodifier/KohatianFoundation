@@ -22,22 +22,35 @@ class _SignInFormState extends ConsumerState<SignInForm> {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Sign In ',
-            style: Theme.of(context).textTheme.displaySmall,),
-            SizedBox(height: 20,),
-           authService.hasLoggedInUser?Column(
-             children: [
-               Text('You are already logged in'),
-               ElevatedButton(
-                 onPressed: () {
-                  //  authService.signOut();
-                  Navigator.of(context).pop();
-                 },
-                 child: const Text('Go Back'),
-               ),
-             ],
-           ):Container(),
-           
+            Text(
+              'Sign In ',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Column(
+              children: [
+                authService.hasLoggedInUser
+                    ? Text('You are already logged in')
+                    : Container(),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Back'),
+                ),
+                authService.hasLoggedInUser
+                    ? ElevatedButton(
+                        onPressed: () {
+                          ref.read(authServiceProvider).signOut();
+                          // ref.read(userProfileProvider)
+                        },
+                        child: const Text('Sign Out'),
+                      )
+                    : SizedBox.shrink(),
+              ],
+            ),
             Form(
               key: _formKey,
               child: SizedBox(
@@ -59,12 +72,13 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                           return null;
                         },
                       ),
-            
+
                       // Password field
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: const InputDecoration(labelText: 'Password'),
+                        decoration:
+                            const InputDecoration(labelText: 'Password'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
@@ -72,9 +86,11 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                           return null;
                         },
                       ),
-            
+
                       // Sign In with Email/Password button
-                    SizedBox(height: 20 ,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -88,14 +104,20 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                           ),
                           ElevatedButton(
                             // onPressed: null,
-                            onPressed: () {
-                              ref.read(authServiceProvider).signInWithGoogle();
+                            onPressed: () async {
+                              await ref
+                                  .read(authServiceProvider)
+                                  .signInWithGoogle();
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (context) => UserHomePage(),
+                              ));
                             },
                             child: const Text('Sign In with Google'),
                           ),
                         ],
                       ),
-            
+
                       // Sign In with Google button
                     ],
                   ),

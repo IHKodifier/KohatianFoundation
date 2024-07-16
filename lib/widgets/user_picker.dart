@@ -71,5 +71,9 @@ class UserPicker extends ConsumerWidget {
     );
   }
 
-  void navigateToSignUpScreen(context) {}
+  void navigateToSignUpScreen(context) {
+     Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const SignupPage()),
+    );
+  }
 }
