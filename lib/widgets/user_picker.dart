@@ -22,9 +22,9 @@ class UserPicker extends ConsumerWidget {
         print('user  will be signed out');
 
         FirebaseAuth.instance.signOut();
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.pop(context);
-        Navigator.push(
+        // Navigator.of(context).popUntil((route) => route.isFirst);
+        // Navigator.pop(context);
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const SignInPage()),
 
@@ -56,6 +56,7 @@ class UserPicker extends ConsumerWidget {
               navigateToSignInScreen(context);
             },
             child: const Text('Sign In')),
+            SizedBox(width: 10),
         ElevatedButton(
             onPressed: () {
               navigateToSignUpScreen(context);

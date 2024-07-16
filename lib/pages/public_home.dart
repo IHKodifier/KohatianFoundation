@@ -1,22 +1,22 @@
 import 'package:kohatian_foundation/widget_export.dart';
 
 class PublicHome extends ConsumerWidget {
-  PublicHome({super.key});
+  const PublicHome({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
+    return  Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: Stack(
-              children: [
-                BannerImage(),
-                AppBarWidget(),
-              ],
-            ),
+          AppBarWidget(
+            // ... other SliverAppBar properties
+            // flexibleSpace: FlexibleSpaceBar(
+            //   background: BannerImage(),
+            // ),
+            
           ),
-          const SliverToBoxAdapter(
+          SliverFillRemaining(child: Container(color:Colors.blue),),
+          SliverToBoxAdapter(
             child: SiteFooter(),
           )
         ],
