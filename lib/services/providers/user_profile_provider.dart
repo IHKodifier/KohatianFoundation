@@ -62,6 +62,7 @@ final firestoreProvider = Provider<FirebaseFirestore>((ref) {
 // StreamProvider for real-time updates
 final userProfileProvider = StreamProvider<UserProfile?>((ref) async* {
   final user = ref.watch(authStateChangesProvider);
+  
 
  
     // Handle the case where the user is null

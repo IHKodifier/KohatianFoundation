@@ -1,5 +1,6 @@
 import 'package:kohatian_foundation/pages/sign-in_page.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/start_up.dart';
 
 class UserPicker extends ConsumerWidget {
   const UserPicker({super.key});
@@ -8,7 +9,9 @@ class UserPicker extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hasLoggedInUser = ref.watch(authServiceProvider).hasLoggedInUser;
 
-    return !hasLoggedInUser ? showSignInUpButtons(context) : showUserAvatar(context);
+    return !hasLoggedInUser
+        ? showSignInUpButtons(context)
+        : showUserAvatar(context);
   }
 
   IconButton showUserAvatar(context) {
@@ -19,8 +22,14 @@ class UserPicker extends ConsumerWidget {
         print('user  will be signed out');
 
         FirebaseAuth.instance.signOut();
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SignInPage()),
 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => PublicHome(),));
+          // Remove all routes below
+        );
       },
       icon: const CircleAvatar(
         child: Icon(Icons.person_2_rounded),
@@ -28,15 +37,15 @@ class UserPicker extends ConsumerWidget {
     );
   }
 
-  void navigatetoSignupCenter(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => const Scaffold(
-                body: Text('Irfan Malik'),
-              )),
-    );
-  }
+  // void navigatetoSignupCenter(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => const Scaffold(
+  //               body: Text('Irfan Malik'),
+  //             )),
+  //   );
+  // }
 
   Widget showSignInUpButtons(context) {
     return Row(

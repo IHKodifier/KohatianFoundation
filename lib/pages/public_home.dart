@@ -7,23 +7,20 @@ class PublicHome extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: CustomScrollView(
-        slivers: _slivers,
+        slivers: [
+          SliverToBoxAdapter(
+            child: Stack(
+              children: [
+                BannerImage(),
+                AppBarWidget(),
+              ],
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SiteFooter(),
+          )
+        ],
       ),
     );
   }
-
-  final _slivers = [
-    const SliverToBoxAdapter(
-      child: Stack(
-        children: [
-          BannerImage(),
-          AppBarWidget(),
-        ],
-      ),
-    ),
-
-    const SliverToBoxAdapter(
-        child: SiteFooter(),
-        )
-  ];
 }
