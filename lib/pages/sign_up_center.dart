@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
-import 'package:kohatian_foundation/widgets/signup_form.dart';
 
 class SignupCenter extends ConsumerStatefulWidget {
   const SignupCenter({super.key});
@@ -67,7 +65,7 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                                     Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => PublicHome(),
+                                        builder: (context) => PublicHomePage(),
                                       ),
                                       (route) => false,
                                     );

@@ -15,7 +15,7 @@ class AppBarWidget extends ConsumerWidget {
       stretch: true,
       automaticallyImplyLeading: false,
     
-      title: navBarRow(),
+      title: NavBarRow(),
       flexibleSpace: FlexibleSpaceBar(
         background: BannerImage(), // BannerImage as the background
       ),
@@ -23,8 +23,8 @@ class AppBarWidget extends ConsumerWidget {
   }
 }
 
-class navBarRow extends StatelessWidget {
-  const navBarRow({
+class NavBarRow extends StatelessWidget {
+  const NavBarRow({
     super.key,
   });
 

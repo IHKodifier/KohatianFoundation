@@ -8,16 +8,16 @@ class StartUp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
   
-    // Use ref.watch to access the AsyncValue from userProfileProvider
+   
     final userAsyncValue = ref.watch(userProfileProvider);
 
      return userAsyncValue.when(
       data: (user) {
         // Check if user is not null before navigating
         if (user != null) {
-          return UserHome();
+          return UserHomePage();
         } else {
-          return PublicHome();
+          return PublicHomePage();
         }
       },
       error: (error, stackTrace) =>

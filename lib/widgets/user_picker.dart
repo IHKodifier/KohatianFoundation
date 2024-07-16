@@ -22,9 +22,8 @@ class UserPicker extends ConsumerWidget {
         print('user  will be signed out');
 
         FirebaseAuth.instance.signOut();
-        // Navigator.of(context).popUntil((route) => route.isFirst);
-        // Navigator.pop(context);
-        Navigator.pushReplacement(
+        
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const SignInPage()),
 
