@@ -1,12 +1,30 @@
 import 'package:kohatian_foundation/widget_export.dart';
 
-final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthService();
+final authServiceProvider = FutureProvider<AuthService>((ref) async {
+  final googleSignIn = await ref.watch(googleSignInProvider);
+  return AuthService(googleSignIn: googleSignIn);
 });
 
-class AuthService {
+
+final googleSignInProvider = Provider<GoogleSignIn>((ref) {
+  return GoogleSignIn(
+    scopes: ['email', 'profile'],
+    clientId:
+        '239392991522-arev04me39i54824423japuftoon0goc.apps.googleusercontent.com',
+  );
+});
+class AuthService  extends ChangeNotifier{
+   final GoogleSignIn googleSignIn;
+
+  AuthService({required this.googleSignIn});
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // final GoogleSignIn _googleSignIn = GoogleSignIn(
+  //   scopes: [
+  //     'email',
+  //     'profile'
+  //   ],
+  //   clientId: '239392991522-arev04me39i54824423japuftoon0goc.apps.googleusercontent.com'
+  // );
 
   Future<UserCredential> signupWithGoogle() async {
     UserCredential? userCredential;
@@ -72,7 +90,7 @@ class AuthService {
 
   Future<UserCredential> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(

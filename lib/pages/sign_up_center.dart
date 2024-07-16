@@ -59,8 +59,8 @@ class _SignUpCenterState extends ConsumerState<SignupCenter> {
                                 onPressed: () async {
                                  try {
                                     await 
-                                        AuthService()
-                                        .signOut();
+                                        ref.read(authServiceProvider).value
+                                        ?.signOut();
                                     print('Signing out ');
                                     // You might want to navigate back to the login screen
                                     // or handle the sign-out in a different way

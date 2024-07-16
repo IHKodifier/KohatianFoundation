@@ -72,7 +72,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
               // Sign In with Google button
               ElevatedButton(
                 // onPressed: null,
-                onPressed: ref.read(authServiceProvider).signInWithGoogle,
+                onPressed: ref.read(authServiceProvider).value?.signInWithGoogle,
                 child: const Text('Sign In with Google'),
               ),
             ],
