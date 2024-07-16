@@ -36,7 +36,7 @@ class AuthService {
     return FirebaseAuth.instance.currentUser;
   }
 
-  bool hasLoggedInUser = FirebaseAuth.instance.currentUser != null;
+  bool get  hasLoggedInUser => FirebaseAuth.instance.currentUser != null;
 
   Future<void> createAppUserInDb(UserProfile appUser) async {
     // Create a new user document in Firestore
