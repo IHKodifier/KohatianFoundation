@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kohatian_foundation/perals.dart';
+import 'package:kohatian_foundation/widgets/entrry_picker.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class AppBarWidget extends ConsumerWidget {
@@ -7,12 +7,13 @@ class AppBarWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SliverAppBar(
+    return const SliverAppBar(
       // pinned: true,
       floating: true,
       toolbarHeight: 120, 
       expandedHeight: 400,
       stretch: true,
+      automaticallyImplyLeading: false,
     
       title: navBarRow(),
       flexibleSpace: FlexibleSpaceBar(
@@ -30,7 +31,7 @@ class navBarRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green,
+      // color: Colors.green,
       child: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -47,7 +48,7 @@ class navBarRow extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => MyApp()));
+                    .push(MaterialPageRoute(builder: (context) => const MyApp()));
               },
             ),
           ),
@@ -58,11 +59,11 @@ class navBarRow extends StatelessWidget {
             child: const Text('Pearls of CCK'),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const PearlsPage(),
+                builder: (context) =>  PearlsPage(),
               ));
             },
           ),
-          UserPicker(),
+          const UserPicker(),
         ],
       )),
     );

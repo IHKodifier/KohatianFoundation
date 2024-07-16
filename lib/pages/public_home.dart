@@ -9,13 +9,11 @@ class PublicHome extends ConsumerWidget {
       body: CustomScrollView(
         slivers: [
           AppBarWidget(
-            // ... other SliverAppBar properties
-            // flexibleSpace: FlexibleSpaceBar(
-            //   background: BannerImage(),
-            // ),
+     
             
           ),
-          SliverFillRemaining(child: Container(color:Colors.blue),),
+          SliverFillRemaining(child: Container(color:Colors.blue,
+          child: Center(child: Text('Public home')),),),
           SliverToBoxAdapter(
             child: SiteFooter(),
           )

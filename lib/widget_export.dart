@@ -35,6 +35,7 @@ export 'package:kohatian_foundation/pages/user_home.dart';
 export 'package:kohatian_foundation/pages/sign_up_center.dart';
 export 'package:kohatian_foundation/pages/sign_up_page.dart';
 export 'package:kohatian_foundation/pages/sign_up_success.dart';
+export 'package:kohatian_foundation/pages/pearls_page.dart';
 
 
 //widgets
