@@ -1,16 +1,23 @@
 import 'package:kohatian_foundation/widget_export.dart';
 
 class UserFeedWidget extends ConsumerWidget {
-  const UserFeedWidget({super.key});
+  const UserFeedWidget({required this.userId, super.key});
+  final String userId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userProfileAsync = ref.watch(userProfileProvider);
-    return userProfileAsync.when(
-        data: onData,
-        error: (error, stackTrace) =>
-            Text(error.toString() + stackTrace.toString()),
-        loading: () => Center(child: CircularProgressIndicator()));
+    // final user = ref.watch(authStateChangesProvider);
+    if (ref.read(authServiceProvider).getCurrentUser() != null) {
+      final userProfileAsync = ref.watch(userProfileProvider(
+          ref.read(authServiceProvider).getCurrentUser()!.uid));
+      return userProfileAsync.when(
+          data: onData,
+          error: (error, stackTrace) =>
+              Text(error.toString() + stackTrace.toString()),
+          loading: () => Center(child: CircularProgressIndicator()));
+    } else {
+      return Center(child: Text('No user logged in'));
+    }
 
     // return Material(
     //   child: Container(

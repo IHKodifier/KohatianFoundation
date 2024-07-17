@@ -32,7 +32,7 @@ class AuthService {
     await FirebaseAuth.instance.signOut();
   }
 
-  Future<User?> getCurrentUser() async {
+  User? getCurrentUser()  {
     return FirebaseAuth.instance.currentUser;
   }
 

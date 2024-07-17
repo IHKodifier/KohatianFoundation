@@ -15,6 +15,11 @@ export 'package:google_sign_in/google_sign_in.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:email_validator/email_validator.dart';
 export 'package:equatable/equatable.dart';
+export 'package:rxdart/rxdart.dart';
+export 'package:tuple/tuple.dart';
+
+
+
 
 //utils
 

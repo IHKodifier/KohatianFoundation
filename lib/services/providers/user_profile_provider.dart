@@ -59,19 +59,12 @@ final firestoreProvider = Provider<FirebaseFirestore>((ref) {
   return FirebaseFirestore.instance;
 });
 
-// StreamProvider for real-time updates
-final userProfileProvider = StreamProvider<UserProfile?>((ref) async* {
-  final user = ref.watch(authStateChangesProvider);
-  
 
- 
-    // Handle the case where the user is null
-  if (user.hasValue && user.asData!.value != null) {
-    final docStream = ref
-        .read(firestoreProvider)
-        .collection('users')
-        .doc(user.asData!.value!.uid)
-        .snapshots();
+// StreamProvider.family for real-time updates
+final userProfileProvider = StreamProvider.family<UserProfile?, String>(
+  (ref, userId) async* {
+    final docStream =
+        ref.read(firestoreProvider).collection('users').doc(userId).snapshots();
     await for (final docSnapshot in docStream) {
       if (docSnapshot.exists) {
         yield UserProfile.fromMap(docSnapshot.data()!);
@@ -79,8 +72,5 @@ final userProfileProvider = StreamProvider<UserProfile?>((ref) async* {
         print('User not found in Firestore');
       }
     }
-  } else {
-    // User is not logged in, yield a null UserProfile
-    yield null;
-  }
-});
+  },
+);
