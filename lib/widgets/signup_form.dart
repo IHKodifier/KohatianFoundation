@@ -402,46 +402,67 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 
 //Signup With Gmail  Button Bar
   Widget gmailButtonBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
-        Expanded (child: signUpWithGoogleButton()),
-        SizedBox(width: 10),
-        formRestButton(),
-        SizedBox(width: 10),    
-        Expanded(
-          child: SizedBox(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded (child: signUpWithGoogleButton()),
+            SizedBox(width: 10),
+            Expanded(child: formResetButton()),
+             
            
-            height:50,
-            child: ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: Text('Back'))),
+          ],
         ),
+        SizedBox(height: 8,),
+         Row(
+           children: [
+             Expanded(
+              child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('Back'))),
+                     ),
+           ],
+         ),
       ],
     );
   }
 
   //Signup with Email Button Bar
   Widget emailButtonBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
       children: [
-        Expanded(child: signUpWithEmailButton()),
-        SizedBox(width: 10),
-        formRestButton(),
-        SizedBox(width: 10),
-          
-          Expanded(
-          child: SizedBox(
-              height: 50,
-              child: ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Back'))),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(child: signUpWithEmailButton()),
+            SizedBox(width: 10),
+            Expanded(child: formResetButton()),
+            SizedBox(width: 10),
+              
+           
+          ],
         ),
+        SizedBox(height: 8,),
+           Row(
+                children: [
+                  Expanded(
+                  child: SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text('Back'))),
+                              ),
+                ],
+              ),
       ],
     );
   }
 
   //form reset button
-  Widget formRestButton() {
+  Widget formResetButton() {
     return SizedBox(
       height: 50,
       child: ElevatedButton(

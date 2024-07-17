@@ -10,7 +10,7 @@ class UserHomePage extends ConsumerWidget {
       data: (User? user) {
         // User is logged in
         if (user != null) {
-          final userProfile = ref.watch(userProfileProvider(user!.uid));
+          final userProfile = ref.watch(userProfileProvider);
           return userProfile.when(
             data: (profile) {
               // User is logged in and profile data is available

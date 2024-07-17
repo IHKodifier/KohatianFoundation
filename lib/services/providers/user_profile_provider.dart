@@ -59,18 +59,24 @@ final firestoreProvider = Provider<FirebaseFirestore>((ref) {
   return FirebaseFirestore.instance;
 });
 
-
 // StreamProvider.family for real-time updates
-final userProfileProvider = StreamProvider.family<UserProfile?, String>(
-  (ref, userId) async* {
+final userProfileProvider = StreamProvider<UserProfile?>((ref) {
+  final authService = ref.watch(authServiceProvider);
+  final user = authService.getCurrentUser();
+  if (user != null) {
+    final userId = user.uid;
     final docStream =
         ref.read(firestoreProvider).collection('users').doc(userId).snapshots();
-    await for (final docSnapshot in docStream) {
+    return docStream.map((docSnapshot) {
       if (docSnapshot.exists) {
-        yield UserProfile.fromMap(docSnapshot.data()!);
+        return UserProfile.fromMap(docSnapshot.data()!);
       } else {
         print('User not found in Firestore');
+        return null;
       }
-    }
-  },
-);
+    });
+  } else {
+    throw Exception('User not found');
+    return Stream<UserProfile?>.value(null);
+  }
+});

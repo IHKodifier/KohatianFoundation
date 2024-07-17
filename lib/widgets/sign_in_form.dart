@@ -14,7 +14,168 @@ class _SignInFormState extends ConsumerState<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (FirebaseAuth.instance.currentUser != null) {}
+    final authService = ref.watch(authServiceProvider);
+    final userStream = FirebaseAuth.instance.authStateChanges();
+    if (currentUser != null) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('you are already logged in '),
+        ],
+      );
+    } else {
+      return StreamBuilder<Tuple2<User?, UserProfile?>>(
+        stream:
+            Rx.combineLatest2<User?, UserProfile?, Tuple2<User?, UserProfile?>>(
+          userStream,
+          userStream.switchMap((user) {
+            if (user != null) {
+              // Correctly access the stream from userProfileProvider
+              return FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(user.uid)
+                  .snapshots()
+                  .map((snapshot) {
+                if (snapshot.exists) {
+                  return UserProfile.fromMap(snapshot.data()!);
+                } else {
+                  return null;
+                }
+              });
+            } else {
+              // Return an empty stream if no user is logged in
+              return Stream<UserProfile?>.value(null);
+            }
+          }),
+          (user, profile) => Tuple2(user, profile),
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final user = snapshot.data!.item1;
+            final profile = snapshot.data!.item2;
 
+            if (user != null && profile != null) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Sign In ',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    children: [
+                      authService.hasLoggedInUser
+                          ? const Text('You are already logged in')
+                          : Container(),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Back'),
+                      ),
+                      authService.hasLoggedInUser
+                          ? ElevatedButton(
+                              onPressed: () {
+                                ref.read(authServiceProvider).signOut();
+                                // ref.read(userProfileProvider)
+                              },
+                              child: const Text('Sign Out'),
+                            )
+                          : const SizedBox.shrink(),
+                    ],
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: SizedBox(
+                      width: 500,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            // Email field
+                            TextFormField(
+                              controller: _emailController,
+                              decoration:
+                                  const InputDecoration(labelText: 'Email'),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                }
+                                if (!value.contains('@')) {
+                                  return 'Please enter a valid email';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            // Password field
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration:
+                                  const InputDecoration(labelText: 'Password'),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                return null;
+                              },
+                            ),
+
+                            // Sign In with Email/Password button
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _signInWithEmailAndPassword();
+                                    }
+                                  },
+                                  child: const Text('Sign In with Email'),
+                                ),
+                                ElevatedButton(
+                                  // onPressed: null,
+                                  onPressed: () async {
+                                    await ref
+                                        .read(authServiceProvider)
+                                        .signInWithGoogle();
+                                    Navigator.of(context)
+                                        .pushReplacement(MaterialPageRoute(
+                                      builder: (context) => UserHomePage(),
+                                    ));
+                                  },
+                                  child: const Text('Sign In with Google'),
+                                ),
+                              ],
+                            ),
+
+                            // Sign In with Google button
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Center(child: SelectableText('Error: ${snapshot.error}'));
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      );
+    }
 
     // return userProfile.when(
     //   data: (userProfile) {
