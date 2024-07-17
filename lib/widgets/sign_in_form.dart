@@ -17,7 +17,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (FirebaseAuth.instance.currentUser != null) {}
     final authService = ref.watch(authServiceProvider);
-    final userStream = FirebaseAuth.instance.authStateChanges();
+    FirebaseAuth.instance.authStateChanges();
     if (currentUser != null) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -255,7 +255,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
   // }
 
   Future<void> _signInWithGoogle() async {
-    final authService = ref.read(authServiceProvider);
+    ref.read(authServiceProvider);
     // try {
     //   // await authService.signInWithGoogle();
     //   // Update userProfileProvider and other providers as needed
@@ -268,7 +268,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
 
 //TODO implement this
   Future<void> _signInWithEmailAndPassword() async {
-    final authService = ref.read(authServiceProvider);
+    ref.read(authServiceProvider);
     //   try {
     //     // await authService.signInWithEmailAndPassword(
     //     //   email: _emailController.text.trim(),

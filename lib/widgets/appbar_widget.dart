@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:kohatian_foundation/widgets/entrry_picker.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class AppBarWidget extends ConsumerWidget {
@@ -63,7 +61,7 @@ class NavBarRow extends StatelessWidget {
               ));
             },
           ),
-          const UserPicker(),
+          const UserAvatarWidget(),
         ],
       )),
     );

@@ -1,5 +1,7 @@
 //Provider
 // Provider for the AppUserNotifier
+// ignore_for_file: dead_code
+
 import 'package:kohatian_foundation/widget_export.dart';
 
 // final appUserProvider = StateNotifierProvider<AppUserNotifier, UserProfile?>(

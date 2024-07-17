@@ -69,7 +69,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     //Kit No Form Field
                     SizedBox(
                       // width: constraints.maxWidth / 2,
@@ -152,7 +152,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 ),
                 // Name FormField
@@ -408,13 +408,13 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded (child: signUpWithGoogleButton()),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(child: formResetButton()),
              
            
           ],
         ),
-        SizedBox(height: 8,),
+        const SizedBox(height: 8,),
          Row(
            children: [
              Expanded(
@@ -422,7 +422,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                   height: 50,
                   child: ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text('Back'))),
+                      child: const Text('Back'))),
                      ),
            ],
          ),
@@ -438,14 +438,14 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded(child: signUpWithEmailButton()),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(child: formResetButton()),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
               
            
           ],
         ),
-        SizedBox(height: 8,),
+        const SizedBox(height: 8,),
            Row(
                 children: [
                   Expanded(
@@ -453,7 +453,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                       height: 50,
                       child: ElevatedButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text('Back'))),
+                          child: const Text('Back'))),
                               ),
                 ],
               ),
@@ -477,7 +477,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return SizedBox(
       height: 50,
       child: ElevatedButton.icon(
-        icon: FaIcon(
+        icon: const FaIcon(
           FontAwesomeIcons.google,
           // color: Colors.red,
         ),
@@ -529,9 +529,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             }
           }
         },
-        label: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const Text('Signup  '),
+        label: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('Signup  '),
         ),
       ),
     );
@@ -542,7 +542,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return SizedBox(
       height: 50,
       child: ElevatedButton.icon(
-        icon: FaIcon(
+        icon: const FaIcon(
           FontAwesomeIcons.envelope,
           // color: Colors.red,
         ),
@@ -580,9 +580,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             }
           }
         },
-        label: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const Text('Signup '),
+        label: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('Signup '),
         ),
       ),
     );
@@ -593,7 +593,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return SizedBox(
       height: 50,
       child: ElevatedButton.icon(
-        icon: FaIcon(
+        icon: const FaIcon(
           FontAwesomeIcons.google,
         ),
         onPressed: () {
@@ -612,7 +612,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return SizedBox(
       height: 50,
       child: ElevatedButton.icon(
-        icon: FaIcon(
+        icon: const FaIcon(
           FontAwesomeIcons.envelope,
           // color: Colors.red,
         ),
@@ -631,7 +631,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   Widget gForm() {
     return Column(
       children: [
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         cadetDetailsForm(),
         const SizedBox(height: 30),
         gmailButtonBar(),
@@ -667,24 +667,24 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 30,),
+              const SizedBox(height: 30,),
               Text('Sign Up',
               style: Theme.of(context).textTheme.titleLarge),
               //Signup Mode selector Gmail vs Email mode
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               signUpUsingGoogleButton(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
           
               //Signup with Email Button
               signUpUsingEmailButton(),
           
-              isSignupUsingGoogle ? gForm() : SizedBox.shrink(),
+              isSignupUsingGoogle ? gForm() : const SizedBox.shrink(),
           
               //Signup with Email Button
-              isSignUpUdingEmail ? emailForm() : SizedBox.shrink(),
+              isSignUpUdingEmail ? emailForm() : const SizedBox.shrink(),
               // cadetDetailsForm(),
           
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
             ],

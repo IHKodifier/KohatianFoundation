@@ -1,12 +1,17 @@
 import 'package:kohatian_foundation/pages/sign-in_page.dart';
 import 'package:kohatian_foundation/widget_export.dart';
-import 'package:kohatian_foundation/widgets/start_up.dart';
 
-class UserPicker extends ConsumerWidget {
-  const UserPicker({super.key});
+class UserAvatarWidget extends ConsumerStatefulWidget {
+  const UserAvatarWidget({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _UserAvatarWidgetState();
+}
+
+class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
+  @override
+  Widget build(BuildContext context) {
     final hasLoggedInUser = ref.watch(authServiceProvider).hasLoggedInUser;
 
     return !hasLoggedInUser
@@ -14,26 +19,18 @@ class UserPicker extends ConsumerWidget {
         : showUserAvatar(context);
   }
 
-  IconButton showUserAvatar(context) {
-    return IconButton(
-      // onPressed: () => navigatetoSignupCenter(context),
-      onPressed: () {
-        print('user avatar clicked');
-        print('user  will be signed out');
-
-        FirebaseAuth.instance.signOut();
+  Widget showUserAvatar(context) {
+    var controller = OverlayPortalController();
+    return MouseRegion(
+          onEnter: (event) => controller.show(),
+          onExit: (event) => controller.hide(),
+          child:const CircleAvatar(
+         backgroundImage:NetworkImage(
         
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const SignInPage()),
-
-          // Remove all routes below
-        );
-      },
-      icon: const CircleAvatar(
-        child: Icon(Icons.person_2_rounded),
-      ),
-    );
+           'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200') ,
+          ));
+      
+    
   }
 
   // void navigatetoSignupCenter(BuildContext context) {
@@ -52,13 +49,14 @@ class UserPicker extends ConsumerWidget {
       children: [
         ElevatedButton(
             onPressed: () {
-              navigateToSignInScreen(context);
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => const SignInPage()));
             },
             child: const Text('Sign In')),
-            SizedBox(width: 10),
+        const SizedBox(width: 10),
         ElevatedButton(
             onPressed: () {
-              navigateToSignUpScreen(context);
+              // navigateToSignUpScreen(context);
             },
             child: const Text('Sign Up')),
       ],
@@ -72,7 +70,7 @@ class UserPicker extends ConsumerWidget {
   }
 
   void navigateToSignUpScreen(context) {
-     Navigator.of(context).push(
+    Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => const SignupPage()),
     );
   }
