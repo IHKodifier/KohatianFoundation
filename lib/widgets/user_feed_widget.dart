@@ -1,4 +1,5 @@
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/start_up.dart';
 
 class UserFeedWidget extends ConsumerWidget {
   const UserFeedWidget({required this.userId, super.key});
@@ -10,13 +11,25 @@ class UserFeedWidget extends ConsumerWidget {
     if (ref.read(authServiceProvider).getCurrentUser() != null) {
       final userProfileAsync = ref.watch(userProfileProvider);
 
-      return userProfileAsync.when(
-          data: onData,
-          error: (error, stackTrace) =>
-              Text(error.toString() + stackTrace.toString()),
-          loading: () => Center(child: CircularProgressIndicator()));
+      return Column(
+        children: [
+          //button to sign out
+          ElevatedButton.icon(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const StartUp()));
+              },
+              label: const Text('Sign Out ')),
+          userProfileAsync.when(
+              data: onData,
+              error: (error, stackTrace) =>
+                  Text(error.toString() + stackTrace.toString()),
+              loading: () => const Center(child: CircularProgressIndicator())),
+        ],
+      );
     } else {
-      return Center(child: Text('No user logged in'));
+      return const Center(child: Text('No user logged in'));
     }
 
     // return Material(
@@ -59,6 +72,6 @@ class UserFeedWidget extends ConsumerWidget {
   }
 
   Widget onData(UserProfile? data) {
-    return Text('Welcome to your user Feed Mr ${data.toString()}');
+    return Text('Welcome to your user Feed  ${data?.kitNo}');
   }
 }

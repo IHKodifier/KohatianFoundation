@@ -15,10 +15,16 @@ class UserHomePage extends ConsumerWidget {
             data: (profile) {
               // User is logged in and profile data is available
               return Scaffold(
+body:CustomScrollView(
+  slivers: [
+    AppBarWidget(),
+    SliverToBoxAdapter(child: UserFeedWidget(userId: user.uid)),
+    SliverToBoxAdapter(child: SiteFooter()),  
+  ],
                 // appBar: AppBarWidget(),
-                body: UserFeedWidget(userId: user.uid),
-                bottomNavigationBar: SiteFooter(),
-              );
+                // body: UserFeedWidget(userId: user.uid),
+                // bottomNavigationBar: SiteFooter(),
+              ));
             },
             error: (error, stackTrace) => Text('Error: $error'),
             loading: () => Center(child: CircularProgressIndicator()),
