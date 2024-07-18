@@ -11,10 +11,10 @@ class PearlsPage extends ConsumerWidget {
       body: CustomScrollView(
         slivers: [
           const AppBarWidget(),
-          SliverToBoxAdapter(
+          SliverToBoxAdapter( 
             child: Container(
               height: 450,
-              child:  const Center(child:  UserAvatarWidget())),
+              child:  const Center(child:  EntryPicker())),
           ), 
            const SliverToBoxAdapter(
             child: SiteFooter(),

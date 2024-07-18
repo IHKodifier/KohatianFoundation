@@ -21,17 +21,20 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
         ? showSignInUpButtons(context)
         : OverlayPortal(
             controller: _controller,
-            child: MouseRegion(
-              // cursor,
-              onHover: (event) {
+            child: GestureDetector(
+              onTap: () {
                 _controller.toggle();
-                print('showing overlay');
               },
-        
-              child: const CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(
-                    'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'),
+              child: MouseRegion(
+                
+                cursor:SystemMouseCursors.click,
+               
+              
+                child: const CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(
+                      'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'),
+                ),
               ),
             ),
             overlayChildBuilder: (context) => UserAvatarOverlayVhild());

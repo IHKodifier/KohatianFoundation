@@ -688,8 +688,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               SizedBox(
                 height: 50,
                 child: ElevatedButton.icon(
-                  icon: const FaIcon(
-                    FontAwesomeIcons.check,
+                  icon: const Icon(
+                    Icons.info_outline_rounded,
                     // color: Colors.red,
                   ),
                   

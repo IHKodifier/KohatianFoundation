@@ -6,17 +6,35 @@ class AppBarWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const SliverAppBar(
+    return  SliverAppBar(
       // pinned: true,
       floating: true,
-      toolbarHeight: 120,
-      expandedHeight: 400,
+      toolbarHeight: 100,
+      expandedHeight: 700,
       stretch: true,
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: false, 
 
-      title: NavBarRow(),
+      title: const NavBarRow(),
       flexibleSpace: FlexibleSpaceBar(
-        background: BannerImage(), // BannerImage as the background
+        background: Stack(children: [
+          const BannerImage(),
+          Positioned(
+            top:350, 
+            left:300,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Once a Kohatian is  \nAlways a Kohatian', 
+                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                      fontSize: 96,
+                    )),
+              ],
+            ),
+          ),
+         
+        ]), // BannerImage as the background
       ),
     );
   }
@@ -81,7 +99,7 @@ class NavBarRow extends StatelessWidget {
             },
             child: const Text(
               'Pearls of CCK',
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           const UserAvatarWidget(),

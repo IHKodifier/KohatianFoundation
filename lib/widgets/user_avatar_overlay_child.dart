@@ -1,13 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class UserAvatarOverlayVhild extends ConsumerWidget {
-  
   const UserAvatarOverlayVhild({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-       final profile = ref.watch(userProfileProvider);
+    final profile = ref.watch(userProfileProvider);
+    //  final user = ref.watch(prov);
     return Positioned(
       top: 50,
       right: 120,
@@ -23,17 +24,18 @@ class UserAvatarOverlayVhild extends ConsumerWidget {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(data!.kitNo),
-                Text(data!.name),
-                Text(data!.house),
-                data.roles.contains(UserRole.admin())
-                    ? TextButton.icon(
-                        onPressed: () {},
-                        label: Text('Admin center'),
-                        iconAlignment: IconAlignment.end,
-                        icon: Icon(Icons.launch),
-                      )
-                    : Container(),
+                Text(
+                    'Cadet ID: ${data!.kitNo}'), // Display Kit Number as Cadet ID
+                Text('Name: ${data.name}'), // Display Name
+                Text('House: ${data.house}'), // Display House
+                if (data.roles
+                    .contains(UserRole.admin())) // Check for Admin Role
+                  TextButton.icon(
+                    onPressed: () {},
+                    label: Text('Admin Center'),
+                    iconAlignment: IconAlignment.end,
+                    icon: Icon(Icons.launch),
+                  ),
               ],
             )),
           ),
