@@ -50,7 +50,7 @@ export 'package:kohatian_foundation/widgets/appbar_widget.dart';
 export 'package:kohatian_foundation/widgets/banner_image.dart';
 export 'package:kohatian_foundation/widgets/site_footer.dart';
 export 'package:kohatian_foundation/widgets/user_feed_widget.dart';
-export 'package:kohatian_foundation/widgets/user_picker.dart';
+export 'package:kohatian_foundation/widgets/user_avatar.dart';
 export 'package:kohatian_foundation/widgets/signup_form.dart';
 export 'package:kohatian_foundation/widgets/sign_in_form.dart';
 export 'package:kohatian_foundation/widgets/public_home_widget.dart';
