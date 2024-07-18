@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/pages/sign-in_page.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/user_avatar_overlay_child.dart';
 
 class UserAvatarWidget extends ConsumerStatefulWidget {
   const UserAvatarWidget({super.key});
@@ -26,48 +27,14 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
                 _controller.toggle();
                 print('showing overlay');
               },
-              // onExit: (event) {
-              //   _controller.hide();
-              //   print('showing overlay');
-              // },
+        
               child: const CircleAvatar(
                 radius: 30,
                 backgroundImage: NetworkImage(
                     'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'),
               ),
             ),
-            overlayChildBuilder: (context) => Positioned(
-                  top: 50,
-                  right: 120,
-                  child: AnimatedContainer(
-                    duration: Durations.long4,
-                    height: 250,
-                    width: 250,
-                    child: profile.when(
-                      data: (data) => 
-                       Card(
-                        elevation: 15,
-                        color: Colors.white,
-                        child: Center(child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(data!.kitNo),
-                            Text(data!.name),
-                            Text(data!.house),
-                            data.roles.contains(UserRole.admin())? 
-                           
-                                TextButton.icon(onPressed: (){}, label: Text('Admin center'),
-                                icon: FaIcon(FontAwesomeIcons.airbnb),)
-                               
-                            :Container(),
-                          ],
-                        )),
-                      ),
-                      error: (error, stackTrace) => Text(error.toString()+ stackTrace.toString()),
-                      loading: () => const Center(child: CircularProgressIndicator()),  
-                    ),
-                  ),
-                ));
+            overlayChildBuilder: (context) => UserAvatarOverlayVhild());
   }
 
   // Widget showUserAvatar(context) {

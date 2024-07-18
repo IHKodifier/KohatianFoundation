@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kohatian_foundation/pages/sign-in_page.dart';
 
 import '../widget_export.dart';
 
@@ -422,7 +424,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               child: SizedBox(
                   height: 50,
                   child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => PublicHomePage(),)),
                       child: const Text('Back'))),
                      ),
            ],
@@ -453,7 +455,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                   child: SizedBox(
                       height: 50,
                       child: ElevatedButton(
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => PublicHomePage(),)),
                           child: const Text('Back'))),
                               ),
                 ],
@@ -666,8 +668,12 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         child: Container(
           width: 500,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(height:5),
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWlujQJd5orHdTsvq6_5sFz3Bmf9zkujaJhQ&s'),
               const SizedBox(height: 30,),
               Text('Sign Up',
               style: Theme.of(context).textTheme.titleLarge),
@@ -678,6 +684,16 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           
               //Signup with Email Button
               signUpUsingEmailButton(),
+                 const SizedBox(height: 8),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton.icon(
+                  icon: const FaIcon(
+                    FontAwesomeIcons.check,
+                    // color: Colors.red,
+                  ),
+                  
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInPage(),) ), label: Text('Already have an Account!    Proceed to Login'))),
           
               isSignupUsingGoogle ? gForm() : const SizedBox.shrink(),
           
