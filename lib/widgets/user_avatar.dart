@@ -12,6 +12,9 @@ class UserAvatarWidget extends ConsumerStatefulWidget {
 }
 
 class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
+   Size startSize = Size(50, 50);
+  Size endSize = Size(250, 250);
+ 
   OverlayPortalController _controller = OverlayPortalController();
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,12 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
                 ),
               ),
             ),
-            overlayChildBuilder: (context) => UserAvatarOverlayVhild());
+            overlayChildBuilder: (context) => AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              // width: currentSize.width,
+              // height: currentSize.height,
+              
+              child: UserAvatarOverlayChild()));
   }
 
   // Widget showUserAvatar(context) {
