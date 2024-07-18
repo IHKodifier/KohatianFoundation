@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widgets/entrry_picker.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
@@ -13,7 +14,7 @@ class PearlsPage extends ConsumerWidget {
           SliverToBoxAdapter(
             child: Container(
               height: 450,
-              child: Center(child: const EntryPicker())),
+              child:  const Center(child:  UserAvatarWidget())),
           ), 
            const SliverToBoxAdapter(
             child: SiteFooter(),

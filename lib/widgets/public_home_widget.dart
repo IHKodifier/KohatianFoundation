@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class PublicHomeWidget extends ConsumerWidget {
@@ -9,7 +10,7 @@ class PublicHomeWidget extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return SliverFillRemaining(
       child: Container(
-        color: Colors.blue,
+        // color: Colors.blue,
         child: Center(child: Text('Public home')),
       ),
     );

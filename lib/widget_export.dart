@@ -43,7 +43,7 @@ export 'package:kohatian_foundation/pages/pearls_page.dart';
 
 
 //widgets
-export 'package:flutter/material.dart';
+// export 'package:flutter/material.dart';
 export 'package:kohatian_foundation/app.dart';
 export 'package:kohatian_foundation/home.dart';
 export 'package:kohatian_foundation/widgets/appbar_widget.dart';

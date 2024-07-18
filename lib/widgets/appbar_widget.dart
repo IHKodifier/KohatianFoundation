@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class AppBarWidget extends ConsumerWidget {
@@ -28,14 +29,21 @@ class NavBarRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.green,
-      child: Center(
+    return Center(
+        child: Container(
+          decoration: BoxDecoration(
+           color: Colors.black.withOpacity(0.5), // Set the background color
+        borderRadius: BorderRadius.circular(50), // Add rounded corners 
+
+          ),
+          // color: Colors.black.withOpacity(0.4),
+          width: double.infinity,
+          height: 80,
           child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        // runSpacing: 10,
-        // spacing: 40,
-        children: [
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  // runSpacing: 10,
+                  // spacing: 40,
+                  children: [
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
@@ -50,20 +58,27 @@ class NavBarRow extends StatelessWidget {
               },
             ),
           ),
-          TextButton(child: const Text('Vision'), onPressed: () {}),
-          TextButton(child: const Text('Mission'), onPressed: () {}),
-          TextButton(child: const Text('Function'), onPressed: () {}),
+          TextButton(child: const Text('Vision',
+          style: TextStyle(color: Colors.white),
+          ), onPressed: () {}),
+          TextButton(child: const Text('Mission',style: TextStyle(color: Colors.white),), onPressed: () {}),
+          TextButton(child: const Text('Function',
+          style: TextStyle(color: Colors.white),
+          ), onPressed: () {}),
           TextButton(
-            child: const Text('Pearls of CCK'),
+         
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) =>  PearlsPage(),
               ));
             },
+            child: const Text('Pearls of CCK',
+               style: const TextStyle(color: Colors.white),
+            ),
           ),
           const UserAvatarWidget(),
-        ],
-      )),
-    );
+                  ],
+                ),
+        ));
   }
 }
