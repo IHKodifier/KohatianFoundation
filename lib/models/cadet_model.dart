@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
-class Cadet {
+class Cadet extends Equatable {
   final String kitNo;
   final bool hasSignedUp = false;
   final String? email;
@@ -14,6 +14,8 @@ class Cadet {
   final SocialLinks? socialLinks;
   final List<Qualification>? professionalQualifications;
   final List<Achievements>? achievements;
+  final String? profileImageUrl;
+  final List<String>? photosOnFile;
 
   Cadet(
       this.kitNo,
@@ -24,7 +26,22 @@ class Cadet {
       this.mobileNumber,
       this.socialLinks,
       this.professionalQualifications,
-      this.achievements);
+      this.achievements,
+      this.profileImageUrl,
+      this.photosOnFile);
+
+  Cadet.empty()
+      : kitNo = 'created empty',
+        email = null,
+        house = 'created empty',
+        name = 'created empty',
+        domicile = 'created empty',
+        mobileNumber = 'created empty',
+        socialLinks = null,
+        professionalQualifications = null,
+        achievements = null,
+        profileImageUrl = null,
+        photosOnFile = null;
 
   Cadet copyWith({
     String? kitNo,
@@ -36,6 +53,8 @@ class Cadet {
     SocialLinks? socialLinks,
     List<Qualification>? professionalQualifications,
     List<Achievements>? achievements,
+    String? profileImageUrl,
+    List<String>? photosOnFile,
   }) {
     return Cadet(
       kitNo ?? this.kitNo,
@@ -47,6 +66,8 @@ class Cadet {
       socialLinks ?? this.socialLinks,
       professionalQualifications ?? this.professionalQualifications,
       achievements ?? this.achievements,
+      profileImageUrl ?? this.profileImageUrl,
+      photosOnFile ?? this.photosOnFile,
     );
   }
 
@@ -74,6 +95,12 @@ class Cadet {
       result.addAll(
           {'achievements': achievements!.map((x) => x.toMap()).toList()});
     }
+    if (profileImageUrl != null) {
+      result.addAll({'profileImageUrl': profileImageUrl});
+    }
+    if (photosOnFile != null) {
+      result.addAll({'photosOnFile': photosOnFile});
+    }
 
     return result;
   }
@@ -97,6 +124,10 @@ class Cadet {
           ? List<Achievements>.from(
               map['achievements']?.map((x) => Achievements.fromMap(x)))
           : null,
+      map['profileImageUrl'],
+      map['photosOnFile'] != null
+          ? List<String>.from(map['photosOnFile'])
+          : null,
     );
   }
 
@@ -106,7 +137,7 @@ class Cadet {
 
   @override
   String toString() {
-    return 'Cadet(kitNo: $kitNo, email: $email, house: $house, name: $name, domicile: $domicile, mobileNumber: $mobileNumber, socialLinks: $socialLinks, professionalQualifications: $professionalQualifications, achievements: $achievements)';
+    return 'Cadet(kitNo: $kitNo, email: $email, house: $house, name: $name, domicile: $domicile, mobileNumber: $mobileNumber, socialLinks: $socialLinks, professionalQualifications: $professionalQualifications, achievements: $achievements, profileImageUrl: $profileImageUrl, photosOnFile: $photosOnFile)';
   }
 
   @override
@@ -123,7 +154,9 @@ class Cadet {
         other.socialLinks == socialLinks &&
         listEquals(
             other.professionalQualifications, professionalQualifications) &&
-        listEquals(other.achievements, achievements);
+        listEquals(other.achievements, achievements) &&
+        other.profileImageUrl == profileImageUrl &&
+        listEquals(other.photosOnFile, photosOnFile);
   }
 
   @override
@@ -136,6 +169,23 @@ class Cadet {
         mobileNumber.hashCode ^
         socialLinks.hashCode ^
         professionalQualifications.hashCode ^
-        achievements.hashCode;
+        achievements.hashCode ^
+        profileImageUrl.hashCode ^
+        photosOnFile.hashCode;
   }
+
+  @override
+  List<Object?> get props => [
+        kitNo,
+        email,
+        house,
+        name,
+        domicile,
+        mobileNumber,
+        socialLinks,
+        professionalQualifications,
+        achievements,
+        profileImageUrl,
+        photosOnFile
+      ];
 }
