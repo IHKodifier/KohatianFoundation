@@ -1,10 +1,6 @@
-
-
-
 //services
 export 'package:kohatian_foundation/services/auth_service.dart';
 export 'package:kohatian_foundation/services/providers/user_profile_provider.dart';
-
 
 // providers & Packages
 export 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,9 +14,6 @@ export 'package:equatable/equatable.dart';
 export 'package:rxdart/rxdart.dart';
 export 'package:tuple/tuple.dart';
 
-
-
-
 //utils
 
 //models
@@ -31,9 +24,6 @@ export 'package:kohatian_foundation/models/qualification_model.dart';
 export 'package:kohatian_foundation/models/achievements_model.dart';
 export 'package:kohatian_foundation/models/social_links_model.dart';
 
-
-
-
 //pages
 export 'package:kohatian_foundation/pages/public_home_page.dart';
 export 'package:kohatian_foundation/pages/user_home_page.dart';
@@ -41,12 +31,11 @@ export 'package:kohatian_foundation/pages/sign_up_page.dart';
 export 'package:kohatian_foundation/pages/sign_up_success.dart';
 export 'package:kohatian_foundation/pages/pearls_page.dart';
 
-
 //widgets
 // export 'package:flutter/material.dart';
 export 'package:kohatian_foundation/app.dart';
 export 'package:kohatian_foundation/home.dart';
-export 'package:kohatian_foundation/widgets/appbar_widget.dart';
+export 'package:kohatian_foundation/widgets/tall_app_bar.dart';
 export 'package:kohatian_foundation/widgets/banner_image.dart';
 export 'package:kohatian_foundation/widgets/site_footer.dart';
 export 'package:kohatian_foundation/widgets/user_feed_widget.dart';
@@ -54,5 +43,6 @@ export 'package:kohatian_foundation/widgets/user_avatar.dart';
 export 'package:kohatian_foundation/widgets/signup_form.dart';
 export 'package:kohatian_foundation/widgets/sign_in_form.dart';
 export 'package:kohatian_foundation/widgets/public_home_widget.dart';
-
-
+export 'pages/admin_center_page.dart';
+export './widgets/slim_appbar.dart';
+export './widgets/admin_center_core.dart';

@@ -18,7 +18,7 @@ class UserHomePage extends ConsumerWidget {
               return Scaffold(
 body:CustomScrollView(
   slivers: [
-    AppBarWidget(),
+                  TallAppBar(),
     SliverToBoxAdapter(child: UserFeedWidget(userId: user.uid)),
     SliverToBoxAdapter(child: SiteFooter()),  
   ],

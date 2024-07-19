@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kohatian_foundation/pages/sign-in_page.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class UserAvatarOverlayChild extends ConsumerStatefulWidget {
@@ -23,7 +24,7 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
       // animationBehavior: AnimationBehavior.preserve
     );
     // Modified line:
-    _animation = Tween<double>(begin: 250, end: 300).animate(CurvedAnimation(
+    _animation = Tween<double>(begin: 200, end: 300).animate(CurvedAnimation(
       parent: _animationController,
       // parent: _animationController,
       curve: Curves.easeInOut,
@@ -82,6 +83,11 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
                       trailing: TextButton(
                         onPressed: () {
                           //TODO
+                             // Sign out the user
+                          FirebaseAuth.instance.signOut();
+
+                           Navigator.of(context).push( MaterialPageRoute(builder: (context) => const SignInPage()));
+                         
                         },
                         child: Text(
                           'SIGN OUT',
@@ -131,6 +137,9 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
                       TextButton(
                         onPressed: () {
                           //TODO
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>  AdminCenterPage(),
+                          ));
                         },
                         child: Text(
                           'Admin Center',

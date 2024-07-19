@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kohatian_foundation/widgets/entrry_picker.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/entrry_picker.dart';
 
 class PearlsPage extends ConsumerWidget {
    PearlsPage({super.key});
@@ -10,7 +10,7 @@ class PearlsPage extends ConsumerWidget {
       return  Scaffold(
       body: CustomScrollView(
         slivers: [
-          const AppBarWidget(),
+          const TallAppBar(),
           SliverToBoxAdapter( 
             child: Container(
               height: 450,

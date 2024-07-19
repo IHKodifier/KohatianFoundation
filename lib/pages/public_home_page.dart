@@ -10,7 +10,7 @@ class PublicHomePage extends ConsumerWidget {
     return  const Scaffold(
       body: CustomScrollView(
         slivers: [
-          AppBarWidget(),
+          TallAppBar(),
           PublicHomeWidget(),
           SliverToBoxAdapter(
             child: SiteFooter(),

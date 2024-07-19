@@ -9,7 +9,7 @@ class SignUpSucess extends ConsumerWidget {
     return
          const CustomScrollView(
       slivers: [
-        AppBarWidget(),
+        TallAppBar(),
         //TODO  update UI,
         SliverToBoxAdapter(child: Text('Signupped Successfully')),
         // SliverToBoxAdapter(child: Text('user name  is ${user} and email is ${email}')),

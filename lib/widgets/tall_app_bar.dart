@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
-class AppBarWidget extends ConsumerWidget {
-  const AppBarWidget({super.key});
+class TallAppBar extends ConsumerWidget {
+  const TallAppBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
