@@ -45,4 +45,5 @@ export 'package:kohatian_foundation/widgets/sign_in_form.dart';
 export 'package:kohatian_foundation/widgets/public_home_widget.dart';
 export 'pages/admin_center_page.dart';
 export './widgets/slim_appbar.dart';
+export './widgets/entry_details_form.dart';
 export './widgets/admin_center_core.dart';

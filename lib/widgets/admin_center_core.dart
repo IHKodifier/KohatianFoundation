@@ -1,40 +1,81 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kohatian_foundation/widget_export.dart';
 
 // ... other imports
 
-class AdminCenterCore extends StatelessWidget {
+class AdminCenterCore extends ConsumerStatefulWidget {
+  final GlobalKey<FormState> formKeyEntryDetails;
+  
+  final TextEditingController entryNameController;
+  final TextEditingController entryNumberController;
+  final TextEditingController entryStrengthController;
+
+  final DateTime? selectedStartDate;
+  final DateTime? selectedEndDate;
+
+  final Function(DateTime) onStartDateChanged;
+  final Function(DateTime) onEndDateChanged;
+  final TextEditingController entryTitleController;
+  final TextEditingController entrySloganController;
+  final VoidCallback onSave;
+  final VoidCallback onNext;
+  final VoidCallback onCancel;
+
+  AdminCenterCore({
+    super.key,
+    required this.formKeyEntryDetails,
+    required this.entryNameController,
+    required this.entryNumberController,
+    required this.entryStrengthController,
+    this.selectedStartDate,
+    this.selectedEndDate,
+    required this.onStartDateChanged,
+    required this.onEndDateChanged,
+    required this.entryTitleController,
+    required this.entrySloganController,
+    required this.onSave,
+    required this.onNext,
+    required this.onCancel,
+  });
+
+  @override
+  ConsumerState<AdminCenterCore> createState() => _AdminCenterCoreState();
+}
+
+class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Container(
-        margin: const EdgeInsets.only(top: 16.0),
-        // color: Colors.yellow,
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            // Card for Admin Dashboard
-            adminDashboardCard(context),
-            const SizedBox(height: 16.0),
-
-            // Card for Entry model creation
-            createEntryCard(context),
-            const SizedBox(height: 16.0),
-
-            // Card for EntryCoordinator settings
-            createEntryCoordinatorCard(context),
-            const SizedBox(height: 16.0),
-
-            // Card for other settings
-            otherSettingsCard(context),
-            // const SizedBox(height: 16.0),
-          ],
+      child: Material(
+        child: Container(
+          margin: const EdgeInsets.only(top: 16.0),
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // Card for Admin Dashboard
+              adminDashboardCard(context),
+              const SizedBox(height: 16.0),
+      
+              // Card for Entry model creation
+              createEntryCard(context),
+              const SizedBox(height: 16.0),
+      
+              // Card for EntryCoordinator settings
+              createEntryCoordinatorCard(context),
+              const SizedBox(height: 16.0),
+      
+              // Card for other settings
+              otherSettingsCard(context),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  // Existing methods for card creation (unchanged)
 
   InkWell createEntryCard(BuildContext context) {
     return InkWell(
@@ -116,6 +157,40 @@ class AdminCenterCore extends StatelessWidget {
     return InkWell(
       onTap: () {
         //TODO
+        showDialog(
+          context: context,
+          builder: (_) => Material(
+            child: EntryDetailsForm(
+              formKeyEntryDetails: widget.formKeyEntryDetails,
+              entryNameController: widget.entryNameController,
+              entryNumberController: widget.entryNumberController,
+              entryStrengthController: widget.entryStrengthController,
+              selectedStartDate: widget.selectedStartDate,
+              selectedEndDate: widget.selectedEndDate,
+              onStartDateChanged: (date) {
+                setState(() {
+                  // widget.selectedStartDate = date;
+                });
+              },
+              onEndDateChanged: (date) {
+                setState(() {
+                  // _selectedEndDate = date;
+                });
+              },
+              entryTitleController: widget.entryTitleController,
+              entrySloganController: widget.entrySloganController,
+              onSave: () {
+                // _saveEntryToFirestore();
+              },
+              onNext: () {
+                // Handle next action (e.g., move to the next step in the Stepper)
+              },
+              onCancel: () {
+                // Handle cancel action (e.g., close the dialog)
+              },
+            ),
+          ),
+        );
       },
       child: Row(
         children: [
@@ -260,4 +335,59 @@ class AdminCenterCore extends StatelessWidget {
       ),
     );
   }
+
+  //   return InkWell(
+  //     onTap: () {
+  //       //TODO
+  //     },
+  //     child: Card(
+  //       elevation: 5,
+  //       child: Column(
+  //         children: [
+  //           InkWell(
+  //             onTap: () {
+  //               //TODO
+  //             },
+  //             child: Padding(
+  //               padding: const EdgeInsets.symmetric(vertical: 8.0),
+  //               child: Row(
+  //                 children: [
+  //                   const Spacer(flex: 8),
+  //                   const Icon(Icons.dashboard,
+  //                       size: 60, color: Colors.black54),
+  //                   const Spacer(flex: 1),
+  //                   Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: [
+  //                       Text(
+  //                         'Admin Dashboard',
+  //                         style: Theme.of(context)
+  //                             .textTheme
+  //                             .headlineMedium
+  //                             ?.copyWith(
+  //                                 fontWeight: FontWeight.w600,
+  //                                 color: Colors.black),
+  //                       ),
+  //                       Text(
+  //                         'View overall statistics and reports....',
+  //                         style:
+  //                             Theme.of(context).textTheme.labelLarge?.copyWith(
+  //                                   // fontWeight: FontWeight.w600,
+  //                                   fontStyle: FontStyle.italic,
+  //                                   color: Colors.black54,
+  //                                 ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   const Spacer(flex: 8),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ],
+  //       ), // ... your Entry creation content
+  //     ),
+  //   );
+  // }
 }
