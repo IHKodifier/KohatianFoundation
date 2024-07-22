@@ -48,14 +48,22 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
           child: Form(
             key: widget.formKeyEntryDetails,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Text('Enter Entry Details',
+                  style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  Text('Step 1 of 3',
+                  style: Theme.of(context).textTheme.labelMedium,
+                  ),
                   TextFormField( //Entry Name
                     controller: widget.entryNameController,
-                    decoration: const InputDecoration(labelText: 'Entry Name'),
+                    decoration: const InputDecoration(labelText: 'Entry Name',
+                   ),
+                   
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter entry name';
@@ -63,6 +71,7 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                       return null;
                     },
                   ),
+                    //  Icon(Icons.question_mark),
                   TextFormField( //Entry Number
                     controller: widget.entryNumberController,
                     decoration: const InputDecoration(labelText: 'Entry Number'),
@@ -73,6 +82,7 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                       return null;
                     },
                   ),
+                    //  Icon(Icons.question_mark),
                   TextFormField( //Entry Strength
                     controller: widget.entryStrengthController,
                     decoration: const InputDecoration(labelText: 'Entry Strength'),
@@ -87,6 +97,7 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                       return null;
                     },
                   ),
+                    //  Icon(Icons.question_mark),
                  SizedBox(height: 12.0),
                   Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
