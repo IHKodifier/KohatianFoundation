@@ -160,37 +160,17 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
         //TODO
         showDialog(
           context: context,
-          builder: (_) => Material(
-            child: CreateEntryStepper(),
-            // EntryDetailsForm(
-            //   formKeyEntryDetails: widget.formKeyEntryDetails,
-            //   entryNameController: widget.entryNameController,
-            //   entryNumberController: widget.entryNumberController,
-            //   entryStrengthController: widget.entryStrengthController,
-            //   selectedStartDate: widget.selectedStartDate,
-            //   selectedEndDate: widget.selectedEndDate,
-            //   onStartDateChanged: (date) {
-            //     setState(() {
-            //       // widget.selectedStartDate = date;
-            //     });
-            //   },
-            //   onEndDateChanged: (date) {
-            //     setState(() {
-            //       // _selectedEndDate = date;
-            //     });
-            //   },
-            //   entryTitleController: widget.entryTitleController,
-            //   entrySloganController: widget.entrySloganController,
-            //   onSave: () {
-            //     // _saveEntryToFirestore();
-            //   },
-            //   onNext: () {
-            //     // Handle next action (e.g., move to the next step in the Stepper)
-            //   },
-            //   onCancel: () {
-            //     // Handle cancel action (e.g., close the dialog)
-            //   },
-            // ),
+          builder: (_) => Dialog(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              width:500,child: Column(
+                children: [
+                  Text('Entry details',
+                  style: Theme.of(context).textTheme.headlineLarge,),
+                  CreateEntryStepper(),
+                ],
+              )),
+           
           ),
         );
       },
