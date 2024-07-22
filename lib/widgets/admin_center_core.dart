@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/create_entry_stepper.dart';
 
 // ... other imports
 
@@ -160,35 +161,36 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
         showDialog(
           context: context,
           builder: (_) => Material(
-            child: EntryDetailsForm(
-              formKeyEntryDetails: widget.formKeyEntryDetails,
-              entryNameController: widget.entryNameController,
-              entryNumberController: widget.entryNumberController,
-              entryStrengthController: widget.entryStrengthController,
-              selectedStartDate: widget.selectedStartDate,
-              selectedEndDate: widget.selectedEndDate,
-              onStartDateChanged: (date) {
-                setState(() {
-                  // widget.selectedStartDate = date;
-                });
-              },
-              onEndDateChanged: (date) {
-                setState(() {
-                  // _selectedEndDate = date;
-                });
-              },
-              entryTitleController: widget.entryTitleController,
-              entrySloganController: widget.entrySloganController,
-              onSave: () {
-                // _saveEntryToFirestore();
-              },
-              onNext: () {
-                // Handle next action (e.g., move to the next step in the Stepper)
-              },
-              onCancel: () {
-                // Handle cancel action (e.g., close the dialog)
-              },
-            ),
+            child: CreateEntryStepper(),
+            // EntryDetailsForm(
+            //   formKeyEntryDetails: widget.formKeyEntryDetails,
+            //   entryNameController: widget.entryNameController,
+            //   entryNumberController: widget.entryNumberController,
+            //   entryStrengthController: widget.entryStrengthController,
+            //   selectedStartDate: widget.selectedStartDate,
+            //   selectedEndDate: widget.selectedEndDate,
+            //   onStartDateChanged: (date) {
+            //     setState(() {
+            //       // widget.selectedStartDate = date;
+            //     });
+            //   },
+            //   onEndDateChanged: (date) {
+            //     setState(() {
+            //       // _selectedEndDate = date;
+            //     });
+            //   },
+            //   entryTitleController: widget.entryTitleController,
+            //   entrySloganController: widget.entrySloganController,
+            //   onSave: () {
+            //     // _saveEntryToFirestore();
+            //   },
+            //   onNext: () {
+            //     // Handle next action (e.g., move to the next step in the Stepper)
+            //   },
+            //   onCancel: () {
+            //     // Handle cancel action (e.g., close the dialog)
+            //   },
+            // ),
           ),
         );
       },
