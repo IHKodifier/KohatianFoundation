@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class EntryDetailsForm extends StatefulWidget {
-  final GlobalKey<FormState> formKeyEntryDetails ;
+  final GlobalKey<FormState> formKeyEntryDetails;
   final TextEditingController entryNameController;
-  final TextEditingController entryNumberController ;
-  final TextEditingController entryStrengthController ;
-  final DateTime? selectedStartDate ;
-  final DateTime? selectedEndDate ;
+  final TextEditingController entryNumberController;
+  final TextEditingController entryStrengthController;
+  final DateTime? selectedStartDate;
+  final DateTime? selectedEndDate;
   final Function(DateTime) onStartDateChanged;
   final Function(DateTime) onEndDateChanged;
-  final TextEditingController entryTitleController ;
-  final TextEditingController entrySloganController ;
+  final TextEditingController entryTitleController;
+  final TextEditingController entrySloganController;
   final VoidCallback? onSave;
   final VoidCallback? onNext;
   final VoidCallback? onCancel;
@@ -18,14 +18,14 @@ class EntryDetailsForm extends StatefulWidget {
   EntryDetailsForm({
     required this.formKeyEntryDetails,
     super.key,
-required this.entryNameController,
-required this.entryNumberController,
-required this.entryStrengthController,
-required this.entrySloganController,
-required this.entryTitleController,
+    required this.entryNameController,
+    required this.entryNumberController,
+    required this.entryStrengthController,
+    required this.entrySloganController,
+    required this.entryTitleController,
     required this.selectedStartDate,
     required this.selectedEndDate,
-     required this.onStartDateChanged,
+    required this.onStartDateChanged,
     required this.onEndDateChanged,
     this.onSave,
     this.onNext,
@@ -65,7 +65,7 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                     decoration: const InputDecoration(
                       labelText: 'Entry Name',
                     ),
-                
+
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter entry name';
@@ -108,23 +108,27 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
+                      ElevatedButton(//Start date picker
                         onPressed: () {
                           // Show the date picker for start date
                           showDatePicker(
                             context: context,
-                            initialDate: null,
+                            initialDate: widget.selectedStartDate ?? DateTime.now(),
                             firstDate: DateTime(1965),
                             lastDate: DateTime.now(),
                           ).then((date) {
                             if (date != null) {
-                              widget.onStartDateChanged(date);
+                              setState(() {
+                                widget.onStartDateChanged(date);
+                          
+                             
+                              });
                             }
                           });
                         },
                         child: Text(
                           widget.selectedStartDate != null
-                              ? '${widget.selectedStartDate!.toLocal()}'
+                              ? '${widget.selectedStartDate!.day} - ${widget.selectedStartDate!.month} - ${widget.selectedStartDate!.year}'
                               : 'Select Start Date',
                         ),
                       ),
@@ -133,8 +137,8 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                           // Show the date picker for end date
                           showDatePicker(
                             context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(19670),
+                            initialDate: widget.selectedEndDate ?? DateTime.now(),
+                            firstDate: DateTime(1970),
                             lastDate: DateTime.now(),
                           ).then((date) {
                             if (date != null) {
@@ -144,13 +148,13 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                         },
                         child: Text(
                           widget.selectedEndDate != null
-                              ? '${widget.selectedEndDate!.toLocal()}'
+                              ? '${widget.selectedEndDate!.day} - ${widget.selectedEndDate!.month} - ${widget.selectedEndDate!.year}'
                               : 'Select End Date',
                         ),
                       ),
                     ],
                   ),
-                
+
                   TextFormField(
                     controller: widget.entryTitleController,
                     decoration: const InputDecoration(
@@ -179,7 +183,7 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                   //       ),
                   //       ElevatedButton(
                   //         onPressed: widget.onNext,
-                  //         child: const Text('Next'), 
+                  //         child: const Text('Next'),
                   //       ),
                   //     ],
                   //   ),

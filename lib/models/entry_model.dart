@@ -8,7 +8,7 @@ class Entry extends Equatable {
   final String number;
   final int strength;
   final DateTime startDate;
-  final DateTime EndDate;
+  final DateTime endDate;
   final String? title;
   final String? slogan;
   final List<Cadet> houseCommanders = [];
@@ -36,7 +36,7 @@ class Entry extends Equatable {
     required this.number,
     required this.strength,
     required this.startDate,
-    required this.EndDate,
+    required this.endDate,
     this.title,
     this.slogan,
     this.bestCadet,
@@ -54,6 +54,7 @@ class Entry extends Equatable {
     this.bestEssayWriterUrdu,
     this.bestEssayWriterEnglish,
     this.bestArtist,
+
   });
 
   Entry copyWith({
@@ -85,7 +86,7 @@ class Entry extends Equatable {
       number: number ?? this.number,
       strength: strength ?? this.strength,
       startDate: startDate ?? this.startDate,
-      EndDate: EndDate ?? this.EndDate,
+      endDate: EndDate ?? this.endDate,
       title: title ?? this.title,
       slogan: slogan ?? this.slogan,
       bestCadet: bestCadet ?? this.bestCadet,
@@ -114,7 +115,7 @@ class Entry extends Equatable {
     result.addAll({'number': number});
     result.addAll({'strength': strength});
     result.addAll({'startDate': startDate.millisecondsSinceEpoch});
-    result.addAll({'EndDate': EndDate.millisecondsSinceEpoch});
+    result.addAll({'EndDate': endDate.millisecondsSinceEpoch});
     if (title != null) {
       result.addAll({'title': title});
     }
@@ -177,7 +178,7 @@ class Entry extends Equatable {
       number: map['number'] ?? '',
       strength: map['strength']?.toInt() ?? 0,
       startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
-      EndDate: DateTime.fromMillisecondsSinceEpoch(map['EndDate']),
+      endDate: DateTime.fromMillisecondsSinceEpoch(map['EndDate']),
       title: map['title'],
       slogan: map['slogan'],
       bestCadet:
@@ -225,7 +226,7 @@ class Entry extends Equatable {
 
   @override
   String toString() {
-    return 'Entry(name: $name, number: $number, strength: $strength, startDate: $startDate, EndDate: $EndDate, title: $title, slogan: $slogan, bestCadet: $bestCadet, bestStudent: $bestStudent, bestSportman: $bestSportman, bestGymnast: $bestGymnast, bestDrillCommander: $bestDrillCommander, bestRider: $bestRider, bestTentpegger: $bestTentpegger, bestSwimmer: $bestSwimmer, bestShooter: $bestShooter, bestQari: $bestQari, bestDebatorUrdu: $bestDebatorUrdu, bestDebatorEnglish: $bestDebatorEnglish, bestEssayWriterUrdu: $bestEssayWriterUrdu, bestEssayWriterEnglish: $bestEssayWriterEnglish, bestArtist: $bestArtist)';
+    return 'Entry(name: $name, number: $number, strength: $strength, startDate: $startDate, EndDate: $endDate, title: $title, slogan: $slogan, bestCadet: $bestCadet, bestStudent: $bestStudent, bestSportman: $bestSportman, bestGymnast: $bestGymnast, bestDrillCommander: $bestDrillCommander, bestRider: $bestRider, bestTentpegger: $bestTentpegger, bestSwimmer: $bestSwimmer, bestShooter: $bestShooter, bestQari: $bestQari, bestDebatorUrdu: $bestDebatorUrdu, bestDebatorEnglish: $bestDebatorEnglish, bestEssayWriterUrdu: $bestEssayWriterUrdu, bestEssayWriterEnglish: $bestEssayWriterEnglish, bestArtist: $bestArtist)';
   }
 
   @override
@@ -237,7 +238,7 @@ class Entry extends Equatable {
         other.number == number &&
         other.strength == strength &&
         other.startDate == startDate &&
-        other.EndDate == EndDate &&
+        other.endDate == endDate &&
         other.title == title &&
         other.slogan == slogan &&
         other.bestCadet == bestCadet &&
@@ -263,7 +264,7 @@ class Entry extends Equatable {
         number.hashCode ^
         strength.hashCode ^
         startDate.hashCode ^
-        EndDate.hashCode ^
+        endDate.hashCode ^
         title.hashCode ^
         slogan.hashCode ^
         bestCadet.hashCode ^
@@ -289,7 +290,7 @@ class Entry extends Equatable {
         number,
         strength,
         startDate,
-        EndDate,
+        endDate,
         title,
         slogan,
         bestCadet,

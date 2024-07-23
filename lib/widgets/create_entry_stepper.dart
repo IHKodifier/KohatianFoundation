@@ -33,8 +33,9 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
     // TODO: implement initState
     super.initState();
     entryNameController = TextEditingController();
-    entryNameController = TextEditingController();
+    entryNumberController = TextEditingController();
     entrySloganController = TextEditingController();
+    entryStrengthController = TextEditingController();
     entryTitleController = TextEditingController();
     entrySloganController = TextEditingController();
     selectedStartDate = DateTime.now();
@@ -45,8 +46,8 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
   void dispose() {
     // TODO: implement dispose
     entryNameController.dispose();
-    entryNameController.dispose();
-    entryNameController.dispose();
+    entryNumberController.dispose();
+    entryStrengthController.dispose();
     entrySloganController.dispose();
     entryTitleController.dispose();
     entrySloganController.dispose();
@@ -111,7 +112,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
               child: EntryDetailsForm(
                 formKeyEntryDetails: formKey_EntryDetails,
                 entryNameController: entryNameController,
-                entryNumberController: entryNameController,
+                entryNumberController: entryNumberController,
                 entryStrengthController: entryStrengthController,
                 entrySloganController: entrySloganController,
                 entryTitleController: entryTitleController,
@@ -120,8 +121,17 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
                 onCancel: () {},
                 onSave: () {},
                 onNext: () {},
-                onStartDateChanged: (date) {},
-                onEndDateChanged: (date) {},
+                onStartDateChanged: (date) {
+                  setState(() {
+                    selectedStartDate = date;
+                  });
+                
+                },
+                onEndDateChanged: (date) {
+                  setState(() {
+                    selectedEndDate = date;
+                  });
+                },
               ),
             ),
           ),
@@ -138,7 +148,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
     );
   }
  
-  void _saveEntryToFirestore() {
+  Future<void> _saveEntryToFirestore() async {
     if (formKey_EntryDetails.currentState!.validate()) {
       // final docRef =
       print(
@@ -152,11 +162,14 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
         'startDate': selectedStartDate != null
             ? Timestamp.fromDate(selectedStartDate!)
             : Timestamp.fromDate(DateTime.now()),
+        'endDate':selectedEndDate != null
+            ? Timestamp.fromDate(selectedEndDate!)
+            : Timestamp.fromDate(DateTime.now()), 
  
       };
 
       try {
-        FirebaseFirestore.instance
+        await FirebaseFirestore.instance
             .collection('entrys')
             .doc(entryNameController.text)
             .set(entryData);
