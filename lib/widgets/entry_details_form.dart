@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 
 class EntryDetailsForm extends StatefulWidget {
-  final GlobalKey<FormState> formKeyEntryDetails;
+  final GlobalKey<FormState> formKeyEntryDetails ;
   final TextEditingController entryNameController;
-  final TextEditingController entryNumberController;
-  final TextEditingController entryStrengthController;
-  final DateTime? selectedStartDate;
-  final DateTime? selectedEndDate;
+  final TextEditingController entryNumberController ;
+  final TextEditingController entryStrengthController ;
+  final DateTime? selectedStartDate ;
+  final DateTime? selectedEndDate ;
   final Function(DateTime) onStartDateChanged;
   final Function(DateTime) onEndDateChanged;
-  final TextEditingController entryTitleController;
-  final TextEditingController entrySloganController;
-  final VoidCallback onSave;
-  final VoidCallback onNext;
-  final VoidCallback onCancel;
+  final TextEditingController entryTitleController ;
+  final TextEditingController entrySloganController ;
+  final VoidCallback? onSave;
+  final VoidCallback? onNext;
+  final VoidCallback? onCancel;
 
-  const EntryDetailsForm({
-    Key? key,
+  EntryDetailsForm({
     required this.formKeyEntryDetails,
-    required this.entryNameController,
-    required this.entryNumberController,
-    required this.entryStrengthController,
+    super.key,
+required this.entryNameController,
+required this.entryNumberController,
+required this.entryStrengthController,
+required this.entrySloganController,
+required this.entryTitleController,
     required this.selectedStartDate,
     required this.selectedEndDate,
-    required this.onStartDateChanged,
+     required this.onStartDateChanged,
     required this.onEndDateChanged,
-    required this.entryTitleController,
-    required this.entrySloganController,
-    required this.onSave,
-    required this.onNext,
-    required this.onCancel,
-  }) : super(key: key);
+    this.onSave,
+    this.onNext,
+    this.onCancel,
+  });
 
   @override
   _EntryDetailsFormState createState() => _EntryDetailsFormState();
@@ -40,11 +40,9 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: Container(
-        width: 500,
-        child: Card(
-             
-          elevation: 5,
+      child: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.7,
           child: Form(
             key: widget.formKeyEntryDetails,
             child: Padding(
@@ -53,17 +51,21 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Enter Entry Details',
-                  style: Theme.of(context).textTheme.displaySmall,
+                  Text(
+                    ' Entry Details',
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  Text('Step 1 of 3',
-                  style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                  TextFormField( //Entry Name
+                  // Text(
+                  //   'Step 1 of 3',
+                  //   style: Theme.of(context).textTheme.labelMedium,
+                  // ),
+                  TextFormField(
+                    //Entry Name
                     controller: widget.entryNameController,
-                    decoration: const InputDecoration(labelText: 'Entry Name',
-                   ),
-                   
+                    decoration: const InputDecoration(
+                      labelText: 'Entry Name',
+                    ),
+                
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter entry name';
@@ -71,10 +73,12 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                       return null;
                     },
                   ),
-                    //  Icon(Icons.question_mark),
-                  TextFormField( //Entry Number
+                  //  Icon(Icons.question_mark),
+                  TextFormField(
+                    //Entry Number
                     controller: widget.entryNumberController,
-                    decoration: const InputDecoration(labelText: 'Entry Number'),
+                    decoration:
+                        const InputDecoration(labelText: 'Entry Number'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter entry number';
@@ -82,10 +86,12 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                       return null;
                     },
                   ),
-                    //  Icon(Icons.question_mark),
-                  TextFormField( //Entry Strength
+                  //  Icon(Icons.question_mark),
+                  TextFormField(
+                    //Entry Strength
                     controller: widget.entryStrengthController,
-                    decoration: const InputDecoration(labelText: 'Entry Strength'),
+                    decoration:
+                        const InputDecoration(labelText: 'Entry Strength'),
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -97,17 +103,18 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                       return null;
                     },
                   ),
-                    //  Icon(Icons.question_mark),
-                 SizedBox(height: 12.0),
-                  Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //  Icon(Icons.question_mark),
+                  SizedBox(height: 12.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           // Show the date picker for start date
                           showDatePicker(
                             context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(1900),
+                            initialDate: null,
+                            firstDate: DateTime(1965),
                             lastDate: DateTime.now(),
                           ).then((date) {
                             if (date != null) {
@@ -121,64 +128,62 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                               : 'Select Start Date',
                         ),
                       ),
-                       ElevatedButton(
-                    onPressed: () {
-                      // Show the date picker for end date
-                      showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime.now(),
-                      ).then((date) {
-                        if (date != null) {
-                          widget.onEndDateChanged(date);
-                        }
-                      });
-                    },
-                    child: Text(
-                      widget.selectedEndDate != null
-                          ? '${widget.selectedEndDate!.toLocal()}'
-                          : 'Select End Date',
-                    ),
-                  ),
-                   
-                   
+                      ElevatedButton(
+                        onPressed: () {
+                          // Show the date picker for end date
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(19670),
+                            lastDate: DateTime.now(),
+                          ).then((date) {
+                            if (date != null) {
+                              widget.onEndDateChanged(date);
+                            }
+                          });
+                        },
+                        child: Text(
+                          widget.selectedEndDate != null
+                              ? '${widget.selectedEndDate!.toLocal()}'
+                              : 'Select End Date',
+                        ),
+                      ),
                     ],
                   ),
-              
+                
                   TextFormField(
                     controller: widget.entryTitleController,
-                    decoration:
-                        const InputDecoration(labelText: 'Entry Title (Optional)'),
+                    decoration: const InputDecoration(
+                        labelText: 'Entry Title (Optional)'),
                   ),
                   TextFormField(
                     controller: widget.entrySloganController,
-                    decoration:
-                        const InputDecoration(labelText: 'Entry Slogan (Optional)'),
+                    decoration: const InputDecoration(
+                        labelText: 'Entry Slogan (Optional)'),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                          onPressed: widget.onCancel,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                          ),
-                          child: const Icon(Icons.cancel),
-                        ),
-                        ElevatedButton(
-                          onPressed: widget.onSave,
-                          child: const Text('Save'),
-                        ),
-                        ElevatedButton(
-                          onPressed: widget.onNext,
-                          child: const Text('Next'),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       ElevatedButton(
+                  //         onPressed: widget.onCancel,
+                  //         style: ElevatedButton.styleFrom(
+                  //           backgroundColor: Colors.red,
+                  //         ),
+                  //         child: const Icon(Icons.cancel),
+                  //       ),
+                  //       ElevatedButton(
+                  //         onPressed: widget.onSave,
+                  //         child: const Text('Save'),
+                  //       ),
+                  //       ElevatedButton(
+                  //         onPressed: widget.onNext,
+                  //         child: const Text('Next'), 
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

@@ -161,15 +161,15 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
         showDialog(
           context: context,
           builder: (_) => Dialog(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              width:500,child: Column(
-                children: [
-                  Text('Entry details',
-                  style: Theme.of(context).textTheme.headlineLarge,),
-                  CreateEntryStepper(),
-                ],
-              )),
+            child: Column(
+              children: [
+                SizedBox(height: 16.0), 
+                Text('Create New Entry',
+                style: Theme.of(context).textTheme.headlineLarge,),
+                SizedBox(height: 16.0),
+                CreateEntryStepper(),
+              ],
+            ),
            
           ),
         );
