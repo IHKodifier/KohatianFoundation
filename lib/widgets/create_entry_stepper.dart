@@ -115,7 +115,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
           ),
           const Step(
             title: Text('Step 2'),
-            content: Text('Content Step 2'),
+            content: CreateEntryStep2(),
           ),
           const Step(
             title: Text('Step 3'),
@@ -201,6 +201,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
         );
         setState(() {
           formIsSuccess = true;
+          stepIndex = 1;
         });
 
       } catch (e) {
