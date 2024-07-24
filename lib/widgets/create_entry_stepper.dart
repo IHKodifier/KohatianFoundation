@@ -12,6 +12,8 @@ class CreateEntryStepper extends ConsumerStatefulWidget {
 
 class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
   final formKey_EntryDetails = GlobalKey<FormState>();
+  bool formIsBusy = false;
+  bool formIsSuccess = false;
 
   late TextEditingController entryNameController;
   late TextEditingController entryNumberController;
@@ -86,7 +88,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Expanded(
@@ -96,7 +98,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
                     child: TextButton.icon(
                       onPressed: () {},
                       label: const Text('Cancel'),
-                      icon: const FaIcon(FontAwesomeIcons.cancel),
+                      icon: const FaIcon(FontAwesomeIcons.ban),
                     ),
                   ),
                 )
@@ -107,33 +109,9 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
         steps: [
           Step(
             title: const Text('Step 1'),
-            content: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: EntryDetailsForm(
-                formKeyEntryDetails: formKey_EntryDetails,
-                entryNameController: entryNameController,
-                entryNumberController: entryNumberController,
-                entryStrengthController: entryStrengthController,
-                entrySloganController: entrySloganController,
-                entryTitleController: entryTitleController,
-                selectedEndDate: selectedEndDate,
-                selectedStartDate: selectedStartDate,
-                onCancel: () {},
-                onSave: () {},
-                onNext: () {},
-                onStartDateChanged: (date) {
-                  setState(() {
-                    selectedStartDate = date;
-                  });
-                
-                },
-                onEndDateChanged: (date) {
-                  setState(() {
-                    selectedEndDate = date;
-                  });
-                },
-              ),
-            ),
+            content: !formIsBusy & !formIsSuccess
+                ? entryFormStep1()
+                : formIsSuccess? Center(child: Text('Entry named ${entryNameController.text} created Successfully ')):  const Center(child: CircularProgressIndicator()),
           ),
           const Step(
             title: Text('Step 2'),
@@ -147,7 +125,36 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
       ),
     );
   }
- 
+
+  Padding entryFormStep1() {
+    return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: EntryDetailsForm(
+                    formKeyEntryDetails: formKey_EntryDetails,
+                    entryNameController: entryNameController,
+                    entryNumberController: entryNumberController,
+                    entryStrengthController: entryStrengthController,
+                    entrySloganController: entrySloganController,
+                    entryTitleController: entryTitleController,
+                    selectedEndDate: selectedEndDate,
+                    selectedStartDate: selectedStartDate,
+                    onCancel: () {},
+                    onSave: () {},
+                    onNext: () {},
+                    onStartDateChanged: (date) {
+                      setState(() {
+                        selectedStartDate = date;
+                      });
+                    },
+                    onEndDateChanged: (date) {
+                      setState(() {
+                        selectedEndDate = date;
+                      });
+                    },
+                  ),
+                );
+  }
+
   Future<void> _saveEntryToFirestore() async {
     if (formKey_EntryDetails.currentState!.validate()) {
       // final docRef =
@@ -155,27 +162,54 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
           '******************************** ENTRY FORM VALID*****************************');
       var entryData = {
         'entryName': entryNameController.text,
-        'entryNumber':entryNumberController.text,
-        'entryStrength':entryStrengthController.text,
+        'entryNumber': entryNumberController.text,
+        'entryStrength': entryStrengthController.text,
         'entryTitle': entryTitleController.text,
-        'entrySlogan':entrySloganController.text,
+        'entrySlogan': entrySloganController.text,
         'startDate': selectedStartDate != null
             ? Timestamp.fromDate(selectedStartDate!)
             : Timestamp.fromDate(DateTime.now()),
-        'endDate':selectedEndDate != null
+        'endDate': selectedEndDate != null
             ? Timestamp.fromDate(selectedEndDate!)
-            : Timestamp.fromDate(DateTime.now()), 
- 
+            : Timestamp.fromDate(DateTime.now()),
       };
-
+      setState(() {
+        formIsBusy = true;
+      });
       try {
         await FirebaseFirestore.instance
             .collection('entrys')
             .doc(entryNameController.text)
             .set(entryData);
+          //show success dialog
+            showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Success'),
+              content:  Text('${entryNameController.text} created successfully!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        setState(() {
+          formIsSuccess = true;
+        });
+
       } catch (e) {
         print(e);
       }
+      setState(() {
+        formIsBusy = false;
+       
+      });
     }
   }
 }
