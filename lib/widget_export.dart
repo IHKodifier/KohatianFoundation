@@ -13,6 +13,7 @@ export 'package:email_validator/email_validator.dart';
 export 'package:equatable/equatable.dart';
 export 'package:rxdart/rxdart.dart';
 export 'package:tuple/tuple.dart';
+export './services/providers/entry_provider.dart';
 
 //utils
 
@@ -45,6 +46,6 @@ export 'package:kohatian_foundation/widgets/sign_in_form.dart';
 export 'package:kohatian_foundation/widgets/public_home_widget.dart';
 export 'pages/admin_center_page.dart';
 export './widgets/slim_appbar.dart';
-export './widgets/entry_details_form.dart';
+export 'widgets/create_entry_step1.dart';
 export './widgets/admin_center_core.dart';
 export './widgets/createentrystep2.dart';

@@ -7,8 +7,8 @@ class Entry extends Equatable {
   final String name;
   final String number;
   final int strength;
-  final DateTime startDate;
-  final DateTime endDate;
+  Timestamp startDate;
+  Timestamp endDate;
   final String? title;
   final String? slogan;
   final List<Cadet> houseCommanders = [];
@@ -54,15 +54,14 @@ class Entry extends Equatable {
     this.bestEssayWriterUrdu,
     this.bestEssayWriterEnglish,
     this.bestArtist,
-
   });
 
   Entry copyWith({
     String? name,
     String? number,
     int? strength,
-    DateTime? startDate,
-    DateTime? EndDate,
+    Timestamp? startDate,
+    Timestamp? EndDate,
     String? title,
     String? slogan,
     Cadet? bestCadet,
@@ -114,8 +113,8 @@ class Entry extends Equatable {
     result.addAll({'name': name});
     result.addAll({'number': number});
     result.addAll({'strength': strength});
-    result.addAll({'startDate': startDate.millisecondsSinceEpoch});
-    result.addAll({'EndDate': endDate.millisecondsSinceEpoch});
+    result.addAll({'startDate': startDate});
+    result.addAll({'EndDate': endDate});
     if (title != null) {
       result.addAll({'title': title});
     }
@@ -177,8 +176,8 @@ class Entry extends Equatable {
       name: map['name'] ?? '',
       number: map['number'] ?? '',
       strength: map['strength']?.toInt() ?? 0,
-      startDate: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
-      endDate: DateTime.fromMillisecondsSinceEpoch(map['EndDate']),
+      startDate: map['startDate'] as Timestamp,
+      endDate: map['endDate'] as Timestamp,
       title: map['title'],
       slogan: map['slogan'],
       bestCadet:

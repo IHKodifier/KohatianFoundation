@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-class EntryDetailsForm extends StatefulWidget {
+class CreateEntryStep1 extends StatefulWidget {
   final GlobalKey<FormState> formKeyEntryDetails;
+
+   const CreateEntryStep1({required this.formKeyEntryDetails, super.key});
+
   final TextEditingController entryNameController;
   final TextEditingController entryNumberController;
   final TextEditingController entryStrengthController;
@@ -15,7 +18,7 @@ class EntryDetailsForm extends StatefulWidget {
   final VoidCallback? onNext;
   final VoidCallback? onCancel;
 
-  EntryDetailsForm({
+  CreateEntryStep1({
     required this.formKeyEntryDetails,
     super.key,
     required this.entryNameController,
@@ -33,10 +36,10 @@ class EntryDetailsForm extends StatefulWidget {
   });
 
   @override
-  _EntryDetailsFormState createState() => _EntryDetailsFormState();
+  _CreateEntryStep1State createState() => _CreateEntryStep1State();
 }
 
-class _EntryDetailsFormState extends State<EntryDetailsForm> {
+class _CreateEntryStep1State extends State<CreateEntryStep1> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -108,20 +111,20 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(//Start date picker
+                      ElevatedButton(
+                        //Start date picker
                         onPressed: () {
                           // Show the date picker for start date
                           showDatePicker(
                             context: context,
-                            initialDate: widget.selectedStartDate ?? DateTime.now(),
+                            initialDate:
+                                widget.selectedStartDate ?? DateTime.now(),
                             firstDate: DateTime(1965),
                             lastDate: DateTime.now(),
                           ).then((date) {
                             if (date != null) {
                               setState(() {
                                 widget.onStartDateChanged(date);
-                          
-                             
                               });
                             }
                           });
@@ -137,7 +140,8 @@ class _EntryDetailsFormState extends State<EntryDetailsForm> {
                           // Show the date picker for end date
                           showDatePicker(
                             context: context,
-                            initialDate: widget.selectedEndDate ?? DateTime.now(),
+                            initialDate:
+                                widget.selectedEndDate ?? DateTime.now(),
                             firstDate: DateTime(1970),
                             lastDate: DateTime.now(),
                           ).then((date) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kohatian_foundation/pages/combeback_gemini_code1.dart';
+import 'package:kohatian_foundation/models/entry_model.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class CreateEntryStepper extends ConsumerStatefulWidget {
@@ -14,6 +14,8 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
   final formKey_EntryDetails = GlobalKey<FormState>();
   bool formIsBusy = false;
   bool formIsSuccess = false;
+  late Entry? entry;
+  late EntryProviderNotifier entryNotifier;
 
   late TextEditingController entryNameController;
   late TextEditingController entryNumberController;
@@ -59,7 +61,13 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    entry = ref.watch(entryProvider) as Entry;
+    entryNotifier = ref.read(entryProvider.notifier);
+
+
+    return entry==null? 
+    CircularProgressIndicator()
+    :Container(
       // width:500,
       height: 500,
       child: Stepper(
@@ -111,7 +119,11 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
             title: const Text('Step 1'),
             content: !formIsBusy & !formIsSuccess
                 ? entryFormStep1()
-                : formIsSuccess? Center(child: Text('Entry named ${entryNameController.text} created Successfully ')):  const Center(child: CircularProgressIndicator()),
+                : formIsSuccess
+                    ? Center(
+                        child: Text(
+                            'Entry named ${entryNameController.text} created Successfully '))
+                    : const Center(child: CircularProgressIndicator()),
           ),
           const Step(
             title: Text('Step 2'),
@@ -128,31 +140,31 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
 
   Padding entryFormStep1() {
     return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: EntryDetailsForm(
-                    formKeyEntryDetails: formKey_EntryDetails,
-                    entryNameController: entryNameController,
-                    entryNumberController: entryNumberController,
-                    entryStrengthController: entryStrengthController,
-                    entrySloganController: entrySloganController,
-                    entryTitleController: entryTitleController,
-                    selectedEndDate: selectedEndDate,
-                    selectedStartDate: selectedStartDate,
-                    onCancel: () {},
-                    onSave: () {},
-                    onNext: () {},
-                    onStartDateChanged: (date) {
-                      setState(() {
-                        selectedStartDate = date;
-                      });
-                    },
-                    onEndDateChanged: (date) {
-                      setState(() {
-                        selectedEndDate = date;
-                      });
-                    },
-                  ),
-                );
+      padding: const EdgeInsets.all(8.0),
+      child: CreateEntryStep1(
+        formKeyEntryDetails: formKey_EntryDetails,
+        entryNameController: entryNameController,
+        entryNumberController: entryNumberController,
+        entryStrengthController: entryStrengthController,
+        entrySloganController: entrySloganController,
+        entryTitleController: entryTitleController,
+        selectedEndDate: selectedEndDate,
+        selectedStartDate: selectedStartDate,
+        onCancel: () {},
+        onSave: () {},
+        onNext: () {},
+        onStartDateChanged: (date) {
+          setState(() {
+            selectedStartDate = date;
+          });
+        },
+        onEndDateChanged: (date) {
+          setState(() {
+            selectedEndDate = date;
+          });
+        },
+      ),
+    );
   }
 
   Future<void> _saveEntryToFirestore() async {
@@ -160,34 +172,40 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
       // final docRef =
       print(
           '******************************** ENTRY FORM VALID*****************************');
-      var entryData = {
-        'entryName': entryNameController.text,
-        'entryNumber': entryNumberController.text,
-        'entryStrength': entryStrengthController.text,
-        'entryTitle': entryTitleController.text,
-        'entrySlogan': entrySloganController.text,
-        'startDate': selectedStartDate != null
+       entry = Entry(
+        name: entryNameController.text,
+        number: entryNumberController.text,
+        strength:
+            int.tryParse(entryStrengthController.text) ?? 0, // Parse strength
+        startDate: selectedStartDate != null
             ? Timestamp.fromDate(selectedStartDate!)
-            : Timestamp.fromDate(DateTime.now()),
-        'endDate': selectedEndDate != null
+            : Timestamp.now(),
+        endDate: selectedEndDate != null
             ? Timestamp.fromDate(selectedEndDate!)
-            : Timestamp.fromDate(DateTime.now()),
-      };
+            : Timestamp.now(),
+        title: entryTitleController.text,
+        slogan: entrySloganController.text,
+      );
       setState(() {
+        
+      entry = Entry.fromMap(entry!.toMap());
         formIsBusy = true;
       });
       try {
         await FirebaseFirestore.instance
             .collection('entrys')
             .doc(entryNameController.text)
-            .set(entryData);
-          //show success dialog
-            showDialog(
+            .set(entry!.toMap());
+             entryNotifier.updateEntry(newEntry: entry!);
+        //show success dialog
+        showDialog(
           context: context,
           builder: (BuildContext context) {
+           
             return AlertDialog(
               title: const Text('Success'),
-              content:  Text('${entryNameController.text} created successfully!'),
+              content:
+                  Text('${entryNameController.text} created successfully!'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -203,13 +221,11 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
           formIsSuccess = true;
           stepIndex = 1;
         });
-
       } catch (e) {
         print(e);
       }
       setState(() {
         formIsBusy = false;
-       
       });
     }
   }
