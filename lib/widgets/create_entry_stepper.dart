@@ -15,7 +15,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
   bool formIsBusy = false;
   bool formIsSuccess = false;
   late Entry? entry;
-  late EntryProviderNotifier entryNotifier;
+  late EntryCreationNotifier entryNotifier;
 
   late TextEditingController entryNameController;
   late TextEditingController entryNumberController;
@@ -61,81 +61,80 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
 
   @override
   Widget build(BuildContext context) {
-    entry = ref.watch(entryProvider) as Entry;
-    entryNotifier = ref.read(entryProvider.notifier);
+    entry = ref.watch(entryCreationProvider).entry;
+    entryNotifier = ref.read(entryCreationProvider.notifier);
 
-
-    return entry==null? 
-    CircularProgressIndicator()
-    :Container(
-      // width:500,
-      height: 500,
-      child: Stepper(
-        elevation: 15,
-        type: StepperType.horizontal,
-        currentStep: stepIndex,
-        onStepTapped: (index) {
-          setState(() {
-            stepIndex = index;
-          });
-        },
-        controlsBuilder: (context, details) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: Row(
-              children: [
-                Expanded(
-                  //Save and Next Button,
-                  child: Container(
-                    height: 50,
-                    child: ElevatedButton.icon(
-                      // onPressed: details.onStepContinue,
-                      onPressed: _saveEntryToFirestore,
-                      label: const Text('Save and next'),
-                      icon: const FaIcon(FontAwesomeIcons.floppyDisk),
-                    ),
+    return formIsBusy
+        ? CircularProgressIndicator()
+        : Container(
+            // width:500,
+            height: 500,
+            child: Stepper(
+              elevation: 15,
+              type: StepperType.horizontal,
+              currentStep: stepIndex,
+              onStepTapped: (index) {
+                setState(() {
+                  stepIndex = index;
+                });
+              },
+              controlsBuilder: (context, details) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        //Save and Next Button,
+                        child: Container(
+                          height: 50,
+                          child: ElevatedButton.icon(
+                            // onPressed: details.onStepContinue,
+                            onPressed: _saveEntryToFirestore,
+                            label: const Text('Save and next'),
+                            icon: const FaIcon(FontAwesomeIcons.floppyDisk),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        // Cancel Button
+                        child: Container(
+                          height: 50,
+                          child: TextButton.icon(
+                            onPressed: () {},
+                            label: const Text('Cancel'),
+                            icon: const FaIcon(FontAwesomeIcons.ban),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
+                );
+              },
+              steps: [
+                Step(
+                  title: const Text('Step 1'),
+                  content: !formIsBusy & !formIsSuccess
+                      ? entryFormStep1()
+                      : formIsSuccess
+                          ? Center(
+                              child: Text(
+                                  'Entry named ${entryNameController.text} created Successfully '))
+                          : const Center(child: CircularProgressIndicator()),
                 ),
-                const SizedBox(
-                  width: 20,
+                const Step(
+                  title: Text('Step 2'),
+                  content: CreateEntryStep2(),
                 ),
-                Expanded(
-                  // Cancel Button
-                  child: Container(
-                    height: 50,
-                    child: TextButton.icon(
-                      onPressed: () {},
-                      label: const Text('Cancel'),
-                      icon: const FaIcon(FontAwesomeIcons.ban),
-                    ),
-                  ),
+                const Step(
+                  title: Text('Step 3'),
+                  content: Text('Content Step 3'),
                 )
               ],
             ),
           );
-        },
-        steps: [
-          Step(
-            title: const Text('Step 1'),
-            content: !formIsBusy & !formIsSuccess
-                ? entryFormStep1()
-                : formIsSuccess
-                    ? Center(
-                        child: Text(
-                            'Entry named ${entryNameController.text} created Successfully '))
-                    : const Center(child: CircularProgressIndicator()),
-          ),
-          const Step(
-            title: Text('Step 2'),
-            content: CreateEntryStep2(),
-          ),
-          const Step(
-            title: Text('Step 3'),
-            content: Text('Content Step 3'),
-          )
-        ],
-      ),
-    );
   }
 
   Padding entryFormStep1() {
@@ -143,69 +142,77 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
       padding: const EdgeInsets.all(8.0),
       child: CreateEntryStep1(
         formKeyEntryDetails: formKey_EntryDetails,
-        entryNameController: entryNameController,
-        entryNumberController: entryNumberController,
-        entryStrengthController: entryStrengthController,
-        entrySloganController: entrySloganController,
-        entryTitleController: entryTitleController,
-        selectedEndDate: selectedEndDate,
-        selectedStartDate: selectedStartDate,
-        onCancel: () {},
-        onSave: () {},
-        onNext: () {},
-        onStartDateChanged: (date) {
-          setState(() {
-            selectedStartDate = date;
-          });
-        },
-        onEndDateChanged: (date) {
-          setState(() {
-            selectedEndDate = date;
-          });
-        },
+        // entryNameController: ref.watch(entryNameControllerProvider),
+        // entryNumberController: entryNumberController,
+        // entryStrengthController: entryStrengthController,
+        // entrySloganController: entrySloganController,
+        // entryTitleController: entryTitleController,
+        // selectedEndDate: selectedEndDate,
+        // selectedStartDate: selectedStartDate,
+        // onCancel: () {},
+        // onSave: () {},
+        // onNext: () {},
+        // onStartDateChanged: (date) {
+        //   setState(() {
+        //     selectedStartDate = date;
+        //   });
+        // },
+        // onEndDateChanged: (date) {
+        //   setState(() {
+        //     selectedEndDate = date;
+        //   });
+        // },
       ),
     );
   }
 
   Future<void> _saveEntryToFirestore() async {
     if (formKey_EntryDetails.currentState!.validate()) {
-      // final docRef =
       print(
           '******************************** ENTRY FORM VALID*****************************');
-       entry = Entry(
-        name: entryNameController.text,
-        number: entryNumberController.text,
-        strength:
-            int.tryParse(entryStrengthController.text) ?? 0, // Parse strength
+      
+      // Access controllers from providers
+      final entryName = ref.read(entryNameControllerProvider).text;
+      final entryNumber = ref.read(entryNumberControllerProvider).text;
+      final entryStrength = ref.read(entryStrengthControllerProvider).text;
+      final selectedStartDate = ref.read(entryStartDateProvider);
+      final selectedEndDate = ref.read(entryEndDateProvider);
+      final entryTitle = ref.read(entryTitleControllerProvider).text;
+      final entrySlogan = ref.read(entrySloganControllerProvider).text;
+      // final docRef =
+
+  // Create the Entry object
+      Entry  newEntry = Entry(
+        name: entryName,
+        number: entryNumber,
+        strength: int.tryParse(entryStrength) ?? 0,
         startDate: selectedStartDate != null
-            ? Timestamp.fromDate(selectedStartDate!)
+            ? Timestamp.fromDate(selectedStartDate)
             : Timestamp.now(),
         endDate: selectedEndDate != null
-            ? Timestamp.fromDate(selectedEndDate!)
+            ? Timestamp.fromDate(selectedEndDate)
             : Timestamp.now(),
-        title: entryTitleController.text,
-        slogan: entrySloganController.text,
+        title: entryTitle,
+        slogan: entrySlogan,
       );
       setState(() {
-        
-      entry = Entry.fromMap(entry!.toMap());
+       
         formIsBusy = true;
       });
       try {
         await FirebaseFirestore.instance
             .collection('entrys')
-            .doc(entryNameController.text)
-            .set(entry!.toMap());
-             entryNotifier.updateEntry(newEntry: entry!);
+            .doc(entryName)
+            .set(newEntry.toMap());
+         entryNotifier.success(newEntry);
         //show success dialog
         showDialog(
           context: context,
           builder: (BuildContext context) {
-           
             return AlertDialog(
               title: const Text('Success'),
               content:
-                  Text('${entryNameController.text} created successfully!'),
+                  Text('${newEntry.name} created successfully!'),
               actions: [
                 TextButton(
                   onPressed: () {

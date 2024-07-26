@@ -176,8 +176,12 @@ class Entry extends Equatable {
       name: map['name'] ?? '',
       number: map['number'] ?? '',
       strength: map['strength']?.toInt() ?? 0,
-      startDate: map['startDate'] as Timestamp,
-      endDate: map['endDate'] as Timestamp,
+    startDate: map['startDate'] != null
+          ? map['startDate'] as Timestamp
+          : Timestamp.now(), // Set to current time if null
+      endDate: map['endDate'] != null
+          ? map['endDate'] as Timestamp
+          : Timestamp.now(), // Set to current time if null
       title: map['title'],
       slogan: map['slogan'],
       bestCadet:

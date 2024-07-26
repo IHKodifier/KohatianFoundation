@@ -13,7 +13,10 @@ export 'package:email_validator/email_validator.dart';
 export 'package:equatable/equatable.dart';
 export 'package:rxdart/rxdart.dart';
 export 'package:tuple/tuple.dart';
-export './services/providers/entry_provider.dart';
+export 'services/providers/entry_creation_provider.dart';
+export 'services/providers/entry_creation_notifier.dart';
+
+
 
 //utils
 

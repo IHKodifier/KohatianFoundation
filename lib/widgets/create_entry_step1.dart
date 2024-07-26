@@ -1,50 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:kohatian_foundation/widget_export.dart';
 
-class CreateEntryStep1 extends StatefulWidget {
+class CreateEntryStep1 extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKeyEntryDetails;
 
-   const CreateEntryStep1({required this.formKeyEntryDetails, super.key});
+  const CreateEntryStep1({required this.formKeyEntryDetails, super.key});
 
-  final TextEditingController entryNameController;
-  final TextEditingController entryNumberController;
-  final TextEditingController entryStrengthController;
-  final DateTime? selectedStartDate;
-  final DateTime? selectedEndDate;
-  final Function(DateTime) onStartDateChanged;
-  final Function(DateTime) onEndDateChanged;
-  final TextEditingController entryTitleController;
-  final TextEditingController entrySloganController;
-  final VoidCallback? onSave;
-  final VoidCallback? onNext;
-  final VoidCallback? onCancel;
-
-  CreateEntryStep1({
-    required this.formKeyEntryDetails,
-    super.key,
-    required this.entryNameController,
-    required this.entryNumberController,
-    required this.entryStrengthController,
-    required this.entrySloganController,
-    required this.entryTitleController,
-    required this.selectedStartDate,
-    required this.selectedEndDate,
-    required this.onStartDateChanged,
-    required this.onEndDateChanged,
-    this.onSave,
-    this.onNext,
-    this.onCancel,
-  });
-
-  @override
-  _CreateEntryStep1State createState() => _CreateEntryStep1State();
+ @override
+  ConsumerState<CreateEntryStep1> createState() => _CreateEntryStep1State();
 }
 
-class _CreateEntryStep1State extends State<CreateEntryStep1> {
-  @override
-  Widget build(BuildContext context) {
+class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
+ @override
+ Widget build(BuildContext context) {
+
+ final entryNameController = ref.watch(entryNameControllerProvider);
+  final entryNumberController = ref.watch(entryNumberControllerProvider);
+  final entryStrengthController = ref.watch(entryStrengthControllerProvider);
+  final selectedStartDate = ref.watch(entryStartDateProvider);
+  final selectedEndDate = ref.watch(entryEndDateProvider);
+  final entryTitleController = ref.watch(entryTitleControllerProvider);
+  final entrySloganController = ref.watch(entrySloganControllerProvider);
+
+// final entryStartDate = ref.watch(entryStartDateProvider);
+// final entryEndDate = ref.watch(entryEndDateProvider);
+
+
+
+
     return Dialog(
       child: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.7,
           child: Form(
             key: widget.formKeyEntryDetails,
@@ -64,7 +50,7 @@ class _CreateEntryStep1State extends State<CreateEntryStep1> {
                   // ),
                   TextFormField(
                     //Entry Name
-                    controller: widget.entryNameController,
+                    controller: ref.read(entryNameControllerProvider), 
                     decoration: const InputDecoration(
                       labelText: 'Entry Name',
                     ),
@@ -79,7 +65,7 @@ class _CreateEntryStep1State extends State<CreateEntryStep1> {
                   //  Icon(Icons.question_mark),
                   TextFormField(
                     //Entry Number
-                    controller: widget.entryNumberController,
+                    controller: ref.read(entryNumberControllerProvider),
                     decoration:
                         const InputDecoration(labelText: 'Entry Number'),
                     validator: (value) {
@@ -92,7 +78,7 @@ class _CreateEntryStep1State extends State<CreateEntryStep1> {
                   //  Icon(Icons.question_mark),
                   TextFormField(
                     //Entry Strength
-                    controller: widget.entryStrengthController,
+                    controller: ref.read(entryStrengthControllerProvider),
                     decoration:
                         const InputDecoration(labelText: 'Entry Strength'),
                     keyboardType: TextInputType.number,
@@ -107,7 +93,7 @@ class _CreateEntryStep1State extends State<CreateEntryStep1> {
                     },
                   ),
                   //  Icon(Icons.question_mark),
-                  SizedBox(height: 12.0),
+                  const SizedBox(height: 12.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -118,20 +104,22 @@ class _CreateEntryStep1State extends State<CreateEntryStep1> {
                           showDatePicker(
                             context: context,
                             initialDate:
-                                widget.selectedStartDate ?? DateTime.now(),
+                                selectedStartDate ?? DateTime.now(),
                             firstDate: DateTime(1965),
                             lastDate: DateTime.now(),
                           ).then((date) {
                             if (date != null) {
                               setState(() {
-                                widget.onStartDateChanged(date);
+                                //TODO
+                                ref.read(entryStartDateProvider.notifier).state= date;
+                                // ref.watch(entryEndDateProvider
                               });
                             }
                           });
                         },
                         child: Text(
-                          widget.selectedStartDate != null
-                              ? '${widget.selectedStartDate!.day} - ${widget.selectedStartDate!.month} - ${widget.selectedStartDate!.year}'
+                          selectedStartDate!= null
+                              ? '${selectedStartDate.day} - ${selectedStartDate.month} - ${selectedStartDate.year}'
                               : 'Select Start Date',
                         ),
                       ),
@@ -141,18 +129,20 @@ class _CreateEntryStep1State extends State<CreateEntryStep1> {
                           showDatePicker(
                             context: context,
                             initialDate:
-                                widget.selectedEndDate ?? DateTime.now(),
+                                selectedEndDate ?? DateTime.now(),
                             firstDate: DateTime(1970),
                             lastDate: DateTime.now(),
                           ).then((date) {
                             if (date != null) {
-                              widget.onEndDateChanged(date);
+                              //TODO
+                          ref.read(entryEndDateProvider.notifier).state= date;
+                              // ref.watch(entryEndDateProvider)
                             }
                           });
                         },
                         child: Text(
-                          widget.selectedEndDate != null
-                              ? '${widget.selectedEndDate!.day} - ${widget.selectedEndDate!.month} - ${widget.selectedEndDate!.year}'
+                          selectedEndDate != null
+                              ? '${selectedEndDate.day} - ${selectedEndDate.month} - ${selectedEndDate.year}'
                               : 'Select End Date',
                         ),
                       ),
@@ -160,38 +150,16 @@ class _CreateEntryStep1State extends State<CreateEntryStep1> {
                   ),
 
                   TextFormField(
-                    controller: widget.entryTitleController,
+                    controller: entryTitleController,
                     decoration: const InputDecoration(
                         labelText: 'Entry Title (Optional)'),
                   ),
                   TextFormField(
-                    controller: widget.entrySloganController,
+                    controller: entrySloganController,
                     decoration: const InputDecoration(
                         labelText: 'Entry Slogan (Optional)'),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       ElevatedButton(
-                  //         onPressed: widget.onCancel,
-                  //         style: ElevatedButton.styleFrom(
-                  //           backgroundColor: Colors.red,
-                  //         ),
-                  //         child: const Icon(Icons.cancel),
-                  //       ),
-                  //       ElevatedButton(
-                  //         onPressed: widget.onSave,
-                  //         child: const Text('Save'),
-                  //       ),
-                  //       ElevatedButton(
-                  //         onPressed: widget.onNext,
-                  //         child: const Text('Next'),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+               
                 ],
               ),
             ),
