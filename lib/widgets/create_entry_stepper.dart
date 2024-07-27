@@ -122,10 +122,15 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
                           ? Center(
                               child: Text(
                                   'Entry named ${entryNameController.text} created Successfully '))
-                          : const Center(child: CircularProgressIndicator()),
+                          : const Center(child: CircularProgressIndicator(),),
                 ),
-                const Step(
-                  title: Text('Step 2'),
+                 Step(
+
+                  //TODO  fix null value error when no entry selected
+                  title: ref.watch(entryCreationProvider).entry != null
+                      ? Text(
+                          ' Add Cadets to ${ref.watch(entryCreationProvider).entry!.name}')
+                      : const Text('Step 2'), // Default title if entry is null
                   content: CreateEntryStep2(),
                 ),
                 const Step(
@@ -142,26 +147,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
       padding: const EdgeInsets.all(8.0),
       child: CreateEntryStep1(
         formKeyEntryDetails: formKey_EntryDetails,
-        // entryNameController: ref.watch(entryNameControllerProvider),
-        // entryNumberController: entryNumberController,
-        // entryStrengthController: entryStrengthController,
-        // entrySloganController: entrySloganController,
-        // entryTitleController: entryTitleController,
-        // selectedEndDate: selectedEndDate,
-        // selectedStartDate: selectedStartDate,
-        // onCancel: () {},
-        // onSave: () {},
-        // onNext: () {},
-        // onStartDateChanged: (date) {
-        //   setState(() {
-        //     selectedStartDate = date;
-        //   });
-        // },
-        // onEndDateChanged: (date) {
-        //   setState(() {
-        //     selectedEndDate = date;
-        //   });
-        // },
+     
       ),
     );
   }

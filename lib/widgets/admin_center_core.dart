@@ -157,22 +157,34 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
   InkWell createEntryContent(BuildContext context) {
     return InkWell(
       onTap: () {
-        //TODO
-        showDialog(
-          context: context,
-          builder: (_) => Dialog(
-            child: Column(
-              children: [
-                SizedBox(height: 16.0), 
-                Text('Create New Entry',
-                style: Theme.of(context).textTheme.headlineLarge,),
-                SizedBox(height: 16.0),
-                CreateEntryStepper(),
-              ],
-            ),
-           
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                CreateEntryStepper(), // Push the CreateEntryStepper
           ),
         );
+
+
+
+
+//NOT NEEDED any more. changed to MaterialPageRoute instead of Dialog
+        //TODO
+        // showDialog(
+        //   context: context,
+        //   builder: (_) => Dialog(
+        //     child: Column(
+        //       children: [
+        //         SizedBox(height: 16.0), 
+        //         Text('Create New Entry',
+        //         style: Theme.of(context).textTheme.headlineLarge,),
+        //         SizedBox(height: 16.0),
+        //         CreateEntryStepper(),
+        //       ],
+        //     ),
+           
+        //   ),
+        // );
       },
       child: Row(
         children: [

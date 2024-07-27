@@ -27,6 +27,7 @@ export 'package:kohatian_foundation/models/cadet_model.dart';
 export 'package:kohatian_foundation/models/qualification_model.dart';
 export 'package:kohatian_foundation/models/achievements_model.dart';
 export 'package:kohatian_foundation/models/social_links_model.dart';
+export './models/entry_model.dart';
 
 //pages
 export 'package:kohatian_foundation/pages/public_home_page.dart';
@@ -52,3 +53,4 @@ export './widgets/slim_appbar.dart';
 export 'widgets/create_entry_step1.dart';
 export './widgets/admin_center_core.dart';
 export './widgets/createentrystep2.dart';
+export './widgets/dropzone_widget.dart';

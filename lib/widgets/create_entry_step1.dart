@@ -22,8 +22,6 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
   final entryTitleController = ref.watch(entryTitleControllerProvider);
   final entrySloganController = ref.watch(entrySloganControllerProvider);
 
-// final entryStartDate = ref.watch(entryStartDateProvider);
-// final entryEndDate = ref.watch(entryEndDateProvider);
 
 
 
