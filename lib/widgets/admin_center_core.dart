@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kohatian_foundation/pages/create_entry_page.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 import 'package:kohatian_foundation/widgets/create_entry_stepper.dart';
 
@@ -157,15 +158,11 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
   InkWell createEntryContent(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
+       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Scaffold(
-              appBar: AppBar(
-                title: const Text('Create Entry'),
-                centerTitle: true,
-              ),
-                body: CreateEntryStepper()), // Push the CreateEntryStepper
+            builder: (context) =>
+                CreateEntryPage(), // New screen for Entry creation
           ),
         );
       },
