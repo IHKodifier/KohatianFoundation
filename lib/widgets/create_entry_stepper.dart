@@ -65,13 +65,13 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
     entryNotifier = ref.read(entryCreationProvider.notifier);
 
     return formIsBusy
-        ? CircularProgressIndicator()
+        ? Center(child: CircularProgressIndicator())
         : Container(
             // width:500,
             height: 500,
             child: Stepper(
               elevation: 15,
-              type: StepperType.horizontal,
+              type: StepperType.vertical,
               currentStep: stepIndex,
               onStepTapped: (index) {
                 setState(() {
@@ -191,25 +191,15 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
             .doc(entryName)
             .set(newEntry.toMap());
          entryNotifier.success(newEntry);
+       
         //show success dialog
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Success'),
-              content:
-                  Text('${newEntry.name} created successfully!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('${newEntry.name} created successfully!'),
+            duration: Duration(seconds: 2),
+          ),
         );
+
         setState(() {
           formIsSuccess = true;
           stepIndex = 1;

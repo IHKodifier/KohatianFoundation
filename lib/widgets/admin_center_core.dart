@@ -6,7 +6,7 @@ import 'package:kohatian_foundation/widgets/create_entry_stepper.dart';
 
 class AdminCenterCore extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKeyEntryDetails;
-  
+
   final TextEditingController entryNameController;
   final TextEditingController entryNumberController;
   final TextEditingController entryStrengthController;
@@ -58,15 +58,15 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
               // Card for Admin Dashboard
               adminDashboardCard(context),
               const SizedBox(height: 16.0),
-      
+
               // Card for Entry model creation
               createEntryCard(context),
               const SizedBox(height: 16.0),
-      
+
               // Card for EntryCoordinator settings
               createEntryCoordinatorCard(context),
               const SizedBox(height: 16.0),
-      
+
               // Card for other settings
               otherSettingsCard(context),
             ],
@@ -160,31 +160,14 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                CreateEntryStepper(), // Push the CreateEntryStepper
+            builder: (context) => Scaffold(
+              appBar: AppBar(
+                title: const Text('Create Entry'),
+                centerTitle: true,
+              ),
+                body: CreateEntryStepper()), // Push the CreateEntryStepper
           ),
         );
-
-
-
-
-//NOT NEEDED any more. changed to MaterialPageRoute instead of Dialog
-        //TODO
-        // showDialog(
-        //   context: context,
-        //   builder: (_) => Dialog(
-        //     child: Column(
-        //       children: [
-        //         SizedBox(height: 16.0), 
-        //         Text('Create New Entry',
-        //         style: Theme.of(context).textTheme.headlineLarge,),
-        //         SizedBox(height: 16.0),
-        //         CreateEntryStepper(),
-        //       ],
-        //     ),
-           
-        //   ),
-        // );
       },
       child: Row(
         children: [
@@ -330,58 +313,5 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
     );
   }
 
-  //   return InkWell(
-  //     onTap: () {
-  //       //TODO
-  //     },
-  //     child: Card(
-  //       elevation: 5,
-  //       child: Column(
-  //         children: [
-  //           InkWell(
-  //             onTap: () {
-  //               //TODO
-  //             },
-  //             child: Padding(
-  //               padding: const EdgeInsets.symmetric(vertical: 8.0),
-  //               child: Row(
-  //                 children: [
-  //                   const Spacer(flex: 8),
-  //                   const Icon(Icons.dashboard,
-  //                       size: 60, color: Colors.black54),
-  //                   const Spacer(flex: 1),
-  //                   Column(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     mainAxisAlignment: MainAxisAlignment.center,
-  //                     children: [
-  //                       Text(
-  //                         'Admin Dashboard',
-  //                         style: Theme.of(context)
-  //                             .textTheme
-  //                             .headlineMedium
-  //                             ?.copyWith(
-  //                                 fontWeight: FontWeight.w600,
-  //                                 color: Colors.black),
-  //                       ),
-  //                       Text(
-  //                         'View overall statistics and reports....',
-  //                         style:
-  //                             Theme.of(context).textTheme.labelLarge?.copyWith(
-  //                                   // fontWeight: FontWeight.w600,
-  //                                   fontStyle: FontStyle.italic,
-  //                                   color: Colors.black54,
-  //                                 ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   const Spacer(flex: 8),
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ), // ... your Entry creation content
-  //     ),
-  //   );
-  // }
+  //
 }
