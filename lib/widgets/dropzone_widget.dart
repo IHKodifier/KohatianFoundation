@@ -20,15 +20,16 @@ class _DropzoneWidgetState extends ConsumerState<DropzoneWidget> {
       child: Center(
         child: Stack(
           children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 16,
-              child: filePickButton(),
-            ),
+         
 
             dropTarget(),
             dropTargetHint(),
+              //  Positioned(
+              // left: 0,
+              // right: 0,
+              // bottom: 16,
+              // child: filePickButton(),
+            // ),
           ],
         ),
       ),
@@ -47,7 +48,7 @@ class _DropzoneWidgetState extends ConsumerState<DropzoneWidget> {
             color: Colors.white,
           ),
           Text('Drop an Excel file here'),
-          Text('or'),
+          // Text('or'),
           SizedBox(
             height: 16,
           ),

@@ -11,6 +11,27 @@ class CreateEntryStep1 extends ConsumerStatefulWidget {
 }
 
 class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
+  // Focus Nodes for each TextFormField
+  final FocusNode entryNameFocusNode = FocusNode();
+  final FocusNode entryNumberFocusNode = FocusNode();
+  final FocusNode entryStrengthFocusNode = FocusNode();
+  final FocusNode entryTitleFocusNode = FocusNode();
+  final FocusNode entrySloganFocusNode = FocusNode();
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+       // Dispose of the FocusNodes when the widget is disposed
+    entryNameFocusNode.dispose();
+    entryNumberFocusNode.dispose();
+    entryStrengthFocusNode.dispose();
+    entryTitleFocusNode.dispose();
+    entrySloganFocusNode.dispose();
+    super.dispose();
+  }
+
+
+
  @override
  Widget build(BuildContext context) {
 
@@ -21,9 +42,6 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
   final selectedEndDate = ref.watch(entryEndDateProvider);
   final entryTitleController = ref.watch(entryTitleControllerProvider);
   final entrySloganController = ref.watch(entrySloganControllerProvider);
-
-
-
 
 
     return Dialog(
@@ -49,6 +67,7 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
                   TextFormField(
                     //Entry Name
                     controller: ref.read(entryNameControllerProvider), 
+                    focusNode: entryNameFocusNode,
                     decoration: const InputDecoration(
                       labelText: 'Entry Name',
                     ),
@@ -64,6 +83,7 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
                   TextFormField(
                     //Entry Number
                     controller: ref.read(entryNumberControllerProvider),
+                    focusNode: entryNumberFocusNode,
                     decoration:
                         const InputDecoration(labelText: 'Entry Number'),
                     validator: (value) {
@@ -77,6 +97,7 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
                   TextFormField(
                     //Entry Strength
                     controller: ref.read(entryStrengthControllerProvider),
+                    focusNode: entryStrengthFocusNode,
                     decoration:
                         const InputDecoration(labelText: 'Entry Strength'),
                     keyboardType: TextInputType.number,
@@ -149,11 +170,13 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
 
                   TextFormField(
                     controller: entryTitleController,
+                    focusNode: entryTitleFocusNode,
                     decoration: const InputDecoration(
                         labelText: 'Entry Title (Optional)'),
                   ),
                   TextFormField(
                     controller: entrySloganController,
+                    focusNode: entrySloganFocusNode,
                     decoration: const InputDecoration(
                         labelText: 'Entry Slogan (Optional)'),
                   ),
