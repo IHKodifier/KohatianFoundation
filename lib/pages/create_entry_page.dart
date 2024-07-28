@@ -88,53 +88,59 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                             },
                           ),
 
+                          SizedBox(height: 16),
                           // Start Date
-                          ElevatedButton(
-                            onPressed: () {
-                              showDatePicker(
-                                context: context,
-                                initialDate:
-                                    ref.watch(entryStartDateProvider) ??
-                                        DateTime.now(),
-                                firstDate: DateTime(1965),
-                                lastDate: DateTime.now(),
-                              ).then((date) {
-                                if (date != null) {
-                                  ref
-                                      .read(entryStartDateProvider.notifier)
-                                      .state = date;
-                                }
-                              });
-                            },
-                            child: Text(
-                              ref.watch(entryStartDateProvider) != null
-                                  ? '${ref.watch(entryStartDateProvider)!.toLocal().day} - ${ref.watch(entryStartDateProvider)!.toLocal().month} - ${ref.watch(entryStartDateProvider)!.toLocal().year}'
-                                  : 'Select Start Date',
-                            ),
-                          ),
-
-                          // End Date
-                          ElevatedButton(
-                            onPressed: () {
-                              showDatePicker(
-                                context: context,
-                                initialDate: ref.watch(entryEndDateProvider) ??
-                                    DateTime.now(),
-                                firstDate: DateTime(1970),
-                                lastDate: DateTime.now(),
-                              ).then((date) {
-                                if (date != null) {
-                                  ref
-                                      .read(entryEndDateProvider.notifier)
-                                      .state = date;
-                                }
-                              });
-                            },
-                            child: Text(
-                              ref.watch(entryEndDateProvider) != null
-                                  ? '${ref.watch(entryEndDateProvider)!.toLocal().day} - ${ref.watch(entryEndDateProvider)!.toLocal().month} - ${ref.watch(entryEndDateProvider)!.toLocal().year}'
-                                  : 'Select End Date',
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  showDatePicker(
+                                    context: context,
+                                    initialDate:
+                                        ref.watch(entryStartDateProvider) ??
+                                            DateTime.now(),
+                                    firstDate: DateTime(1965),
+                                    lastDate: DateTime.now(),
+                                  ).then((date) {
+                                    if (date != null) {
+                                      ref
+                                          .read(entryStartDateProvider.notifier)
+                                          .state = date;
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  ref.watch(entryStartDateProvider) != null
+                                      ? '${ref.watch(entryStartDateProvider)!.toLocal().day} - ${ref.watch(entryStartDateProvider)!.toLocal().month} - ${ref.watch(entryStartDateProvider)!.toLocal().year}'
+                                      : 'Select Start Date',
+                                ),
+                              ),
+                              // End Date
+                              ElevatedButton(
+                                onPressed: () {
+                                  showDatePicker(
+                                    context: context,
+                                    initialDate:
+                                        ref.watch(entryEndDateProvider) ??
+                                            DateTime.now(),
+                                    firstDate: DateTime(1970),
+                                    lastDate: DateTime.now(),
+                                  ).then((date) {
+                                    if (date != null) {
+                                      ref
+                                          .read(entryEndDateProvider.notifier)
+                                          .state = date;
+                                    }
+                                  });
+                                },
+                                child: Text(
+                                  ref.watch(entryEndDateProvider) != null
+                                      ? '${ref.watch(entryEndDateProvider)!.toLocal().day} - ${ref.watch(entryEndDateProvider)!.toLocal().month} - ${ref.watch(entryEndDateProvider)!.toLocal().year}'
+                                      : 'Select End Date',
+                                ),
+                              ),
+                            ],
                           ),
 
                           // Entry Title
@@ -181,25 +187,6 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                           ElevatedButton(
                             onPressed: () {
                               //TODO
-                              // Trigger the cadet creation process
-                              // You'll need to implement the logic here
-                              // based on your application's requirements.
-                              // This might involve:
-                              // 1. Reading the entry strength from the form.
-                              // 2. Creating a new entry in your database.
-                              // 3. Generating cadet profiles based on the strength.
-                              // 4. Saving the cadet profiles to your database.
-                              // 5. Potentially navigating to a new screen to manage cadets.
-                              // ...
-                              // Example:
-                              // int strength = int.parse(ref.read(entryStrengthControllerProvider).text);
-                              // // ... create entry and cadets ...
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => CadetManagementPage(), // Replace with your cadet management screen
-                              //   ),
-                              // );
                             },
                             child: const Text('Create Cadets'),
                           ),

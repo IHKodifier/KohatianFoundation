@@ -35,13 +35,13 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
  @override
  Widget build(BuildContext context) {
 
- final entryNameController = ref.watch(entryNameControllerProvider);
-  final entryNumberController = ref.watch(entryNumberControllerProvider);
-  final entryStrengthController = ref.watch(entryStrengthControllerProvider);
-  final selectedStartDate = ref.watch(entryStartDateProvider);
-  final selectedEndDate = ref.watch(entryEndDateProvider);
-  final entryTitleController = ref.watch(entryTitleControllerProvider);
-  final entrySloganController = ref.watch(entrySloganControllerProvider);
+//  final entryNameController = ref.watch(entryNameControllerProvider);
+//   final entryNumberController = ref.watch(entryNumberControllerProvider);
+//   final entryStrengthController = ref.watch(entryStrengthControllerProvider);
+//   final selectedStartDate = ref.watch(entryStartDateProvider);
+//   final selectedEndDate = ref.watch(entryEndDateProvider);
+//   final entryTitleController = ref.watch(entryTitleControllerProvider);
+//   final entrySloganController = ref.watch(entrySloganControllerProvider);
 
 
     return Dialog(
