@@ -11,206 +11,257 @@ class CreateEntryPage extends ConsumerStatefulWidget {
 class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   final GlobalKey<FormState> formKeyEntryDetails = GlobalKey<FormState>();
 
+  bool formIsBusy = false;
+  late Widget form;
+
   @override
   Widget build(BuildContext context) {
+    final savedEntry = ref.watch(entryCreationProvider).entry;
+
+    // Use a ternary operator to handle the initial null state
+    form = savedEntry == null
+        ? Form(
+            key: formKeyEntryDetails,
+            child: Column(
+              children: [
+                //Entry Name
+                TextFormField(
+                  controller: ref.read(entryNameControllerProvider),
+                  decoration: const InputDecoration(
+                    labelText: 'Entry Name',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter entry name';
+                    }
+                    return null;
+                  },
+                ),
+
+                // Entry Number
+                TextFormField(
+                  controller: ref.read(entryNumberControllerProvider),
+                  decoration: const InputDecoration(
+                    labelText: 'Entry Number',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter entry number';
+                    }
+                    return null;
+                  },
+                ),
+             
+
+                // Entry Strength
+                TextFormField(
+                  controller: ref.read(entryStrengthControllerProvider),
+                  decoration: const InputDecoration(
+                    labelText: 'Entry Strength',
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter entry strength';
+                    }
+                    if (int.tryParse(value) == null) {
+                      return 'Please enter a valid number';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                // Start Date
+
+                // Entry Title
+                TextFormField(
+                  controller: ref.read(entryTitleControllerProvider),
+                  decoration: const InputDecoration(
+                    labelText: 'Entry Title (Optional)',
+                  ),
+                  // validator: (value) {
+                  //   return null;
+                  // },
+                ),
+
+                // Entry Slogan
+                TextFormField(
+                  controller: ref.read(entrySloganControllerProvider),
+                  decoration: const InputDecoration(
+                    labelText: 'Entry Slogan (Optional)',
+                  ),
+                  //  validator: (value) {
+                  //   return null;
+                  // },
+                ),
+              ],
+            ),
+          )
+        : Center(
+            child:
+                Text('newe entry of ${savedEntry.name} created successfully'),
+          );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Entry'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Entry Details Section
-              Text(
-                'Entry Details',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 16.0),
-
-              // Entry Details Form and Dropzone/Cadet Creation in a Row
-              Row(
-                children: [
-                  // Entry Details Form
-                  Expanded(
-                    flex: 2, // Adjust flex for width ratio
-                    child: Form(
-                      key: formKeyEntryDetails,
-                      child: Column(
-                        children: [
-                          // Entry Name
-                          TextFormField(
-                            controller: ref.read(entryNameControllerProvider),
-                            decoration: const InputDecoration(
-                              labelText: 'Entry Name',
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter entry name';
-                              }
-                              return null;
-                            },
-                          ),
-
-                          // Entry Number
-                          TextFormField(
-                            controller: ref.read(entryNumberControllerProvider),
-                            decoration: const InputDecoration(
-                              labelText: 'Entry Number',
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter entry number';
-                              }
-                              return null;
-                            },
-                          ),
-
-                          // Entry Strength
-                          TextFormField(
-                            controller:
-                                ref.read(entryStrengthControllerProvider),
-                            decoration: const InputDecoration(
-                              labelText: 'Entry Strength',
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter entry strength';
-                              }
-                              if (int.tryParse(value) == null) {
-                                return 'Please enter a valid number';
-                              }
-                              return null;
-                            },
-                          ),
-
-                          SizedBox(height: 16),
-                          // Start Date
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  showDatePicker(
-                                    context: context,
-                                    initialDate:
-                                        ref.watch(entryStartDateProvider) ??
-                                            DateTime.now(),
-                                    firstDate: DateTime(1965),
-                                    lastDate: DateTime.now(),
-                                  ).then((date) {
-                                    if (date != null) {
-                                      ref
-                                          .read(entryStartDateProvider.notifier)
-                                          .state = date;
-                                    }
-                                  });
-                                },
-                                child: Text(
-                                  ref.watch(entryStartDateProvider) != null
-                                      ? '${ref.watch(entryStartDateProvider)!.toLocal().day} - ${ref.watch(entryStartDateProvider)!.toLocal().month} - ${ref.watch(entryStartDateProvider)!.toLocal().year}'
-                                      : 'Select Start Date',
-                                ),
-                              ),
-                              // End Date
-                              ElevatedButton(
-                                onPressed: () {
-                                  showDatePicker(
-                                    context: context,
-                                    initialDate:
-                                        ref.watch(entryEndDateProvider) ??
-                                            DateTime.now(),
-                                    firstDate: DateTime(1970),
-                                    lastDate: DateTime.now(),
-                                  ).then((date) {
-                                    if (date != null) {
-                                      ref
-                                          .read(entryEndDateProvider.notifier)
-                                          .state = date;
-                                    }
-                                  });
-                                },
-                                child: Text(
-                                  ref.watch(entryEndDateProvider) != null
-                                      ? '${ref.watch(entryEndDateProvider)!.toLocal().day} - ${ref.watch(entryEndDateProvider)!.toLocal().month} - ${ref.watch(entryEndDateProvider)!.toLocal().year}'
-                                      : 'Select End Date',
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          // Entry Title
-                          TextFormField(
-                            controller: ref.read(entryTitleControllerProvider),
-                            decoration: const InputDecoration(
-                              labelText: 'Entry Title (Optional)',
-                            ),
-                          ),
-
-                          // Entry Slogan
-                          TextFormField(
-                            controller: ref.read(entrySloganControllerProvider),
-                            decoration: const InputDecoration(
-                              labelText: 'Entry Slogan (Optional)',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // Dropzone and Create Cadets Button in a Column
-                  Expanded(
-                    flex: 1, // Adjust flex for width ratio
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: Column(
-                        children: [
-                          // Dropzone
-                          Card(
-                            elevation: 5,
-                            child: Center(
-                              child: Container(
-                                height: 200,
-                                width: double.infinity,
-                                child: DropzoneWidget(),
-                              ),
-                            ),
-                          ),
-
-                          // Create Cadets Button
-                          const SizedBox(height: 16.0),
-                          ElevatedButton(
-                            onPressed: () {
-                              //TODO
-                            },
-                            child: const Text('Create Cadets'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              // Save Button
-              const SizedBox(height: 32.0),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    //TODO ... your logic to save the Entry
-                  },
-                  child: const Text('Save Entry'),
+      body: !formIsBusy
+          ? SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildEntryDetailsSection(),
+                    buildcreatedEntrySummary(savedEntry),
+                    SizedBox(height: 16),
+                    buildDatePickerRow(),
+                    buildSaveButton(),
+                    buildDropzoneAndCreateCadetsButton(),
+                  ],
                 ),
               ),
-            ],
+            )
+          : const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  Widget buildEntryDetailsSection() {
+    return form;
+  }
+
+  Widget buildDatePickerRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            showDatePicker(
+              context: context,
+              initialDate: ref.watch(entryStartDateProvider) ?? DateTime.now(),
+              firstDate: DateTime(1965),
+              lastDate: DateTime.now(),
+            ).then((date) {
+              if (date != null) {
+                ref.read(entryStartDateProvider.notifier).state = date;
+              }
+            });
+          },
+          child: Text(
+            ref.watch(entryStartDateProvider) != null
+                ? '${ref.watch(entryStartDateProvider)!.toLocal().day} - ${ref.watch(entryStartDateProvider)!.toLocal().month} - ${ref.watch(entryStartDateProvider)!.toLocal().year}'
+                : 'Select Start Date',
           ),
         ),
+        // End Date
+        ElevatedButton(
+          onPressed: () {
+            showDatePicker(
+              context: context,
+              initialDate: ref.watch(entryEndDateProvider) ?? DateTime.now(),
+              firstDate: DateTime(1970),
+              lastDate: DateTime.now(),
+            ).then((date) {
+              if (date != null) {
+                ref.read(entryEndDateProvider.notifier).state = date;
+              }
+            });
+          },
+          child: Text(
+            ref.watch(entryEndDateProvider) != null
+                ? '${ref.watch(entryEndDateProvider)!.toLocal().day} - ${ref.watch(entryEndDateProvider)!.toLocal().month} - ${ref.watch(entryEndDateProvider)!.toLocal().year}'
+                : 'Select End Date',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildSaveButton() {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () async {
+          if (formKeyEntryDetails.currentState!.validate()) {
+            // Access controllers from providers
+            final entryName = ref.read(entryNameControllerProvider).text;
+            final entryNumber = ref.read(entryNumberControllerProvider).text;
+            final entryStrength =
+                ref.read(entryStrengthControllerProvider).text;
+            final selectedStartDate = ref.read(entryStartDateProvider);
+            final selectedEndDate = ref.read(entryEndDateProvider);
+            final entryTitle = ref.read(entryTitleControllerProvider).text;
+            final entrySlogan = ref.read(entrySloganControllerProvider).text;
+
+            // Create the Entry object
+            Entry newEntry = Entry(
+              name: entryName,
+              number: entryNumber,
+              strength: int.tryParse(entryStrength) ?? 0,
+              startDate: selectedStartDate != null
+                  ? Timestamp.fromDate(selectedStartDate)
+                  : Timestamp.now(),
+              endDate: selectedEndDate != null
+                  ? Timestamp.fromDate(selectedEndDate)
+                  : Timestamp.now(),
+              title: entryTitle ?? 'not applicable',
+              slogan: entrySlogan ?? 'not applicable',
+            );
+
+            // Save the Entry to Firestore
+            setState(() {
+              formIsBusy = true;
+            });
+            await DbService().saveEntryToFirestore(newEntry);
+            setState(() {
+              formIsBusy = false;
+            });
+          }
+        },
+        child: const Text('Save Entry'),
       ),
     );
+  }
+
+  Widget buildDropzoneAndCreateCadetsButton() {
+    return Column(
+      children: [
+        // Dropzone and Create Cadets Button
+        const SizedBox(height: 16.0),
+        const Card(
+          elevation: 5,
+          child: Center(
+            child: SizedBox(
+              height: 200,
+              width: 300,
+              child: DropzoneWidget(),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16.0),
+        ElevatedButton(
+          onPressed: () {
+            //TODO: Implement logic to create cadets
+          },
+          child: const Text('Create Cadets'),
+        ),
+      ],
+    );
+  }
+
+  Widget buildcreatedEntrySummary(Entry? savedEntry) {
+    return savedEntry != null
+        ? const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('new entry name is ....'),
+                Text('new entry strength  is ....'),
+              ],
+            ),
+          )
+        : Container();
   }
 }

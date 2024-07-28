@@ -6,7 +6,7 @@ class CreateEntryStep1 extends ConsumerStatefulWidget {
 
   const CreateEntryStep1({required this.formKeyEntryDetails, super.key});
 
- @override
+  @override
   ConsumerState<CreateEntryStep1> createState() => _CreateEntryStep1State();
 }
 
@@ -18,10 +18,10 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
   final FocusNode entryTitleFocusNode = FocusNode();
   final FocusNode entrySloganFocusNode = FocusNode();
 
-@override
+  @override
   void dispose() {
     // TODO: implement dispose
-       // Dispose of the FocusNodes when the widget is disposed
+    // Dispose of the FocusNodes when the widget is disposed
     entryNameFocusNode.dispose();
     entryNumberFocusNode.dispose();
     entryStrengthFocusNode.dispose();
@@ -30,11 +30,8 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
     super.dispose();
   }
 
-
-
- @override
- Widget build(BuildContext context) {
-
+  @override
+  Widget build(BuildContext context) {
 //  final entryNameController = ref.watch(entryNameControllerProvider);
 //   final entryNumberController = ref.watch(entryNumberControllerProvider);
 //   final entryStrengthController = ref.watch(entryStrengthControllerProvider);
@@ -42,151 +39,155 @@ class _CreateEntryStep1State extends ConsumerState<CreateEntryStep1> {
 //   final selectedEndDate = ref.watch(entryEndDateProvider);
 //   final entryTitleController = ref.watch(entryTitleControllerProvider);
 //   final entrySloganController = ref.watch(entrySloganControllerProvider);
-
-
-    return Dialog(
-      child: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
-          child: Form(
-            key: widget.formKeyEntryDetails,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    ' Entry Details',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  // Text(
-                  //   'Step 1 of 3',
-                  //   style: Theme.of(context).textTheme.labelMedium,
-                  // ),
-                  TextFormField(
-                    //Entry Name
-                    controller: ref.read(entryNameControllerProvider), 
-                    focusNode: entryNameFocusNode,
-                    decoration: const InputDecoration(
-                      labelText: 'Entry Name',
-                    ),
-
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter entry name';
-                      }
-                      return null;
-                    },
-                  ),
-                  //  Icon(Icons.question_mark),
-                  TextFormField(
-                    //Entry Number
-                    controller: ref.read(entryNumberControllerProvider),
-                    focusNode: entryNumberFocusNode,
-                    decoration:
-                        const InputDecoration(labelText: 'Entry Number'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter entry number';
-                      }
-                      return null;
-                    },
-                  ),
-                  //  Icon(Icons.question_mark),
-                  TextFormField(
-                    //Entry Strength
-                    controller: ref.read(entryStrengthControllerProvider),
-                    focusNode: entryStrengthFocusNode,
-                    decoration:
-                        const InputDecoration(labelText: 'Entry Strength'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter entry strength';
-                      }
-                      if (int.tryParse(value) == null) {
-                        return 'Please enter a valid number';
-                      }
-                      return null;
-                    },
-                  ),
-                  //  Icon(Icons.question_mark),
-                  const SizedBox(height: 12.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        //Start date picker
-                        onPressed: () {
-                          // Show the date picker for start date
-                          showDatePicker(
-                            context: context,
-                            initialDate:
-                                selectedStartDate ?? DateTime.now(),
-                            firstDate: DateTime(1965),
-                            lastDate: DateTime.now(),
-                          ).then((date) {
-                            if (date != null) {
-                              setState(() {
-                                //TODO
-                                ref.read(entryStartDateProvider.notifier).state= date;
-                                // ref.watch(entryEndDateProvider
-                              });
-                            }
-                          });
-                        },
-                        child: Text(
-                          selectedStartDate!= null
-                              ? '${selectedStartDate.day} - ${selectedStartDate.month} - ${selectedStartDate.year}'
-                              : 'Select Start Date',
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Show the date picker for end date
-                          showDatePicker(
-                            context: context,
-                            initialDate:
-                                selectedEndDate ?? DateTime.now(),
-                            firstDate: DateTime(1970),
-                            lastDate: DateTime.now(),
-                          ).then((date) {
-                            if (date != null) {
-                              //TODO
-                          ref.read(entryEndDateProvider.notifier).state= date;
-                              // ref.watch(entryEndDateProvider)
-                            }
-                          });
-                        },
-                        child: Text(
-                          selectedEndDate != null
-                              ? '${selectedEndDate.day} - ${selectedEndDate.month} - ${selectedEndDate.year}'
-                              : 'Select End Date',
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  TextFormField(
-                    controller: entryTitleController,
-                    focusNode: entryTitleFocusNode,
-                    decoration: const InputDecoration(
-                        labelText: 'Entry Title (Optional)'),
-                  ),
-                  TextFormField(
-                    controller: entrySloganController,
-                    focusNode: entrySloganFocusNode,
-                    decoration: const InputDecoration(
-                        labelText: 'Entry Slogan (Optional)'),
-                  ),
-               
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return Container(
+      height: 50,
+      width: 200,
+      color: Colors.deepOrange,
     );
+
+    // return Dialog(
+    //   child: SingleChildScrollView(
+    //     child: SizedBox(
+    //       width: MediaQuery.of(context).size.width * 0.7,
+    //       child: Form(
+    //         key: widget.formKeyEntryDetails,
+    //         child: Padding(
+    //           padding: const EdgeInsets.symmetric(horizontal: 32.0),
+    //           child: Column(
+    //             crossAxisAlignment: CrossAxisAlignment.center,
+    //             mainAxisSize: MainAxisSize.min,
+    //             children: [
+    //               Text(
+    //                 ' Entry Details',
+    //                 style: Theme.of(context).textTheme.headlineSmall,
+    //               ),
+    //               // Text(
+    //               //   'Step 1 of 3',
+    //               //   style: Theme.of(context).textTheme.labelMedium,
+    //               // ),
+    //               TextFormField(
+    //                 //Entry Name
+    //                 controller: ref.read(entryNameControllerProvider),
+    //                 focusNode: entryNameFocusNode,
+    //                 decoration: const InputDecoration(
+    //                   labelText: 'Entry Name',
+    //                 ),
+
+    //                 validator: (value) {
+    //                   if (value == null || value.isEmpty) {
+    //                     return 'Please enter entry name';
+    //                   }
+    //                   return null;
+    //                 },
+    //               ),
+    //               //  Icon(Icons.question_mark),
+    //               TextFormField(
+    //                 //Entry Number
+    //                 controller: ref.read(entryNumberControllerProvider),
+    //                 focusNode: entryNumberFocusNode,
+    //                 decoration:
+    //                     const InputDecoration(labelText: 'Entry Number'),
+    //                 validator: (value) {
+    //                   if (value == null || value.isEmpty) {
+    //                     return 'Please enter entry number';
+    //                   }
+    //                   return null;
+    //                 },
+    //               ),
+    //               //  Icon(Icons.question_mark),
+    //               TextFormField(
+    //                 //Entry Strength
+    //                 controller: ref.read(entryStrengthControllerProvider),
+    //                 focusNode: entryStrengthFocusNode,
+    //                 decoration:
+    //                     const InputDecoration(labelText: 'Entry Strength'),
+    //                 keyboardType: TextInputType.number,
+    //                 validator: (value) {
+    //                   if (value == null || value.isEmpty) {
+    //                     return 'Please enter entry strength';
+    //                   }
+    //                   if (int.tryParse(value) == null) {
+    //                     return 'Please enter a valid number';
+    //                   }
+    //                   return null;
+    //                 },
+    //               ),
+    //               //  Icon(Icons.question_mark),
+    //               const SizedBox(height: 12.0),
+    //               Row(
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: [
+    //                   ElevatedButton(
+    //                     //Start date picker
+    //                     onPressed: () {
+    //                       // Show the date picker for start date
+    //                       showDatePicker(
+    //                         context: context,
+    //                         initialDate:
+    //                             selectedStartDate ?? DateTime.now(),
+    //                         firstDate: DateTime(1965),
+    //                         lastDate: DateTime.now(),
+    //                       ).then((date) {
+    //                         if (date != null) {
+    //                           setState(() {
+    //                             //TODO
+    //                             ref.read(entryStartDateProvider.notifier).state= date;
+    //                             // ref.watch(entryEndDateProvider
+    //                           });
+    //                         }
+    //                       });
+    //                     },
+    //                     child: Text(
+    //                       selectedStartDate!= null
+    //                           ? '${selectedStartDate.day} - ${selectedStartDate.month} - ${selectedStartDate.year}'
+    //                           : 'Select Start Date',
+    //                     ),
+    //                   ),
+    //                   ElevatedButton(
+    //                     onPressed: () {
+    //                       // Show the date picker for end date
+    //                       showDatePicker(
+    //                         context: context,
+    //                         initialDate:
+    //                             selectedEndDate ?? DateTime.now(),
+    //                         firstDate: DateTime(1970),
+    //                         lastDate: DateTime.now(),
+    //                       ).then((date) {
+    //                         if (date != null) {
+    //                           //TODO
+    //                       ref.read(entryEndDateProvider.notifier).state= date;
+    //                           // ref.watch(entryEndDateProvider)
+    //                         }
+    //                       });
+    //                     },
+    //                     child: Text(
+    //                       selectedEndDate != null
+    //                           ? '${selectedEndDate.day} - ${selectedEndDate.month} - ${selectedEndDate.year}'
+    //                           : 'Select End Date',
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+
+    //               TextFormField(
+    //                 controller: entryTitleController,
+    //                 focusNode: entryTitleFocusNode,
+    //                 decoration: const InputDecoration(
+    //                     labelText: 'Entry Title (Optional)'),
+    //               ),
+    //               TextFormField(
+    //                 controller: entrySloganController,
+    //                 focusNode: entrySloganFocusNode,
+    //                 decoration: const InputDecoration(
+    //                     labelText: 'Entry Slogan (Optional)'),
+    //               ),
+
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
