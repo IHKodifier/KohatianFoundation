@@ -1,7 +1,7 @@
 //services
 export 'package:kohatian_foundation/services/auth_service.dart';
 export 'package:kohatian_foundation/services/providers/user_profile_provider.dart';
-
+export './services/db/dbservice.dart';
 // providers & Packages
 export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:firebase_core/firebase_core.dart';
@@ -15,8 +15,6 @@ export 'package:rxdart/rxdart.dart';
 export 'package:tuple/tuple.dart';
 export 'services/providers/entry_creation_provider.dart';
 export 'services/providers/entry_creation_notifier.dart';
-
-
 
 //utils
 

@@ -89,7 +89,7 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
                           height: 50,
                           child: ElevatedButton.icon(
                             // onPressed: details.onStepContinue,
-                            onPressed: _saveEntryToFirestore,
+                            onPressed: _saveEntry,
                             label: const Text('Save and next'),
                             icon: const FaIcon(FontAwesomeIcons.floppyDisk),
                           ),
@@ -122,10 +122,11 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
                           ? Center(
                               child: Text(
                                   'Entry named ${entryNameController.text} created Successfully '))
-                          : const Center(child: CircularProgressIndicator(),),
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            ),
                 ),
-                 Step(
-
+                Step(
                   //TODO  fix null value error when no entry selected
                   title: ref.watch(entryCreationProvider).entry != null
                       ? Text(
@@ -147,16 +148,15 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
       padding: const EdgeInsets.all(8.0),
       child: CreateEntryStep1(
         formKeyEntryDetails: formKey_EntryDetails,
-     
       ),
     );
   }
 
-  Future<void> _saveEntryToFirestore() async {
+  Future<void> _saveEntry() async {
     if (formKey_EntryDetails.currentState!.validate()) {
       print(
           '******************************** ENTRY FORM VALID*****************************');
-      
+
       // Access controllers from providers
       final entryName = ref.read(entryNameControllerProvider).text;
       final entryNumber = ref.read(entryNumberControllerProvider).text;
@@ -167,8 +167,8 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
       final entrySlogan = ref.read(entrySloganControllerProvider).text;
       // final docRef =
 
-  // Create the Entry object
-      Entry  newEntry = Entry(
+      // Create the Entry object
+      Entry newEntry = Entry(
         name: entryName,
         number: entryNumber,
         strength: int.tryParse(entryStrength) ?? 0,
@@ -182,18 +182,15 @@ class _CreateEntryStepperState extends ConsumerState<CreateEntryStepper> {
         slogan: entrySlogan,
       );
       setState(() {
-       
         formIsBusy = true;
       });
       try {
-        await FirebaseFirestore.instance
-            .collection('entrys')
-            .doc(entryName)
-            .set(newEntry.toMap());
-         entryNotifier.success(newEntry);
        
-        //show success dialog
-          ScaffoldMessenger.of(context).showSnackBar(
+        DbService().saveEntryToFirestore(newEntry);
+        entryNotifier.success(newEntry);
+
+        //show success snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${newEntry.name} created successfully!'),
             duration: Duration(seconds: 2),
