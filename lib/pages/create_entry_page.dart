@@ -16,7 +16,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final savedEntry = ref.watch(entryCreationProvider).entry;
+    final savedEntry = ref.watch(entryCreationProvider).;
 
     // Use a ternary operator to handle the initial null state
     form = savedEntry == null
@@ -51,7 +51,6 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                     return null;
                   },
                 ),
-             
 
                 // Entry Strength
                 TextFormField(
@@ -114,10 +113,12 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildEntryDetailsSection(),
+                    savedEntry!=null?
+                    buildEntryDetailsSection(savedEntry):Container(),
                     buildcreatedEntrySummary(savedEntry),
-                    SizedBox(height: 16),
-                    buildDatePickerRow(),
+                    const SizedBox(height: 16),
+                     savedEntry!=null?
+                     buildDatePickerRow():Container(),
                     buildSaveButton(),
                     buildDropzoneAndCreateCadetsButton(),
                   ],
@@ -128,8 +129,14 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
     );
   }
 
-  Widget buildEntryDetailsSection() {
-    return form;
+  Widget buildEntryDetailsSection(Entry? savedEntry) {
+    //show when ready to create new entry
+
+    return formIsBusy
+        ? const Center(child: CircularProgressIndicator())
+        : savedEntry == null
+            ? form
+            : buildcreatedEntrySummary(savedEntry);
   }
 
   Widget buildDatePickerRow() {
@@ -251,14 +258,16 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   }
 
   Widget buildcreatedEntrySummary(Entry? savedEntry) {
+    //TODO check against buildEntryDetailsSection and fix
     return savedEntry != null
-        ? const Center(
+        ?  Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('new entry name is ....'),
-                Text('new entry strength  is ....'),
+                Text('new entry name is ${savedEntry.name}'),
+                Text('new entry strength  is ${savedEntry.strength}'),
+                Text('new entry number is ${savedEntry.number}'),
               ],
             ),
           )
