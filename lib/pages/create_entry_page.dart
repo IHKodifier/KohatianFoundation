@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
@@ -5,188 +7,116 @@ class CreateEntryPage extends ConsumerStatefulWidget {
   const CreateEntryPage({super.key});
 
   @override
-  ConsumerState<CreateEntryPage> createState() => _CreateEntryPageState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _CreateEntryPageState();
 }
 
 class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   final GlobalKey<FormState> formKeyEntryDetails = GlobalKey<FormState>();
-
+  late EntryCreationStatus entryCreationStatus;
+  late EntryCreationNotifier entryCreationNotifier;
   bool formIsBusy = false;
-  late Widget form;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    entryCreationStatus = EntryCreationStatus.initial;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final savedEntry = ref.watch(entryCreationProvider).;
+    final entryCreationStatus = ref.watch(entryCreationProvider).status;
+    final newlyCreatedEntry = ref.watch(entryCreationProvider).entry;
+     entryCreationNotifier = ref.read(entryCreationProvider.notifier);
 
-    // Use a ternary operator to handle the initial null state
-    form = savedEntry == null
-        ? Form(
-            key: formKeyEntryDetails,
-            child: Column(
-              children: [
-                //Entry Name
-                TextFormField(
-                  controller: ref.read(entryNameControllerProvider),
-                  decoration: const InputDecoration(
-                    labelText: 'Entry Name',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter entry name';
-                    }
-                    return null;
-                  },
-                ),
-
-                // Entry Number
-                TextFormField(
-                  controller: ref.read(entryNumberControllerProvider),
-                  decoration: const InputDecoration(
-                    labelText: 'Entry Number',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter entry number';
-                    }
-                    return null;
-                  },
-                ),
-
-                // Entry Strength
-                TextFormField(
-                  controller: ref.read(entryStrengthControllerProvider),
-                  decoration: const InputDecoration(
-                    labelText: 'Entry Strength',
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter entry strength';
-                    }
-                    if (int.tryParse(value) == null) {
-                      return 'Please enter a valid number';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                // Start Date
-
-                // Entry Title
-                TextFormField(
-                  controller: ref.read(entryTitleControllerProvider),
-                  decoration: const InputDecoration(
-                    labelText: 'Entry Title (Optional)',
-                  ),
-                  // validator: (value) {
-                  //   return null;
-                  // },
-                ),
-
-                // Entry Slogan
-                TextFormField(
-                  controller: ref.read(entrySloganControllerProvider),
-                  decoration: const InputDecoration(
-                    labelText: 'Entry Slogan (Optional)',
-                  ),
-                  //  validator: (value) {
-                  //   return null;
-                  // },
-                ),
-              ],
-            ),
-          )
-        : Center(
-            child:
-                Text('newe entry of ${savedEntry.name} created successfully'),
-          );
+    // print(entryCreationStatus.toString());
+    // print(newlyCreatedEntry.toString());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Entry'),
-        centerTitle: true,
+        appBar: AppBar(
+          title: Text('create Entry'),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            child: Column(
+              children: [
+                entryList(),
+                entryCreationForm(),
+                buildSaveButton(),
+                addEntryCadetsDropzone(),
+                SiteFooter(),
+              ],
+            ),
+          ),
+        ));
+  }
+
+  entryList() {
+    return Container(
+      height: 80,
+      width: double.infinity,
+      color: Colors.deepOrange,
+      child: Text('entries list goes here'),
+    );
+  }
+
+  entryCreationForm() {
+    return Form(
+      key: formKeyEntryDetails,
+      child: Column(
+        children: [
+          // Entry Name
+          _buildTextFormField(
+            controller: ref.read(entryNameControllerProvider),
+            labelText: 'Entry Name',
+          ),
+
+          // Entry Number
+          _buildTextFormField(
+            controller: ref.read(entryNumberControllerProvider),
+            labelText: 'Entry Number',
+          ),
+
+          // Entry Strength
+          _buildTextFormField(
+            controller: ref.read(entryStrengthControllerProvider),
+            labelText: 'Entry Strength',
+            keyboardType: TextInputType.number,
+          ),
+
+          const SizedBox(height: 16),
+          // Start Date
+          // _buildDatePickerRow(
+          //   controller: ref.read(entryStartDateProvider.notifier),
+          //   labelText: 'Select Start Date',
+          // ),
+
+          // // End Date
+          // _buildDatePickerRow(
+          //   controller: ref.read(entryEndDateProvider.notifier),
+          //   labelText: 'Select End Date',
+          // ),
+
+          // Entry Title
+          _buildTextFormField(
+              controller: ref.read(entryTitleControllerProvider),
+              labelText: 'Entry Title (Optional)',
+              reuiresValidation: false),
+
+          // Entry Slogan
+          _buildTextFormField(
+            controller: ref.read(entrySloganControllerProvider),
+            labelText: 'Entry Slogan (Optional)',
+            reuiresValidation: false,
+          ),
+        ],
       ),
-      body: !formIsBusy
-          ? SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    savedEntry!=null?
-                    buildEntryDetailsSection(savedEntry):Container(),
-                    buildcreatedEntrySummary(savedEntry),
-                    const SizedBox(height: 16),
-                     savedEntry!=null?
-                     buildDatePickerRow():Container(),
-                    buildSaveButton(),
-                    buildDropzoneAndCreateCadetsButton(),
-                  ],
-                ),
-              ),
-            )
-          : const Center(child: CircularProgressIndicator()),
     );
   }
 
-  Widget buildEntryDetailsSection(Entry? savedEntry) {
-    //show when ready to create new entry
-
-    return formIsBusy
-        ? const Center(child: CircularProgressIndicator())
-        : savedEntry == null
-            ? form
-            : buildcreatedEntrySummary(savedEntry);
-  }
-
-  Widget buildDatePickerRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            showDatePicker(
-              context: context,
-              initialDate: ref.watch(entryStartDateProvider) ?? DateTime.now(),
-              firstDate: DateTime(1965),
-              lastDate: DateTime.now(),
-            ).then((date) {
-              if (date != null) {
-                ref.read(entryStartDateProvider.notifier).state = date;
-              }
-            });
-          },
-          child: Text(
-            ref.watch(entryStartDateProvider) != null
-                ? '${ref.watch(entryStartDateProvider)!.toLocal().day} - ${ref.watch(entryStartDateProvider)!.toLocal().month} - ${ref.watch(entryStartDateProvider)!.toLocal().year}'
-                : 'Select Start Date',
-          ),
-        ),
-        // End Date
-        ElevatedButton(
-          onPressed: () {
-            showDatePicker(
-              context: context,
-              initialDate: ref.watch(entryEndDateProvider) ?? DateTime.now(),
-              firstDate: DateTime(1970),
-              lastDate: DateTime.now(),
-            ).then((date) {
-              if (date != null) {
-                ref.read(entryEndDateProvider.notifier).state = date;
-              }
-            });
-          },
-          child: Text(
-            ref.watch(entryEndDateProvider) != null
-                ? '${ref.watch(entryEndDateProvider)!.toLocal().day} - ${ref.watch(entryEndDateProvider)!.toLocal().month} - ${ref.watch(entryEndDateProvider)!.toLocal().year}'
-                : 'Select End Date',
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildSaveButton() {
+  buildSaveButton() {
     return Center(
       child: ElevatedButton(
         onPressed: () async {
@@ -212,8 +142,8 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
               endDate: selectedEndDate != null
                   ? Timestamp.fromDate(selectedEndDate)
                   : Timestamp.now(),
-              title: entryTitle ?? 'not applicable',
-              slogan: entrySlogan ?? 'not applicable',
+              title: entryTitle,
+              slogan: entrySlogan,
             );
 
             // Save the Entry to Firestore
@@ -231,46 +161,70 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
     );
   }
 
-  Widget buildDropzoneAndCreateCadetsButton() {
-    return Column(
-      children: [
-        // Dropzone and Create Cadets Button
-        const SizedBox(height: 16.0),
-        const Card(
-          elevation: 5,
-          child: Center(
-            child: SizedBox(
-              height: 200,
-              width: 300,
-              child: DropzoneWidget(),
-            ),
-          ),
-        ),
-        const SizedBox(height: 16.0),
-        ElevatedButton(
-          onPressed: () {
-            //TODO: Implement logic to create cadets
-          },
-          child: const Text('Create Cadets'),
-        ),
-      ],
+  addEntryCadetsDropzone() {
+    return Container(
+      height: 80,
+      width: double.infinity,
+      color: Colors.deepPurple,
+      child: Text('dropzone goes here'),
     );
   }
 
-  Widget buildcreatedEntrySummary(Entry? savedEntry) {
-    //TODO check against buildEntryDetailsSection and fix
-    return savedEntry != null
-        ?  Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('new entry name is ${savedEntry.name}'),
-                Text('new entry strength  is ${savedEntry.strength}'),
-                Text('new entry number is ${savedEntry.number}'),
-              ],
-            ),
-          )
-        : Container();
+  Widget _buildTextFormField(
+      {required TextEditingController controller,
+      required String labelText,
+      TextInputType keyboardType = TextInputType.text,
+      bool reuiresValidation = true}) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(labelText: labelText),
+      keyboardType: keyboardType,
+      validator: (value) {
+        if (reuiresValidation) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter $labelText';
+          }
+          if (keyboardType == TextInputType.number &&
+              int.tryParse(value) == null) {
+            return 'Please enter a valid number';
+          }
+          return null;
+        }
+      },
+    );
+  }
+
+  Widget _buildDatePickerRow(
+      // {
+      // required StateNotifier<DateTime?> controller,
+      // required String labelText,
+
+      // }
+      ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            showDatePicker(
+              context: context,
+              initialDate: entryCreationNotifier.startDate ?? DateTime.now(),
+              firstDate: DateTime(1965),
+              lastDate: DateTime.now(),
+            ).then((date) {
+              if (date != null) {
+                // controller.updateStartDate(date);
+                ref.read(entryCreationProvider.notifier).updateStartDate(date);
+              }
+            });
+          },
+          child: Text(
+            entryCreationNotifier.startDate != null
+                ? '${entryCreationNotifier.startDate!.toLocal().day} - ${entryCreationNotifier.startDate!.toLocal().month} - ${entryCreationNotifier.startDate!.toLocal().year}'
+                : 'Entry Start Dat',
+          ),
+        ),
+      ],
+    );
   }
 }
