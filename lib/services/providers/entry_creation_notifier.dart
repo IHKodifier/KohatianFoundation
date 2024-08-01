@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kohatian_foundation/models/entry_model.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class EntryCreationNotifier extends StateNotifier<EntryCreationState> {
@@ -12,8 +10,7 @@ class EntryCreationNotifier extends StateNotifier<EntryCreationState> {
   final _entryStrengthController = TextEditingController();
   final _entryTitleController = TextEditingController();
   final _entrySloganController = TextEditingController();
-  // final _entryStartDateController = TextEditingController();
-  // final _entryEndDateController = TextEditingController();
+
 
   // Getters for the controllers
   TextEditingController get entryNameController => _entryNameController;
@@ -21,17 +18,23 @@ class EntryCreationNotifier extends StateNotifier<EntryCreationState> {
   TextEditingController get entryStrengthController => _entryStrengthController;
   TextEditingController get entryTitleController => _entryTitleController;
   TextEditingController get entrySloganController => _entrySloganController;
-  // TextEditingController get entryStartDateController =>
-  //     _entryStartDateController;
-  // TextEditingController get entryEndDateController => _entryEndDateController;
+
 
   // Date variables
   DateTime? _startDate;
   DateTime? _endDate;
 
-  // Getters for the dates
+  // Getters /setters  for the dates
   DateTime? get startDate => _startDate;
-  DateTime? get endDate => _endDate;
+  set startDate(DateTime? value) {
+    _startDate = value;
+    state = state.copyWith(startDate: value); // Update the state directly
+  }
+DateTime? get endDate => _endDate;
+  set endDate(DateTime? value) {
+    _endDate = value;
+    state = state.copyWith(endDate: value); // Update the state directly
+  }
 
 // Update methods for the dates
   void updateStartDate(DateTime? newDate) {
@@ -51,12 +54,12 @@ class EntryCreationNotifier extends StateNotifier<EntryCreationState> {
     entry.startDate = Timestamp.fromDate(newDate!);
 
     // Update the state with the new Entry
-    state = state!.copyWith(entry: entry);
+    state = state.copyWith(entry: entry);
   }
 
   void updateEndDate(DateTime? newDate) {
     // Create a new Entry object if it doesn't exist
-   if (state.entry == null) {
+    if (state.entry == null) {
       state = state.copyWith(
         entry: Entry(
           name: '',
@@ -74,17 +77,37 @@ class EntryCreationNotifier extends StateNotifier<EntryCreationState> {
         entry: state.entry!.copyWith(startDate: Timestamp.fromDate(newDate!)),
       );
     }
-
-   
   }
 
 
 
-  Future<void> createEntry(Entry entry) async {
-    //TODO
-    // Simulate entry creation (replace with your actual logic)
-    await Future.delayed(const Duration(seconds: 1));
-    state = EntryCreationState.success(entry);
+  Future<void> saveEntry() async {
+    // Access controllers from providers
+    final entryName = _entryNameController.text;
+    final entryNumber = _entryNumberController.text;
+    final entryStrength = _entryStrengthController.text;
+    final entryTitle = _entryTitleController.text;
+    final entrySlogan = _entrySloganController.text;
+
+    // Create the Entry object
+    Entry newEntry = Entry(
+      name: entryName,
+      number: entryNumber,
+      strength: int.tryParse(entryStrength) ?? 0,
+      startDate: _startDate != null
+          ? Timestamp.fromDate(_startDate!)
+          : Timestamp.now(),
+      endDate:
+          _endDate != null ? Timestamp.fromDate(_endDate!) : Timestamp.now(),
+      title: entryTitle,
+      slogan: entrySlogan,
+    );
+
+    // Save the Entry to Firestore
+    await DbService().saveEntryToFirestore(newEntry);
+
+    // Update the notifier state with the newly created entry
+    state = EntryCreationState.success(newEntry);
   }
 
   void reset() {
@@ -98,26 +121,43 @@ class EntryCreationNotifier extends StateNotifier<EntryCreationState> {
 
 class EntryCreationState {
   final Entry? entry;
+  final DateTime? startDate;
+  final DateTime? endDate;
   final EntryCreationStatus status;
 
-   EntryCreationState({
+  EntryCreationState({
     this.entry,
+    this.startDate,
+    this.endDate,
     required this.status,
   });
 
   const EntryCreationState.initial()
       : entry = null,
+        startDate = null,
+        endDate = null,
         status = EntryCreationStatus.initial;
-        
 
   const EntryCreationState.success(this.entry)
-      : status = EntryCreationStatus.success;
+      : startDate = null,
+        endDate = null,
+        status = EntryCreationStatus.success;
   const EntryCreationState.failure()
       : entry = null,
+        startDate = null,
+        endDate = null,
         status = EntryCreationStatus.failure;
-   EntryCreationState copyWith({Entry? entry, EntryCreationStatus? status}) {
+
+  EntryCreationState copyWith({
+    Entry? entry,
+    DateTime? startDate,
+    DateTime? endDate,
+    EntryCreationStatus? status,
+  }) {
     return EntryCreationState(
       entry: entry ?? this.entry,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
       status: status ?? this.status,
     );
   }

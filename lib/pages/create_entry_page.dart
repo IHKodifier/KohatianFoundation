@@ -16,6 +16,8 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   late EntryCreationStatus entryCreationStatus;
   late EntryCreationNotifier entryCreationNotifier;
   bool formIsBusy = false;
+  DateTime? _startDate;
+  DateTime? _endDate;
 
   @override
   void initState() {
@@ -26,16 +28,16 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final entryCreationStatus = ref.watch(entryCreationProvider).status;
+    // Watch the EntryCreationNotifier for changes
+    entryCreationStatus = ref.watch(entryCreationProvider).status;
     final newlyCreatedEntry = ref.watch(entryCreationProvider).entry;
-     entryCreationNotifier = ref.read(entryCreationProvider.notifier);
-
-    // print(entryCreationStatus.toString());
-    // print(newlyCreatedEntry.toString());
+    entryCreationNotifier = ref.read(entryCreationProvider.notifier);
+    _startDate = entryCreationNotifier.startDate;
+    _endDate = entryCreationNotifier.endDate;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('create Entry'),
+          title: const Text('create Entry'),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -46,7 +48,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                 entryCreationForm(),
                 buildSaveButton(),
                 addEntryCadetsDropzone(),
-                SiteFooter(),
+                const SiteFooter(),
               ],
             ),
           ),
@@ -58,62 +60,104 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
       height: 80,
       width: double.infinity,
       color: Colors.deepOrange,
-      child: Text('entries list goes here'),
+      child: const Text('entries list goes here'),
     );
   }
 
   entryCreationForm() {
-    return Form(
-      key: formKeyEntryDetails,
-      child: Column(
-        children: [
-          // Entry Name
-          _buildTextFormField(
-            controller: ref.read(entryNameControllerProvider),
-            labelText: 'Entry Name',
-          ),
+    return !formIsBusy & (entryCreationStatus == EntryCreationStatus.initial)
+        ? Form(
+            key: formKeyEntryDetails,
+            child: Column(
+              children: [
+                // Entry Name
+                _buildTextFormField(
+                  controller: ref.read(entryNameControllerProvider),
+                  labelText: 'Entry Name',
+                ),
 
-          // Entry Number
-          _buildTextFormField(
-            controller: ref.read(entryNumberControllerProvider),
-            labelText: 'Entry Number',
-          ),
+                // Entry Number
+                _buildTextFormField(
+                  controller: ref.read(entryNumberControllerProvider),
+                  labelText: 'Entry Number',
+                ),
 
-          // Entry Strength
-          _buildTextFormField(
-            controller: ref.read(entryStrengthControllerProvider),
-            labelText: 'Entry Strength',
-            keyboardType: TextInputType.number,
-          ),
+                // Entry Strength
+                _buildTextFormField(
+                  controller: ref.read(entryStrengthControllerProvider),
+                  labelText: 'Entry Strength',
+                  keyboardType: TextInputType.number,
+                ),
 
-          const SizedBox(height: 16),
-          // Start Date
-          // _buildDatePickerRow(
-          //   controller: ref.read(entryStartDateProvider.notifier),
-          //   labelText: 'Select Start Date',
-          // ),
+                const SizedBox(height: 16),
 
-          // // End Date
-          // _buildDatePickerRow(
-          //   controller: ref.read(entryEndDateProvider.notifier),
-          //   labelText: 'Select End Date',
-          // ),
+                //Date pickers
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Start Date Picker
+                    ElevatedButton(
+                      onPressed: () async {
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1965),
+                          lastDate: DateTime.now(),
+                        );
+                        if (selectedDate != null) {
+                          setState(() {
+                            entryCreationNotifier.startDate = selectedDate;
+                          });
+                        }
+                      },
+                      child: Text(
+                        entryCreationNotifier.startDate != null
+                            ? '${entryCreationNotifier.startDate?.day} - ${entryCreationNotifier.startDate?.month} - ${entryCreationNotifier.startDate?.year}'
+                            : 'Entry Start Date',
+                      ),
+                    ),
+                    // End Date Picker
+                    ElevatedButton(
+                      onPressed: () async {
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2100),
+                        );
+                        if (selectedDate != null) {
+                          setState(() {
+                            entryCreationNotifier.endDate = selectedDate;
+                          });
+                        }
+                      },
+                      child: Text(
+                        entryCreationNotifier.endDate != null
+                            ? '${entryCreationNotifier.endDate?.day} - ${entryCreationNotifier.endDate?.month} - ${entryCreationNotifier.endDate?.year}'
+                            : 'Entry End Date',
+                      ),
+                    ),
+                  ],
+                ),
 
-          // Entry Title
-          _buildTextFormField(
-              controller: ref.read(entryTitleControllerProvider),
-              labelText: 'Entry Title (Optional)',
-              reuiresValidation: false),
+                // Entry Title
+                _buildTextFormField(
+                    controller: ref.read(entryTitleControllerProvider),
+                    labelText: 'Entry Title (Optional)',
+                    reuiresValidation: false),
 
-          // Entry Slogan
-          _buildTextFormField(
-            controller: ref.read(entrySloganControllerProvider),
-            labelText: 'Entry Slogan (Optional)',
-            reuiresValidation: false,
-          ),
-        ],
-      ),
-    );
+                // Entry Slogan
+                _buildTextFormField(
+                  controller: ref.read(entrySloganControllerProvider),
+                  labelText: 'Entry Slogan (Optional)',
+                  reuiresValidation: false,
+                ),
+              ],
+            ),
+          )
+        : ref.watch(entryCreationProvider).entry != null
+            ? buildEntrySuccess()
+            : const CircularProgressIndicator();
   }
 
   buildSaveButton() {
@@ -126,8 +170,8 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
             final entryNumber = ref.read(entryNumberControllerProvider).text;
             final entryStrength =
                 ref.read(entryStrengthControllerProvider).text;
-            final selectedStartDate = ref.read(entryStartDateProvider);
-            final selectedEndDate = ref.read(entryEndDateProvider);
+            // final selectedStartDate = ref.read(entryStartDateProvider);
+            // final selectedEndDate = ref.read(entryEndDateProvider);
             final entryTitle = ref.read(entryTitleControllerProvider).text;
             final entrySlogan = ref.read(entrySloganControllerProvider).text;
 
@@ -136,11 +180,11 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
               name: entryName,
               number: entryNumber,
               strength: int.tryParse(entryStrength) ?? 0,
-              startDate: selectedStartDate != null
-                  ? Timestamp.fromDate(selectedStartDate)
+              startDate: _startDate != null
+                  ? Timestamp.fromDate(_startDate!)
                   : Timestamp.now(),
-              endDate: selectedEndDate != null
-                  ? Timestamp.fromDate(selectedEndDate)
+              endDate: _endDate != null
+                  ? Timestamp.fromDate(_endDate!)
                   : Timestamp.now(),
               title: entryTitle,
               slogan: entrySlogan,
@@ -154,11 +198,16 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
             setState(() {
               formIsBusy = false;
             });
+
+            ref.read(entryCreationProvider.notifier).success(newEntry);
           }
         },
         child: const Text('Save Entry'),
       ),
     );
+    setState(() {
+      formIsBusy = false;
+    });
   }
 
   addEntryCadetsDropzone() {
@@ -166,7 +215,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
       height: 80,
       width: double.infinity,
       color: Colors.deepPurple,
-      child: Text('dropzone goes here'),
+      child: const Text('dropzone goes here'),
     );
   }
 
@@ -190,6 +239,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
           }
           return null;
         }
+        return null;
       },
     );
   }
@@ -223,6 +273,38 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                 ? '${entryCreationNotifier.startDate!.toLocal().day} - ${entryCreationNotifier.startDate!.toLocal().month} - ${entryCreationNotifier.startDate!.toLocal().year}'
                 : 'Entry Start Dat',
           ),
+        ),
+      ],
+    );
+  }
+
+  buildEntrySuccess() {
+    return Column(
+      children: [
+          const SizedBox(
+          height: 16,
+        ),
+        Text(
+            'Entry named ${ref.read(entryCreationProvider).entry?.name} crreated Successfully'),
+        const SizedBox(
+          height: 16,
+        ),
+        const Text('next Up, you need to create cadet profiles in the entry'),
+          const SizedBox(
+          height: 16,
+        ),
+        const Text('You have two ways to do this:'),
+        const SizedBox(
+          height: 16,
+        ),
+        ElevatedButton(onPressed: () {}, 
+        child: Text('create ${ref.read(entryCreationProvider).entry?.strength.toString()} Blank cadet Profiles')),
+          const SizedBox(
+          height: 16,
+        ),
+            const Text('Or you can browse/drag an drop an Excel file to create cadet profiles for cadets of this entry.'),
+        const SizedBox(
+          height: 16,
         ),
       ],
     );
