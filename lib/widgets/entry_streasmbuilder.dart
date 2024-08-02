@@ -9,19 +9,25 @@ class EntryStreamBuilder extends ConsumerWidget {
     final entryAsync = ref.watch(entryStreamProvider);
 
     return entryAsync.when(
-      data: (data) => Container(
-        height: 300,
-        child: ListView.builder(
-          itemBuilder: (context, index) => ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.blue.shade500,
-                      child: Text(data[index].number),
-                      ),
-                      title: Text(data[index].name),
-                      subtitle: Text(data[index].strength.toString(),),
-          ), ),
-      ),
-      error: (error, stackTrace) => Text(error.toString()+ stackTrace.toString()), 
-      loading: ()=>Center(child: CircularProgressIndicator()));
+        data: (data) => Container(
+              height: 300,
+              child: ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (context, index) => ListTile(
+                  leading: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.blue.shade400,
+                    child: Text(data[index].number),
+                  ),
+                  title: Text(data[index].name),
+                  subtitle: Text(
+                    '${data[index].strength.toString()} cadets',
+                  ),
+                ),
+              ),
+            ),
+        error: (error, stackTrace) =>
+            Text(error.toString() + stackTrace.toString()),
+        loading: () => Center(child: CircularProgressIndicator()));
   }
 }

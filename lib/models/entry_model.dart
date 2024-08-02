@@ -131,17 +131,18 @@ class Entry extends Equatable {
     if (slogan != null) {
       result.addAll({'slogan': slogan});
     }
-    if (houseCommanders != null) {
+    if (houseCommanders != null && houseCommanders!.isNotEmpty) {
       result.addAll(
           {'houseCommanders': houseCommanders!.map((e) => e.toMap()).toList()});
     }
-    if (seniorSectionCommanders != null) {
+    if (seniorSectionCommanders != null &&
+        seniorSectionCommanders!.isNotEmpty) {
       result.addAll({
         'seniorSectionCommanders':
             seniorSectionCommanders!.map((e) => e.toMap()).toList()
       });
     }
-    if (sectionCommanders != null) {
+    if (sectionCommanders != null && sectionCommanders!.isNotEmpty) {
       result.addAll({
         'sectionCommanders': sectionCommanders!.map((e) => e.toMap()).toList()
       });
@@ -209,21 +210,23 @@ class Entry extends Equatable {
           : Timestamp.now(), // Set to current time if null
       title: map['title'] ?? '',
       slogan: map['slogan'] ?? '',
-      houseCommanders: map['houseCommanders'] != null
+     houseCommanders: map.containsKey('houseCommanders')
           ? (map['houseCommanders'] as List)
               .map((e) => Cadet.fromMap(e))
               .toList()
-          : null,
-      seniorSectionCommanders: map['seniorSectionCommanders'] != null
+          : [], // Initialize as an empty list if the key is missing
+
+      seniorSectionCommanders: map.containsKey('seniorSectionCommanders')
           ? (map['seniorSectionCommanders'] as List)
               .map((e) => Cadet.fromMap(e))
               .toList()
-          : null,
-      sectionCommanders: map['sectionCommanders'] != null
+          : [], // Initialize as an empty list if the key is missing
+
+      sectionCommanders: map.containsKey('sectionCommanders')
           ? (map['sectionCommanders'] as List)
               .map((e) => Cadet.fromMap(e))
               .toList()
-          : null,
+          : [], // Initialize as an empty list if the key is missing
       bestCadet:
           map['bestCadet'] != null ? Cadet.fromMap(map['bestCadet']) : null,
       bestStudent:
