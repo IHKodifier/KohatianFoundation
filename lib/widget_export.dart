@@ -15,6 +15,7 @@ export 'package:rxdart/rxdart.dart';
 export 'package:tuple/tuple.dart';
 export 'services/providers/entry_creation_provider.dart';
 export 'services/providers/entry_creation_notifier.dart';
+export './services/providers/entry_stream_provider.dart';
 
 //utils
 
@@ -52,3 +53,4 @@ export 'widgets/create_entry_step1.dart';
 export './widgets/admin_center_core.dart';
 export './widgets/createentrystep2.dart';
 export './widgets/dropzone_widget.dart';
+export './widgets/entry_streasmbuilder.dart';

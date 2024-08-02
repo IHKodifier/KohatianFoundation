@@ -25,4 +25,27 @@ group EntryName TextformField, Entry Number TextForm Field , Entry Strength Form
 write code to make two changes to the crerateEntryPage, first of all only hide the formfields when formIsBusy. no need to hide the dropzone when formIsBusy. Secondly, when a new entry is successfully created show a Centered TextWidget bearing the name of the newly created entry  having been successfully created. write full code for the class so i can copy and replace the existing code
 ok. we are about to simplify things for EntryCreation. lets show only two elevated buttons for date pickers initialized to DateTime.now labelled  Entry Start Date and entry End Date with no upfront wiring-up to the EntryCreationNotifier. as soon as the user picks date  still no wiring up with the EntryCreationNotifier . as soon as the Save Entry button is clicked, dates from both the file pickers would be assigned to the Entry state in the EntryCreationNotifier before doing the actual firestore saving. Once the notifier entry state  has been set, we will save the entry to firestore and get the entrycreation notifier state fully populated with the the data of newly created entry. write the required code modifications to CreateEntryPage 
 
-ok once again, we  are again taking a fresh approach and almost a clean slate start to entry creation. 
+im using flutter_riverpod 2.5.1. write a riverpod streamprovider to read the entrys collection from forebasefirestore.instance. and transform the firebase stream into Stream<Entry>.
+
+rewrite the entire Entry class
+the only changes you are making to the existing code are  this 
+make  the following three lists as nullable lists 
+houseCommanders list , 
+the seniorSectionCommanders list 
+sectionCommanders lists 
+keep all other class members like bestCadet,
+bestStudent,
+bestSportman,
+bestGymnast,
+bestDrillCommander,
+bestRider,
+bestTentpegger,
+bestSwimmer,
+bestShooter,
+bestQari,
+bestDebatorUrdu,
+bestDebatorEnglish,
+bestEssayWriterUrdu,
+bestEssayWriterEnglish,
+bestArtist, in the existing code exactly as they are . i want full code, complete with fromMap, toMap, fromJson, toJson, copyWith, toString,equality via Equatable. no need to define an id for Entry
+no need for implementing equality the traditional way, use Equatable to implement equality

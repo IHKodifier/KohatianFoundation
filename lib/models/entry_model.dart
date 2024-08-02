@@ -11,9 +11,9 @@ class Entry extends Equatable {
   Timestamp endDate;
   final String? title;
   final String? slogan;
-  final List<Cadet> houseCommanders = [];
-  final List<Cadet> seniorSectionCommanders = [];
-  final List<Cadet> sectionCommanders = [];
+  final List<Cadet>? houseCommanders;
+  final List<Cadet>? seniorSectionCommanders;
+  final List<Cadet>? sectionCommanders;
   //entry title winners
   final Cadet? bestCadet;
   final Cadet? bestStudent;
@@ -39,6 +39,9 @@ class Entry extends Equatable {
     required this.endDate,
     this.title,
     this.slogan,
+    this.houseCommanders,
+    this.seniorSectionCommanders,
+    this.sectionCommanders,
     this.bestCadet,
     this.bestStudent,
     this.bestSportman,
@@ -64,6 +67,9 @@ class Entry extends Equatable {
     Timestamp? EndDate,
     String? title,
     String? slogan,
+    List<Cadet>? houseCommanders,
+    List<Cadet>? seniorSectionCommanders,
+    List<Cadet>? sectionCommanders,
     Cadet? bestCadet,
     Cadet? bestStudent,
     Cadet? bestSportman,
@@ -88,6 +94,10 @@ class Entry extends Equatable {
       endDate: EndDate ?? this.endDate,
       title: title ?? this.title,
       slogan: slogan ?? this.slogan,
+      houseCommanders: houseCommanders ?? this.houseCommanders,
+      seniorSectionCommanders:
+          seniorSectionCommanders ?? this.seniorSectionCommanders,
+      sectionCommanders: sectionCommanders ?? this.sectionCommanders,
       bestCadet: bestCadet ?? this.bestCadet,
       bestStudent: bestStudent ?? this.bestStudent,
       bestSportman: bestSportman ?? this.bestSportman,
@@ -120,6 +130,21 @@ class Entry extends Equatable {
     }
     if (slogan != null) {
       result.addAll({'slogan': slogan});
+    }
+    if (houseCommanders != null) {
+      result.addAll(
+          {'houseCommanders': houseCommanders!.map((e) => e.toMap()).toList()});
+    }
+    if (seniorSectionCommanders != null) {
+      result.addAll({
+        'seniorSectionCommanders':
+            seniorSectionCommanders!.map((e) => e.toMap()).toList()
+      });
+    }
+    if (sectionCommanders != null) {
+      result.addAll({
+        'sectionCommanders': sectionCommanders!.map((e) => e.toMap()).toList()
+      });
     }
     if (bestCadet != null) {
       result.addAll({'bestCadet': bestCadet!.toMap()});
@@ -172,18 +197,33 @@ class Entry extends Equatable {
   }
 
   factory Entry.fromMap(Map<String, dynamic> map) {
-    return Entry(
+    Entry entry = Entry(
       name: map['name'] ?? '',
       number: map['number'] ?? '',
       strength: map['strength']?.toInt() ?? 0,
-    startDate: map['startDate'] != null
+      startDate: map['startDate'] != null
           ? map['startDate'] as Timestamp
           : Timestamp.now(), // Set to current time if null
       endDate: map['endDate'] != null
           ? map['endDate'] as Timestamp
           : Timestamp.now(), // Set to current time if null
-      title: map['title'],
-      slogan: map['slogan'],
+      title: map['title'] ?? '',
+      slogan: map['slogan'] ?? '',
+      houseCommanders: map['houseCommanders'] != null
+          ? (map['houseCommanders'] as List)
+              .map((e) => Cadet.fromMap(e))
+              .toList()
+          : null,
+      seniorSectionCommanders: map['seniorSectionCommanders'] != null
+          ? (map['seniorSectionCommanders'] as List)
+              .map((e) => Cadet.fromMap(e))
+              .toList()
+          : null,
+      sectionCommanders: map['sectionCommanders'] != null
+          ? (map['sectionCommanders'] as List)
+              .map((e) => Cadet.fromMap(e))
+              .toList()
+          : null,
       bestCadet:
           map['bestCadet'] != null ? Cadet.fromMap(map['bestCadet']) : null,
       bestStudent:
@@ -221,6 +261,7 @@ class Entry extends Equatable {
       bestArtist:
           map['bestArtist'] != null ? Cadet.fromMap(map['bestArtist']) : null,
     );
+    return entry;
   }
 
   String toJson() => json.encode(toMap());
@@ -232,60 +273,60 @@ class Entry extends Equatable {
     return 'Entry(name: $name, number: $number, strength: $strength, startDate: $startDate, EndDate: $endDate, title: $title, slogan: $slogan, bestCadet: $bestCadet, bestStudent: $bestStudent, bestSportman: $bestSportman, bestGymnast: $bestGymnast, bestDrillCommander: $bestDrillCommander, bestRider: $bestRider, bestTentpegger: $bestTentpegger, bestSwimmer: $bestSwimmer, bestShooter: $bestShooter, bestQari: $bestQari, bestDebatorUrdu: $bestDebatorUrdu, bestDebatorEnglish: $bestDebatorEnglish, bestEssayWriterUrdu: $bestEssayWriterUrdu, bestEssayWriterEnglish: $bestEssayWriterEnglish, bestArtist: $bestArtist)';
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
 
-    return other is Entry &&
-        other.name == name &&
-        other.number == number &&
-        other.strength == strength &&
-        other.startDate == startDate &&
-        other.endDate == endDate &&
-        other.title == title &&
-        other.slogan == slogan &&
-        other.bestCadet == bestCadet &&
-        other.bestStudent == bestStudent &&
-        other.bestSportman == bestSportman &&
-        other.bestGymnast == bestGymnast &&
-        other.bestDrillCommander == bestDrillCommander &&
-        other.bestRider == bestRider &&
-        other.bestTentpegger == bestTentpegger &&
-        other.bestSwimmer == bestSwimmer &&
-        other.bestShooter == bestShooter &&
-        other.bestQari == bestQari &&
-        other.bestDebatorUrdu == bestDebatorUrdu &&
-        other.bestDebatorEnglish == bestDebatorEnglish &&
-        other.bestEssayWriterUrdu == bestEssayWriterUrdu &&
-        other.bestEssayWriterEnglish == bestEssayWriterEnglish &&
-        other.bestArtist == bestArtist;
-  }
+  //   return other is Entry &&
+  //       other.name == name &&
+  //       other.number == number &&
+  //       other.strength == strength &&
+  //       other.startDate == startDate &&
+  //       other.endDate == endDate &&
+  //       other.title == title &&
+  //       other.slogan == slogan &&
+  //       other.bestCadet == bestCadet &&
+  //       other.bestStudent == bestStudent &&
+  //       other.bestSportman == bestSportman &&
+  //       other.bestGymnast == bestGymnast &&
+  //       other.bestDrillCommander == bestDrillCommander &&
+  //       other.bestRider == bestRider &&
+  //       other.bestTentpegger == bestTentpegger &&
+  //       other.bestSwimmer == bestSwimmer &&
+  //       other.bestShooter == bestShooter &&
+  //       other.bestQari == bestQari &&
+  //       other.bestDebatorUrdu == bestDebatorUrdu &&
+  //       other.bestDebatorEnglish == bestDebatorEnglish &&
+  //       other.bestEssayWriterUrdu == bestEssayWriterUrdu &&
+  //       other.bestEssayWriterEnglish == bestEssayWriterEnglish &&
+  //       other.bestArtist == bestArtist;
+  // }
 
-  @override
-  int get hashCode {
-    return name.hashCode ^
-        number.hashCode ^
-        strength.hashCode ^
-        startDate.hashCode ^
-        endDate.hashCode ^
-        title.hashCode ^
-        slogan.hashCode ^
-        bestCadet.hashCode ^
-        bestStudent.hashCode ^
-        bestSportman.hashCode ^
-        bestGymnast.hashCode ^
-        bestDrillCommander.hashCode ^
-        bestRider.hashCode ^
-        bestTentpegger.hashCode ^
-        bestSwimmer.hashCode ^
-        bestShooter.hashCode ^
-        bestQari.hashCode ^
-        bestDebatorUrdu.hashCode ^
-        bestDebatorEnglish.hashCode ^
-        bestEssayWriterUrdu.hashCode ^
-        bestEssayWriterEnglish.hashCode ^
-        bestArtist.hashCode;
-  }
+  // @override
+  // int get hashCode {
+  //   return name.hashCode ^
+  //       number.hashCode ^
+  //       strength.hashCode ^
+  //       startDate.hashCode ^
+  //       endDate.hashCode ^
+  //       title.hashCode ^
+  //       slogan.hashCode ^
+  //       bestCadet.hashCode ^
+  //       bestStudent.hashCode ^
+  //       bestSportman.hashCode ^
+  //       bestGymnast.hashCode ^
+  //       bestDrillCommander.hashCode ^
+  //       bestRider.hashCode ^
+  //       bestTentpegger.hashCode ^
+  //       bestSwimmer.hashCode ^
+  //       bestShooter.hashCode ^
+  //       bestQari.hashCode ^
+  //       bestDebatorUrdu.hashCode ^
+  //       bestDebatorEnglish.hashCode ^
+  //       bestEssayWriterUrdu.hashCode ^
+  //       bestEssayWriterEnglish.hashCode ^
+  //       bestArtist.hashCode;
+  // }
 
   @override
   List<Object?> get props => [

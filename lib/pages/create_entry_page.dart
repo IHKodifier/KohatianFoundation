@@ -79,12 +79,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   }
 
   entryList() {
-    return Container(
-      height: 80,
-      width: double.infinity,
-      color: Colors.deepOrange,
-      child: const Text('entries list goes here'),
-    );
+    return EntryStreamBuilder();
   }
 
   entryCreationForm() {
