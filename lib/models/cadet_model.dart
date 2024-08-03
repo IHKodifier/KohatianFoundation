@@ -30,8 +30,10 @@ class Cadet extends Equatable {
       this.profileImageUrl,
       this.photosOnFile);
 
-  Cadet.empty()
-      : kitNo = 'created empty',
+  Cadet.empty({
+    required String kitNo,
+})
+      : kitNo = kitNo,
         email = null,
         house = 'created empty',
         name = 'created empty',

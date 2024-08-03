@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
@@ -346,7 +347,36 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
           height: 16,
         ),
         ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              final entry = ref.watch(entryCreationProvider).entry;
+              if (entry != null) {
+                final cadets = List.generate(
+                  entry.strength,
+                  (index) => Cadet.empty(
+                    kitNo:
+                        '${entry.number}${index < 9 ? '0${index+1}' : index + 1} '
+                            .padLeft(2, '0'),
+                  ),
+                );
+
+                final batch = FirebaseFirestore.instance.batch();
+                for (final cadet in cadets) {
+                  batch.set(
+                    FirebaseFirestore.instance
+                        .collection('entrys')
+                        .doc(entry.name)
+                        .collection('cadets')
+                        .doc(cadet.kitNo),
+                    cadet.toMap(),
+                  );
+                }
+
+                await batch.commit();
+                if (kDebugMode) {
+                  print('Cadets written to Firestore');
+                }
+              }
+            },
             child: Text(
                 'create ${ref.read(entryCreationProvider).entry?.strength.toString()} Blank cadet Profiles')),
         const SizedBox(

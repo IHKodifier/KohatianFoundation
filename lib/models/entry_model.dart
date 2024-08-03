@@ -11,6 +11,7 @@ class Entry extends Equatable {
   Timestamp endDate;
   final String? title;
   final String? slogan;
+  List<Cadet>? cadets;
   final List<Cadet>? houseCommanders;
   final List<Cadet>? seniorSectionCommanders;
   final List<Cadet>? sectionCommanders;
@@ -37,6 +38,7 @@ class Entry extends Equatable {
     required this.strength,
     required this.startDate,
     required this.endDate,
+    this.cadets,
     this.title,
     this.slogan,
     this.houseCommanders,
@@ -67,6 +69,7 @@ class Entry extends Equatable {
     Timestamp? EndDate,
     String? title,
     String? slogan,
+    List<Cadet>? cadets,
     List<Cadet>? houseCommanders,
     List<Cadet>? seniorSectionCommanders,
     List<Cadet>? sectionCommanders,
@@ -94,6 +97,7 @@ class Entry extends Equatable {
       endDate: EndDate ?? this.endDate,
       title: title ?? this.title,
       slogan: slogan ?? this.slogan,
+      cadets: cadets ?? this.cadets,
       houseCommanders: houseCommanders ?? this.houseCommanders,
       seniorSectionCommanders:
           seniorSectionCommanders ?? this.seniorSectionCommanders,
@@ -130,6 +134,10 @@ class Entry extends Equatable {
     }
     if (slogan != null) {
       result.addAll({'slogan': slogan});
+    }
+    if (cadets != null && cadets!.isNotEmpty) {
+      result.addAll(
+          {'cadets': cadets!.map((e) => e.toMap()).toList()});
     }
     if (houseCommanders != null && houseCommanders!.isNotEmpty) {
       result.addAll(
@@ -210,7 +218,11 @@ class Entry extends Equatable {
           : Timestamp.now(), // Set to current time if null
       title: map['title'] ?? '',
       slogan: map['slogan'] ?? '',
-     houseCommanders: map.containsKey('houseCommanders')
+      cadets: map.containsKey('cadets')
+      ?(map['cadets'] as List)
+              .map((e) => Cadet.fromMap(e))
+              .toList():[],
+      houseCommanders: map.containsKey('houseCommanders')
           ? (map['houseCommanders'] as List)
               .map((e) => Cadet.fromMap(e))
               .toList()
