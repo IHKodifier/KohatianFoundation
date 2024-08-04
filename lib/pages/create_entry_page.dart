@@ -48,9 +48,12 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
             padding: const EdgeInsets.symmetric(horizontal: 32.0),
             child: Column(
               children: [
-                Card(
+                Container(
+                  // height: 250, 
+                  child: Card(
                   elevation: 15,
                   child: entryList(),
+                                    ),
                 ),
                 Card(
                     elevation: 15,
