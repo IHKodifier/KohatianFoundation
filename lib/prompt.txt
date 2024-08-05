@@ -28,3 +28,5 @@ ok. we are about to simplify things for EntryCreation. lets show only two elevat
 im using flutter_riverpod 2.5.1. write a riverpod streamprovider to read the entrys collection from forebasefirestore.instance. and transform the firebase stream into Stream<Entry>.
 write code for an elevated button that will create ref.read(entryCreationProvider).entry.strength of cadets using  Cadet.empty() constructor with kitno sequenced from entry.number concatenated with index from 01 to entry.strength and then batchwrite them to firebasefrestore.instance.collection(entrys).doc((ref.read(entryCreationProvider).entry.name))
 modify the abovecode so that with index number less than 10, it appends a zero to the left of index and then concatenates it with entry.number. this leading zero is not required for index above index 9 . so the kitNo for entry.number 29 will be like 2901,	2902,	2903,	2904,	2905,	2906,	2907,	2908,	2909,	2910,	2911,	2912,	2913,	2914, ....... etc up until entry.strength
+write a riverpod family StreamProvider to fetch firebasefirestore.instance.collection('entrys').collection('cadets')  based on entry name, transform the firebase docs  into Stream<Cadet>.
+

@@ -54,3 +54,4 @@ export './widgets/admin_center_core.dart';
 export './widgets/createentrystep2.dart';
 export './widgets/dropzone_widget.dart';
 export './widgets/entry_streasmbuilder.dart';
+export './widgets/cadet_grid_tile.dart';
