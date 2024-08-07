@@ -5,7 +5,7 @@ import 'package:kohatian_foundation/widget_export.dart';
 
 class Cadet extends Equatable {
   final String kitNo;
-  final bool hasSignedUp = false;
+  final bool hasSignedUp;
   final String? email;
   final String house;
   final String name;
@@ -19,6 +19,7 @@ class Cadet extends Equatable {
 
   Cadet(
       this.kitNo,
+        this.hasSignedUp,
       this.email,
       this.house,
       this.name,
@@ -34,19 +35,21 @@ class Cadet extends Equatable {
     required String kitNo,
 })
       : kitNo = kitNo,
+       hasSignedUp = false,
         email = null,
-        house = 'created empty',
-        name = 'created empty',
-        domicile = 'created empty',
-        mobileNumber = 'created empty',
+        house = 'Has not signed up yet',
+        name = 'Has not signed up yet',
+        domicile = 'Has not signed up yet',
+        mobileNumber = 'Has not signed up yet',
         socialLinks = null,
         professionalQualifications = null,
         achievements = null,
-        profileImageUrl = null,
+        profileImageUrl = '',
         photosOnFile = null;
 
   Cadet copyWith({
     String? kitNo,
+    bool? hasSignedUp,
     String? email,
     String? house,
     String? name,
@@ -60,6 +63,7 @@ class Cadet extends Equatable {
   }) {
     return Cadet(
       kitNo ?? this.kitNo,
+      hasSignedUp ?? this.hasSignedUp,
       email ?? this.email,
       house ?? this.house,
       name ?? this.name,
@@ -81,6 +85,7 @@ class Cadet extends Equatable {
       result.addAll({'email': email});
     }
     result.addAll({'house': house});
+    result.addAll({'hasSignedUp': hasSignedUp});
     result.addAll({'name': name});
     result.addAll({'domicile': domicile});
     result.addAll({'mobileNumber': mobileNumber});
@@ -110,6 +115,7 @@ class Cadet extends Equatable {
   factory Cadet.fromMap(Map<String, dynamic> map) {
     return Cadet(
       map['kitNo'] ?? '',
+      map['hasSignedUp'] ?? false,
       map['email'],
       map['house'] ?? '',
       map['name'] ?? '',

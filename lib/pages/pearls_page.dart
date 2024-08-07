@@ -16,26 +16,30 @@ class PearlsPage extends ConsumerWidget {
           const TallAppBar(),
           SliverToBoxAdapter(
             child: Container(
-                height: 450,
+                height: 850,
                 child: Column(
+                  // mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(
                       height: 24,
                     ),
                     Center(child: const EntryPicker()),
                     Flexible(
-                      // height: 150
-                      // color: Colors.pink,
+                    
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GridView.extent(
-                          maxCrossAxisExtent: 300, 
-                          mainAxisSpacing: 4,
-                          crossAxisSpacing: 16,
-                          children: cadets.when(
-                            data: (data) => data.map((cadet) => CadetGridTile(cadet: cadet)).toList(), 
-                            error: (error, stackTrace) => [Text(error.toString()+ stackTrace.toString())] , 
-                            loading: () => [Center(child: CircularProgressIndicator())],),
+                        padding: const EdgeInsets.all(12),
+                        child: Card(
+                          elevation: 5,
+                          margin: EdgeInsets.all(8),
+                          child: GridView.extent(
+                            maxCrossAxisExtent: 300, 
+                            mainAxisSpacing: 4,
+                            crossAxisSpacing: 16,
+                            children: cadets.when(
+                              data: (data) => data.map((cadet) => CadetGridTile(cadet: cadet)).toList(), 
+                              error: (error, stackTrace) => [Text(error.toString()+ stackTrace.toString())] , 
+                              loading: () => [Center(child: CircularProgressIndicator())],),
+                          ),
                         ),
                       ),
                     ),
