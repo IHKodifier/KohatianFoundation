@@ -1,6 +1,10 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/pages/sign-in_page.dart';
+import 'package:kohatian_foundation/services/providers/flexscheme_provider.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+
+
 
 class UserAvatarOverlayChild extends ConsumerStatefulWidget {
   const UserAvatarOverlayChild({super.key});
@@ -42,6 +46,8 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(userProfileProvider);
+  
+
 
     return Positioned(
       top: 50,
@@ -59,14 +65,15 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
           ),
           child: Card(
             elevation: 5,
-            color: Colors.white,
+            // color: Colors.white,
             child: Center(
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 profilePic(),
                 Text(
-                    'Cadet ID: ${data!.kitNo}'), // Display Kit Number as Cadet ID
+                    'Cadet ID: ${data!.kitNo}', 
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.secondary)), // Display Kit Number as Cadet ID
                 Text('Name: ${data.name}'), // Display Name
                 Text('House: ${data.house}'), // Display House
                 Padding(
@@ -154,19 +161,15 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
                   ),
                 ),
 
-                // if (data.roles
-                //     .contains(UserRole.admin())) // Check for Admin Role
-                //   TextButton.icon(
-                //     onPressed: () {},
-                //     label: const Text('Admin Center'),
-                //     iconAlignment: IconAlignment.end,
-                //     icon: const Icon(Icons.launch),
-                //   ),
+                
+                ThemesTile(),
                 SizedBox(height: 10),
+                ThemeModeTile(),
               ],
             )),
           ),
         ),
+
         error: (error, stackTrace) =>
             Text(error.toString() + stackTrace.toString()),
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -183,6 +186,97 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
         backgroundImage: NetworkImage(
             'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'),
       ),
+    );
+  }
+}
+
+class ThemesTile extends ConsumerWidget {
+  ThemesTile({
+    super.key,
+  });
+  late WidgetRef ref;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    this.ref = ref;
+    return ListTile(
+      onTap: () {
+        showDialog(context: context, builder: themesDialogBuilder);
+      },
+      leading: Icon(
+        (Icons.color_lens),
+        color: Theme.of(context).colorScheme.primary,
+        // size: 40,
+      ),
+      title: Text(
+        'Themes',
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+    );
+  }
+
+  Widget themesDialogBuilder(BuildContext context) {
+    final currentScheme = ref.watch(flexSchemeProvider);
+    bool isLoading = false;
+
+    return Stack(
+      children: [
+        SimpleDialog(
+          title: const Text('Choose Theme'),
+          insetPadding: const EdgeInsets.all(8),
+          children: FlexScheme.values
+              .map(
+                (e) => ListTile(
+                  title: Text(e.name),
+                  trailing: currentScheme == e ? const Icon(Icons.check) : null,
+                  onTap: () async {
+                    Navigator.pop(context);
+                    isLoading = true;
+                    ref.read(flexSchemeProvider.notifier).changeScheme(e);
+                    await Future.delayed(const Duration(milliseconds: 5000));
+                  },
+                ),
+              )
+              .toList(),
+        ),
+        // LoadingOverlay(isLoading: isLoading),
+      ],
+    );
+  }
+}
+class ThemeModeTile extends ConsumerWidget {
+  var themeNotifier;
+
+  ThemeModeTile({super.key});
+
+  void onChanged(bool value) {
+    if (value == true) {
+      themeNotifier.applyDarkTheme();
+    } else {
+      themeNotifier.applyLightTheme();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+    themeNotifier = ref.read(themeModeProvider.notifier);
+    return SwitchListTile(
+      value: themeMode == ThemeMode.dark,
+      secondary: Icon(
+        (Icons.dark_mode),
+        color: Theme.of(context).colorScheme.primary,
+        // size: 40,
+      ),
+      onChanged: (value) {
+        onChanged(value);
+      },
+      title: Text(
+        'Dark Mode',
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+      // trailing:
+      //     Switch(value: themeMode == ThemeMode.dark, onChanged: onChanged),
     );
   }
 }

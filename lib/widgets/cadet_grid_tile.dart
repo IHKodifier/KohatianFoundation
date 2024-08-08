@@ -9,6 +9,7 @@ class CadetGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String houseName = cadet.house;
+    final hasSignedUp = cadet.hasSignedUp;
 
     switch (cadet.house) {
       case 'JH':
@@ -41,11 +42,9 @@ class CadetGridTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min, 
-            
-            
+            mainAxisSize: MainAxisSize.min,
             children: [
-               CircleAvatar(
+              CircleAvatar(
                 // backgroundColor: Colors.black,
                 radius: 40,
                 backgroundImage: cadet.hasSignedUp == false
@@ -74,9 +73,12 @@ class CadetGridTile extends StatelessWidget {
               Text('Domicile: ${cadet.domicile}'),
               const SizedBox(height: 4),
               Text('Phone: ${cadet.mobileNumber}'),
-              const SizedBox(height: 4),
-              // cadet.hasSignedUp == true
-              //     ?Text('profile image url: ${cadet.profileImageUrl}'):Container(),
+              const SizedBox(height: 12),
+              cadet.hasSignedUp != true
+                  ? ElevatedButton(
+                      onPressed: () {},
+                      child: Text('Sign Up as ${cadet.kitNo}'))
+                  : Container(),
             ],
           ),
         ),
