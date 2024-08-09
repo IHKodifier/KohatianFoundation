@@ -36,7 +36,7 @@ class CadetGridTile extends StatelessWidget {
     return Expanded(
       child: Card(
         elevation: 12,
-        color: Colors.blueGrey.shade50,
+        // color: Colors.blueGrey.shade50,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -45,7 +45,7 @@ class CadetGridTile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               CircleAvatar(
-                // backgroundColor: Colors.black,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
                 radius: 40,
                 backgroundImage: cadet.hasSignedUp == false
                     ? AssetImage('assets/images/no_user_avatar.png')
@@ -77,7 +77,7 @@ class CadetGridTile extends StatelessWidget {
               cadet.hasSignedUp != true
                   ? ElevatedButton(
                       onPressed: () {},
-                      child: Text('Sign Up as ${cadet.kitNo}'))
+                      child: Text('Signup as ${cadet.kitNo}'))
                   : Container(),
             ],
           ),
