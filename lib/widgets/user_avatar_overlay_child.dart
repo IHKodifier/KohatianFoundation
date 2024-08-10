@@ -66,7 +66,7 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                profilePic(),
+                profilePic(data!),
                 //Kitno,Name and house
                 Column(
                   children: [
@@ -111,14 +111,22 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: Container(
                         decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context).colorScheme.secondary,
                           border: Border.all(),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Text(e.value,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
+                          child: Text(
+                            e.value,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary),
+                          ),
                         )),
                   ),
                 )
@@ -183,7 +191,30 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
   }
 
   Text cadetHouse(UserProfile? data, BuildContext context) {
-    return Text(data!.house,
+    String houseName = '';
+     switch (data!.house) {
+      case 'JH':
+        houseName = 'Jinnah House';
+        break;
+      case 'KH':
+        houseName = 'Khushal House';
+        break;
+      case 'IH':
+        houseName = 'Iqbal House';
+        break;
+      case 'AH':
+        houseName = 'Ayub House';
+        break;
+      case 'MH':
+        houseName = 'Munawar House';
+        break;
+      case 'RH':
+        houseName = 'Rustam House';
+        break;
+      default:
+        houseName = data.house;
+    }
+    return Text(houseName,
         style: Theme.of(context)
             .textTheme
             .titleMedium
@@ -210,14 +241,15 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
             ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
   }
 
-  Padding profilePic() {
-    return const Padding(
+  Padding profilePic(UserProfile data) {
+    return Padding(
       padding: EdgeInsets.all(12.0),
       child: CircleAvatar(
         radius: 58,
         backgroundColor: Color.fromARGB(255, 4, 45, 92),
-        backgroundImage: NetworkImage(
-            'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'),
+        backgroundImage: data.profileImageUrl.isNotEmpty
+            ? NetworkImage(data!.profileImageUrl)
+            : AssetImage('assets/images/mo_user_avatar.png'),
       ),
     );
   }

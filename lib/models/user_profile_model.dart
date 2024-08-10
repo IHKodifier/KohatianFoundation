@@ -12,7 +12,7 @@ class UserProfile {
   final String domicile;
   final String mobileNumber;
   // String? password;
-  String? profileImageUrl;
+  String profileImageUrl;
   final bool isValidated;
   List<UserRole> roles;
 
@@ -27,7 +27,7 @@ class UserProfile {
     // this.password,
     required this.isValidated,
     required this.roles,
-    this.profileImageUrl='',
+    this.profileImageUrl = '',
   });
 
   UserProfile copyWith({
@@ -69,6 +69,9 @@ class UserProfile {
     // if(password != null){
     //   result.addAll({'password': password});
     // }
+    if (profileImageUrl.isNotEmpty) {
+      result.addAll({'profileImageUrl':result});
+    }
     result.addAll({'isValidated': isValidated});
     result.addAll({'roles': roles.map((x) => x.toMap()).toList()});
 
@@ -84,6 +87,7 @@ class UserProfile {
       house: map['house'] ?? '',
       domicile: map['domicile'] ?? '',
       mobileNumber: map['mobileNumber'] ?? '',
+      profileImageUrl: map['profileImageUrl'] ?? '',
       // password: map['password'],
       isValidated: map['isValidated'] ?? false,
       roles: List<UserRole>.from(map['roles']?.map((x) => UserRole.fromMap(x))),

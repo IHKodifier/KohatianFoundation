@@ -16,37 +16,90 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
   Size endSize = Size(250, 250);
  
   OverlayPortalController _controller = OverlayPortalController();
+  // @override
+  // Widget build(BuildContext context) {
+  //   final hasLoggedInUser = ref.watch(authServiceProvider).hasLoggedInUser;
+  //   final profile = ref.watch(userProfileProvider);
+  //   return !hasLoggedInUser
+  //       ? showSignInUpButtons(context)
+  //       : OverlayPortal(
+  //           controller: _controller,
+  //           child: GestureDetector(
+  //             onTap: () {
+  //               _controller.toggle();
+  //             },
+  //             child: MouseRegion(
+                
+  //               cursor:SystemMouseCursors.click,
+               
+              
+  //               child: const CircleAvatar(
+  //                 radius: 30,
+  //                 backgroundImage: NetworkImage(
+  //                     'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'),
+  //               ),
+  //             ),
+  //           ),
+  //           overlayChildBuilder: (context) => AnimatedContainer(
+  //             duration: const Duration(milliseconds: 100),
+  //             // width: currentSize.width,
+  //             // height: currentSize.height,
+              
+  //             child: UserAvatarOverlayChild()));
+  // }
   @override
   Widget build(BuildContext context) {
     final hasLoggedInUser = ref.watch(authServiceProvider).hasLoggedInUser;
     final profile = ref.watch(userProfileProvider);
+
     return !hasLoggedInUser
         ? showSignInUpButtons(context)
-        : OverlayPortal(
-            controller: _controller,
-            child: GestureDetector(
-              onTap: () {
-                _controller.toggle();
-              },
-              child: MouseRegion(
-                
-                cursor:SystemMouseCursors.click,
-               
-              
-                child: const CircleAvatar(
-                  radius: 30,
-                  backgroundImage: NetworkImage(
-                      'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200'),
+        : profile.when(
+            // value: profile,
+            data: (profile) => OverlayPortal(
+              controller: _controller,
+              child: GestureDetector(
+                onTap: () {
+                  _controller.toggle();
+                },
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: profile!.profileImageUrl.isNotEmpty
+                        ? NetworkImage(profile.profileImageUrl)
+                        : AssetImage('assets/images_no_user_avatar'),
+                  ),
                 ),
               ),
+              overlayChildBuilder: (context) => AnimatedContainer(
+                duration: const Duration(milliseconds: 100),
+                child: UserAvatarOverlayChild(),
+              ),
             ),
-            overlayChildBuilder: (context) => AnimatedContainer(
-              duration: const Duration(milliseconds: 100),
-              // width: currentSize.width,
-              // height: currentSize.height,
-              
-              child: UserAvatarOverlayChild()));
+            loading: () => const CircularProgressIndicator(),
+            error: (error, stackTrace) => Text('Error: $error'),
+          );
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Widget showUserAvatar(context) {
   //   return
