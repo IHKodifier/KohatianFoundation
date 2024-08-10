@@ -6,7 +6,8 @@ import 'package:kohatian_foundation/pages/sign-in_page.dart';
 import '../widget_export.dart';
 
 class SignupForm extends ConsumerStatefulWidget {
-  const SignupForm({super.key});
+  final String? kitNo; // Receive kitNo as argument
+  const SignupForm({this.kitNo, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignupFormState();
@@ -34,7 +35,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     super.initState();
     isSignUpUdingEmail = false;
     isSignupUsingGoogle = false;
-    kitno.text = '';
+    kitno.text = widget.kitNo ?? ''; // Get kitNo from widget
     name.text = '';
     house.text = '';
     email.text = '';
@@ -67,8 +68,10 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             elevation: 15,
             child: Column(
               children: [
-                Text('Cadet Details',
-                style: Theme.of(context).textTheme.titleMedium,),
+                Text(
+                  'Cadet Details',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -108,7 +111,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                         ),
                       ),
                     ),
-            
+
                     //House FormField
                     SizedBox(
                       // width: constraints.maxWidth / 2,
@@ -139,7 +142,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                             if (value != '') {
                               value = value!.toUpperCase();
                             }
-            
+
                             if (value == '' ||
                                 !(value == 'JH' ||
                                     value == 'KH' ||
@@ -172,7 +175,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                             .textTheme
                             .labelSmall
                             ?.copyWith(
-                                fontStyle: FontStyle.italic, color: Colors.grey),
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey),
                         labelStyle: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -205,7 +209,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                             .textTheme
                             .labelSmall
                             ?.copyWith(
-                                fontStyle: FontStyle.italic, color: Colors.grey),
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey),
                         labelStyle: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -238,7 +243,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                             .textTheme
                             .labelSmall
                             ?.copyWith(
-                                fontStyle: FontStyle.italic, color: Colors.grey),
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey),
                         labelStyle: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -277,8 +283,10 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           elevation: 15,
           child: Column(
             children: [
-              Text('Email & Password Details',
-              style: Theme.of(context).textTheme.titleLarge,),
+              Text(
+                'Email & Password Details',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               emailFormField(),
               passwordFormField(),
               confirmPasswordFormField(),
@@ -410,25 +418,28 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded (child: signUpWithGoogleButton()),
+            Expanded(child: signUpWithGoogleButton()),
             const SizedBox(width: 10),
             Expanded(child: formResetButton()),
-             
-           
           ],
         ),
-        const SizedBox(height: 8,),
-         Row(
-           children: [
-             Expanded(
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            Expanded(
               child: SizedBox(
                   height: 50,
                   child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => PublicHomePage(),)),
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PublicHomePage(),
+                          )),
                       child: const Text('Back'))),
-                     ),
-           ],
-         ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -444,22 +455,25 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             const SizedBox(width: 10),
             Expanded(child: formResetButton()),
             const SizedBox(width: 10),
-              
-           
           ],
         ),
-        const SizedBox(height: 8,),
-           Row(
-                children: [
-                  Expanded(
-                  child: SizedBox(
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => PublicHomePage(),)),
-                          child: const Text('Back'))),
-                              ),
-                ],
-              ),
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PublicHomePage(),
+                          )),
+                      child: const Text('Back'))),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -506,7 +520,6 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                     house: house.text.toUpperCase(),
                     domicile: domicile.text,
                     mobileNumber: mobileNumber.text,
-                    
                     email: userCredential.user!.email!,
                     isValidated: false,
                     roles: [UserRole.cadet()]));
@@ -648,8 +661,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return SingleChildScrollView(
       child: Column(
         children: [
-                   const SizedBox(height: 30),
-
+          const SizedBox(height: 30),
           cadetDetailsForm(),
           const SizedBox(height: 30),
           emailDetailsForm(),
@@ -670,37 +682,43 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(height:5),
-                CachedNetworkImage(
+              SizedBox(height: 5),
+              CachedNetworkImage(
                   imageUrl:
                       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWlujQJd5orHdTsvq6_5sFz3Bmf9zkujaJhQ&s'),
-              const SizedBox(height: 30,),
-              Text('Sign Up',
-              style: Theme.of(context).textTheme.titleLarge),
+              const SizedBox(
+                height: 30,
+              ),
+              Text('Sign Up', style: Theme.of(context).textTheme.titleLarge),
               //Signup Mode selector Gmail vs Email mode
-              const SizedBox(height: 8),
+              const SizedBox(height: 24),
               signUpUsingGoogleButton(),
-              const SizedBox(height: 8),
-          
+              const SizedBox(height: 24),
+
               //Signup with Email Button
               signUpUsingEmailButton(),
-                 const SizedBox(height: 8),
+              const SizedBox(height: 24),
+
               SizedBox(
-                height: 50,
-                child: ElevatedButton.icon(
-                  icon: const Icon(
-                    Icons.info_outline_rounded,
-                    // color: Colors.red,
-                  ),
-                  
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInPage(),) ), label: Text('Already have an Account!    Proceed to Login'))),
-          
+                  height: 50,
+                  child: ElevatedButton.icon(
+                      icon: const Icon(
+                        Icons.info_outline_rounded,
+                        // color: Colors.red,
+                      ),
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SignInPage(),
+                          )),
+                      label: Text(
+                          'Already have an Account!    Proceed to Login'))),
+
               isSignupUsingGoogle ? gForm() : const SizedBox.shrink(),
-          
+
               //Signup with Email Button
               isSignUpUdingEmail ? emailForm() : const SizedBox.shrink(),
               // cadetDetailsForm(),
-          
+
               const SizedBox(
                 height: 8,
               ),

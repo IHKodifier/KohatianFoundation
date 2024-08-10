@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class CadetGridTile extends StatelessWidget {
-  const CadetGridTile({Key? key, required this.cadet}) : super(key: key);
+  const CadetGridTile({super.key, required this.cadet});
 
   final Cadet cadet;
 
@@ -44,45 +44,72 @@ class CadetGridTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                radius: 40,
-                backgroundImage: cadet.hasSignedUp == false
-                    ? AssetImage('assets/images/no_user_avatar.png')
-                    : NetworkImage(cadet.profileImageUrl!),
-              ),
-              Text(
-                cadet.kitNo,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                cadet.name,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              cadetAvatar(context),
               const SizedBox(height: 8),
-              Text(houseName),
-              const SizedBox(height: 4),
-              Text('Domicile: ${cadet.domicile}'),
-              const SizedBox(height: 4),
-              Text('Phone: ${cadet.mobileNumber}'),
+              kitNo(),
               const SizedBox(height: 12),
-              cadet.hasSignedUp != true
-                  ? ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Signup as ${cadet.kitNo}'))
-                  : Container(),
+              name(),
+              const SizedBox(height: 8),
+              house(houseName),
+              const SizedBox(height: 4),
+              domicile(),
+              const SizedBox(height: 4),
+              mobileNumber(),
+              const SizedBox(height: 12),
+              signupButton(context),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Text kitNo() {
+    return Text(
+              cadet.kitNo,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+  }
+
+  CircleAvatar cadetAvatar(BuildContext context) {
+    return CircleAvatar(
+              backgroundColor: Theme.of(context).colorScheme.onPrimary,
+              radius: 40,
+              backgroundImage: cadet.hasSignedUp == false
+                  ? const AssetImage('assets/images/no_user_avatar.png')
+                  : NetworkImage(cadet.profileImageUrl!),
+            );
+  }
+
+  Widget mobileNumber() => cadet.hasSignedUp?Text(cadet.mobileNumber):Container();
+
+  Widget domicile() => cadet.hasSignedUp?Text(' ${cadet.domicile}'):Container();
+
+  Text house(String houseName) => Text(houseName);
+
+  Text name() {
+    return Text(
+      cadet.name,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  signupButton(BuildContext context) {
+    return cadet.hasSignedUp != true
+        ? ElevatedButton(
+            onPressed: () {
+              // Navigate to SignupPage and pass the kitNo
+              Navigator.pushNamed(context, '/signup', arguments: cadet.kitNo);
+            },
+            child: Text('Signup as ${cadet.kitNo}'))
+        : Container();
   }
 }

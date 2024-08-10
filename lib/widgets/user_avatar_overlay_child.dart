@@ -67,24 +67,21 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 profilePic(),
-                //Kitno,Name and house 
+                //Kitno,Name and house
                 Column(
                   children: [
-             
-                    kitNumberText(data, context),  // Display Kit Number 
-                cadetName(data, context), // Display Name
-                cadetHouse(data, context), // Display House
+                    kitNumberText(data, context), // Display Kit Number
+                    cadetName(data, context), // Display Name
+                    cadetHouse(data, context), // Display House
                   ],
-                ), 
-               
+                ),
+
                 ThemesTile(),
                 const SizedBox(height: 10),
                 ThemeModeTile(),
                 accountTile(data, context),
                 accountTypeTile(profile, data, context),
                 SizedBox(height: 10),
-
-                
               ],
             )),
           ),
@@ -96,125 +93,121 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
     );
   }
 
-  Padding accountTypeTile(AsyncValue<UserProfile?> profile, UserProfile? data, BuildContext context) {
+  Padding accountTypeTile(AsyncValue<UserProfile?> profile, UserProfile? data,
+      BuildContext context) {
     return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Card(
-                  // color: Colors.blueGrey.shade50,
-                  elevation: 5,
-                  child: ListTile(
-                    leading: const Icon(Icons.person, size: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Card(
+        // color: Colors.blueGrey.shade50,
+        elevation: 5,
+        child: ListTile(
+          leading: const Icon(Icons.person, size: 40),
 
-                    title: const Text('Account  Type'),
-                    subtitle: Row(
-                      children: profile.asData!.value!.roles
-                          .map(
-                            (e) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4.0),
-                                    child: Text(e.value),
-                                  )),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    // enabled: true,
-                    trailing: (data!.roles.contains(UserRole.admin()))
-                        ? // Check for Admin Role
-                        TextButton(
-                            onPressed: () {
-                              //TODO
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AdminCenterPage(),
-                              ));
-                            },
-                            child: Text(
-                              'Admin Center',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                    // color: Colors.red,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          )
-                        : Container(),
-
+          title: const Text('Account  Type'),
+          subtitle: Row(
+            children: profile.asData!.value!.roles
+                .map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Text(e.value,
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSecondary),),
+                        )),
                   ),
-                ),
-              );
+                )
+                .toList(),
+          ),
+          // enabled: true,
+          trailing: (data!.roles.contains(UserRole.admin()))
+              ? // Check for Admin Role
+              TextButton(
+                  onPressed: () {
+                    //TODO
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AdminCenterPage(),
+                    ));
+                  },
+                  child: Text(
+                    'Admin Center',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          // color: Colors.red,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                )
+              : Container(),
+        ),
+      ),
+    );
   }
 
   Padding accountTile(UserProfile? data, BuildContext context) {
     return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Card(
-                  // color: Colors.blueGrey.shade50,
-                  elevation: 5,
-                  child: ListTile(
-                    leading: const Icon(Icons.person, size: 40),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Card(
+        // color: Colors.blueGrey.shade50,
+        elevation: 5,
+        child: ListTile(
+          leading: const Icon(Icons.person, size: 40),
 
-                    title: const Text('Account '),
-                    subtitle: Text('${data!.email}'),
-                    // enabled: true,
-                    trailing: TextButton(
-                      onPressed: () {
-                        //TODO
-                        // Sign out the user
-                        FirebaseAuth.instance.signOut();
+          title: const Text('Account '),
+          subtitle: Text('${data!.email}'),
+          // enabled: true,
+          trailing: TextButton(
+            onPressed: () {
+              //TODO
+              // Sign out the user
+              FirebaseAuth.instance.signOut();
 
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const SignInPage()));
-                      },
-                      child: Text(
-                        'SIGN OUT',
-                        style:
-                            Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                      ),
-                    ),
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const SignInPage()));
+            },
+            child: Text(
+              'SIGN OUT',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w900,
                   ),
-                ),
-              );
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Text cadetHouse(UserProfile? data, BuildContext context) {
     return Text(data!.house,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .tertiary));
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
   }
 
   Text cadetName(UserProfile? data, BuildContext context) {
     return Text(
-                data!.name,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(color: Theme.of(context).colorScheme.primary),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              );
+      data!.name,
+      style: Theme.of(context)
+          .textTheme
+          .titleLarge
+          ?.copyWith(color: Theme.of(context).colorScheme.primary),
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+    );
   }
 
   Text kitNumberText(UserProfile? data, BuildContext context) {
     return Text(data!.kitNo,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .tertiary));
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium
+            ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
   }
 
   Padding profilePic() {

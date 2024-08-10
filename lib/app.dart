@@ -28,7 +28,14 @@ class MyApp extends ConsumerWidget {
 // to let the device system mode control the theme mode:
 themeMode: themeMode,
 
-      home: Material(child: StartUp()),
+
+    initialRoute: '/', // Set the initial route
+      routes: {
+        '/': (context) => StartUp(), // Your initial page
+        '/signup': (context) => SignupPage(
+            kitNo: ModalRoute.of(context)!.settings.arguments
+                as String?), // Define the signup route
+      },
     );
   }
 }

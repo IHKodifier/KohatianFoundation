@@ -170,7 +170,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                             final selectedDate = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
+                              firstDate: DateTime(1967),
                               lastDate: DateTime(2100),
                             );
                             if (selectedDate != null) {
@@ -357,7 +357,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                   entry.strength,
                   (index) => Cadet.empty(
                     kitNo:
-                        '${entry.number}${index < 9 ? '0${index+1}' : index + 1} '
+                        '${entry.number}${index < 9 ? '0${index+1}' : index + 1}'
                             .padLeft(2, '0'),
                   ),
                 );

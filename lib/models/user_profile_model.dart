@@ -11,10 +11,10 @@ class UserProfile {
   final String house;
   final String domicile;
   final String mobileNumber;
-  String? password;
+  // String? password;
+  String? profileImageUrl;
   final bool isValidated;
   List<UserRole> roles;
-
 
   UserProfile({
     required this.uuid,
@@ -24,9 +24,10 @@ class UserProfile {
     required this.house,
     required this.domicile,
     required this.mobileNumber,
-    this.password,
+    // this.password,
     required this.isValidated,
     required this.roles,
+    this.profileImageUrl='',
   });
 
   UserProfile copyWith({
@@ -37,8 +38,8 @@ class UserProfile {
     String? house,
     String? domicile,
     String? mobileNumber,
-    String? password,
-    bool? isValidated=false,
+    // String? password,
+    bool? isValidated = false,
     List<UserRole>? roles,
   }) {
     return UserProfile(
@@ -49,7 +50,7 @@ class UserProfile {
       house: house ?? this.house,
       domicile: domicile ?? this.domicile,
       mobileNumber: mobileNumber ?? this.mobileNumber,
-      password: password ?? this.password,
+      // password: password ?? this.password,
       isValidated: isValidated ?? this.isValidated,
       roles: roles ?? this.roles,
     );
@@ -57,7 +58,7 @@ class UserProfile {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'uuid': uuid});
     result.addAll({'name': name});
     result.addAll({'email': email});
@@ -65,12 +66,12 @@ class UserProfile {
     result.addAll({'house': house});
     result.addAll({'domicile': domicile});
     result.addAll({'mobileNumber': mobileNumber});
-    if(password != null){
-      result.addAll({'password': password});
-    }
+    // if(password != null){
+    //   result.addAll({'password': password});
+    // }
     result.addAll({'isValidated': isValidated});
     result.addAll({'roles': roles.map((x) => x.toMap()).toList()});
-  
+
     return result;
   }
 
@@ -83,7 +84,7 @@ class UserProfile {
       house: map['house'] ?? '',
       domicile: map['domicile'] ?? '',
       mobileNumber: map['mobileNumber'] ?? '',
-      password: map['password'],
+      // password: map['password'],
       isValidated: map['isValidated'] ?? false,
       roles: List<UserRole>.from(map['roles']?.map((x) => UserRole.fromMap(x))),
     );
@@ -96,37 +97,38 @@ class UserProfile {
 
   @override
   String toString() {
-    return 'AppUser(uuid: $uuid, name: $name, email: $email, kitNo: $kitNo, house: $house, domicile: $domicile, mobileNumber: $mobileNumber, password: $password, isValidated: $isValidated, roles: $roles)';
+    return '''AppUser(uuid: $uuid, name: $name, email: $email, kitNo: $kitNo, house: $house, domicile: $domicile, mobileNumber: $mobileNumber,
+        isValidated: $isValidated, roles: $roles)''';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is UserProfile &&
-      other.uuid == uuid &&
-      other.name == name &&
-      other.email == email &&
-      other.kitNo == kitNo &&
-      other.house == house &&
-      other.domicile == domicile &&
-      other.mobileNumber == mobileNumber &&
-      other.password == password &&
-      other.isValidated == isValidated &&
-      listEquals(other.roles, roles);
+        other.uuid == uuid &&
+        other.name == name &&
+        other.email == email &&
+        other.kitNo == kitNo &&
+        other.house == house &&
+        other.domicile == domicile &&
+        other.mobileNumber == mobileNumber &&
+        // other.password == password &&
+        other.isValidated == isValidated &&
+        listEquals(other.roles, roles);
   }
 
   @override
   int get hashCode {
     return uuid.hashCode ^
-      name.hashCode ^
-      email.hashCode ^
-      kitNo.hashCode ^
-      house.hashCode ^
-      domicile.hashCode ^
-      mobileNumber.hashCode ^
-      password.hashCode ^
-      isValidated.hashCode ^
-      roles.hashCode;
+        name.hashCode ^
+        email.hashCode ^
+        kitNo.hashCode ^
+        house.hashCode ^
+        domicile.hashCode ^
+        mobileNumber.hashCode ^
+        // password.hashCode ^
+        isValidated.hashCode ^
+        roles.hashCode;
   }
 }
