@@ -52,6 +52,7 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
         child: Container(
           margin: const EdgeInsets.only(top: 16.0),
           padding: const EdgeInsets.all(16.0),
+          width: 250,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -118,7 +119,9 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                   children: [
                     const Spacer(flex: 8),
                     const Icon(Icons.precision_manufacturing,
-                        size: 60, color: Colors.black54),
+                        size: 60, 
+                        //color: Colors.black54,
+                        ),
                     const Spacer(flex: 1),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,16 +133,17 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                               .textTheme
                               .headlineMedium
                               ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
+                                  // fontWeight: FontWeight.w600,
+                                  // color: Colors.black,
+                                  ),
                         ),
                         Text(
-                          'Set uup  Entry Coordins=ators....',
+                          'Set up  Entry Coordinators....',
                           style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
+                              Theme.of(context).textTheme.labelSmall?.copyWith(
                                     // fontWeight: FontWeight.w600,
                                     fontStyle: FontStyle.italic,
-                                    color: Colors.black54,
+                                    // color: Colors.black54,
                                   ),
                         ),
                       ],
@@ -169,7 +173,9 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
       child: Row(
         children: [
           const Spacer(flex: 8),
-          const Icon(Icons.diversity_2, size: 60, color: Colors.black54),
+          const Icon(Icons.diversity_2, size: 60, 
+          // color: Colors.black54,
+          ),
           const Spacer(flex: 1),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -180,14 +186,16 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                 Text(
                   'Entrys',
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontWeight: FontWeight.w600, color: Colors.black),
+                      // fontWeight: FontWeight.w600, 
+                      // color: Colors.black,
+                      ),
                 ),
                 Text(
                   'Create/Update/ Manage Entrys....',
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         // fontWeight: FontWeight.w600,
                         fontStyle: FontStyle.italic,
-                        color: Colors.black54,
+                        // color: Colors.black54,
                       ),
                 ),
               ],
@@ -217,7 +225,9 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                 child: Row(
                   children: [
                     const Spacer(flex: 8),
-                    const Icon(Icons.settings, size: 60, color: Colors.black54),
+                    const Icon(Icons.settings, size: 60,
+                    //  color: Colors.black54,
+                     ),
                     const Spacer(flex: 1),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,16 +239,17 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                               .textTheme
                               .headlineMedium
                               ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
+                                  // fontWeight: FontWeight.w600,
+                                  // color: Colors.black,
+                                  ),
                         ),
                         Text(
                           'Manage other settings....',
                           style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
+                              Theme.of(context).textTheme.labelSmall?.copyWith(
                                     // fontWeight: FontWeight.w600,
                                     fontStyle: FontStyle.italic,
-                                    color: Colors.black54,
+                                    // color: Colors.black54,
                                   ),
                         ),
                       ],
@@ -273,7 +284,9 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                   children: [
                     const Spacer(flex: 8),
                     const Icon(Icons.dashboard,
-                        size: 60, color: Colors.black54),
+                        size: 60,
+                        // color: Colors.black54,
+                        ),
                     const Spacer(flex: 1),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,16 +298,17 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                               .textTheme
                               .headlineMedium
                               ?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
+                                  // fontWeight: FontWeight.w600,
+                                  // color: Colors.black,
+                                  ),
                         ),
                         Text(
                           'View overall statistics and reports....',
                           style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
+                              Theme.of(context).textTheme.labelSmall?.copyWith(
                                     // fontWeight: FontWeight.w600,
                                     fontStyle: FontStyle.italic,
-                                    color: Colors.black54,
+                                    // color: Colors.black54,
                                   ),
                         ),
                       ],

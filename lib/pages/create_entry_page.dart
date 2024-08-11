@@ -39,7 +39,8 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
     return Scaffold(
         appBar: AppBar(
           title:
-              Text(' Entrys', style: Theme.of(context).textTheme.displaySmall),
+              Text(' Entrys'), 
+              
           centerTitle: true,
         ),
         // ),

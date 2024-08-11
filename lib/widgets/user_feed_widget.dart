@@ -10,7 +10,8 @@ class UserFeedWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // final user = ref.watch(authStateChangesProvider);
     if (ref.read(authServiceProvider).getCurrentUser() != null) {
-      final userProfileAsync = ref.watch(userProfileProvider);
+      final userProfileAsync = ref.watch(userProfileProvider(
+          ref.read(authServiceProvider).getCurrentUser()!.uid));
 
       return Column(
         children: [

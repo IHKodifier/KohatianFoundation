@@ -47,6 +47,7 @@ class NavBarRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Center(
         child: Container(
       decoration: BoxDecoration(
@@ -59,6 +60,7 @@ class NavBarRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         
         children: [
+          //Kf logo
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
@@ -73,24 +75,28 @@ class NavBarRow extends StatelessWidget {
               },
             ),
           ),
+        //Vision
           TextButton(
               child: const Text(
                 'Vision',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {}),
+        //Mission
           TextButton(
               child: const Text(
                 'Mission',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {}),
+        //Function
           TextButton(
               child: const Text(
                 'Function',
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {}),
+        //Pearls
           TextButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -102,6 +108,7 @@ class NavBarRow extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
           ),
+         //UserAvatar
           const UserAvatarWidget(),
         ],
       ),

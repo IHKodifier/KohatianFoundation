@@ -64,14 +64,8 @@ class _AdminCenterPageState extends State<AdminCenterPage> {
                 // ...
               }
             },
-            onNext: () {
-              // Implement next action logic here
-              // ...
-            },
-            onCancel: () {
-              // Implement cancel action logic here
-              // ...
-            },
+            onNext: () {},
+            onCancel: () {},
           ),
         ],
       ),
