@@ -45,7 +45,7 @@ class PearlsPage extends ConsumerWidget {
                   ],
                 )),
           ),
-          const SliverToBoxAdapter(
+           SliverToBoxAdapter(
             child: SiteFooter(),
           )
         ],

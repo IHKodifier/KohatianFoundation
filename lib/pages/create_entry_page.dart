@@ -76,7 +76,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                     )),
 
                 // addEntryCadetsDropzone(),
-                const SiteFooter(),
+                 SiteFooter(),
               ],
             ),
           ),

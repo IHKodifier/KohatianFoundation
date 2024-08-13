@@ -7,7 +7,7 @@ class SignUpSucess extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return
-         const CustomScrollView(
+          CustomScrollView(
       slivers: [
         TallAppBar(),
         //TODO  update UI,
