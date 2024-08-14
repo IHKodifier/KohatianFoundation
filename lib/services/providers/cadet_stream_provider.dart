@@ -11,7 +11,11 @@ final cadetStreamProvider = StreamProvider.family<List<Cadet>, String>(
         .collection('cadets');
 
     return cadetsCollection.snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => Cadet.fromMap(doc.data())).toList();
+    // Sort the list of cadets by kitNo in ascending order
+      final cadets =
+          snapshot.docs.map((doc) => Cadet.fromMap(doc.data())).toList();
+      cadets.sort((a, b) => a.kitNo.compareTo(b.kitNo));
+      return cadets;
     });
   },
 );

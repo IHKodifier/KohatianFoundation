@@ -516,6 +516,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 final result = await authService.createAppUserInDb(UserProfile(
                     uuid: userCredential.user!.uid,
                     name: name.text,
+                    
+
                     kitNo: kitno.text,
                     house: house.text.toUpperCase(),
                     domicile: domicile.text,

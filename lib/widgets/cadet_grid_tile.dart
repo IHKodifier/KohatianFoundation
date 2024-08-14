@@ -66,7 +66,7 @@ class CadetGridTile extends StatelessWidget {
 
   Text kitNo() {
     return Text(
-              cadet.kitNo,
+              cadet.kitNo.toString(),
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

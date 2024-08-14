@@ -358,8 +358,8 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                   entry.strength,
                   (index) => Cadet.empty(
                     kitNo:
-                        '${entry.number}${index < 9 ? '0${index+1}' : index + 1}'
-                            .padLeft(2, '0'),
+                        int.parse('${entry.number}${index < 9 ? '0${index+1}' : index + 1}'
+                            .padLeft(2, '0')),
                   ),
                 );
 
@@ -370,7 +370,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                         .collection('entrys')
                         .doc(entry.name)
                         .collection('cadets')
-                        .doc(cadet.kitNo),
+                        .doc(cadet.kitNo.toString()),
                     cadet.toMap(),
                   );
                 }

@@ -1,10 +1,211 @@
+// import 'dart:convert';
+// import 'package:flutter/foundation.dart';
+// import 'package:kohatian_foundation/widget_export.dart';
+
+// class Cadet extends Equatable {
+//   final String kitNo;
+//   final bool hasSignedUp;
+//   final String? email;
+//   final String house;
+//   final String name;
+//   final String domicile;
+//   final String mobileNumber;
+//   final SocialLinks? socialLinks;
+//   final List<Qualification>? professionalQualifications;
+//   final List<Achievements>? achievements;
+//   final String? profileImageUrl;
+//   final List<String>? photosOnFile;
+
+//   Cadet(
+//       this.kitNo,
+//       this.hasSignedUp,
+//       this.email,
+//       this.house,
+//       this.name,
+//       this.domicile,
+//       this.mobileNumber,
+//       this.socialLinks,
+//       this.professionalQualifications,
+//       this.achievements,
+//       this.profileImageUrl,
+//       this.photosOnFile);
+
+//   Cadet.empty({
+//     required String kitNo,
+// })
+//       : kitNo = kitNo,
+//        hasSignedUp = false,
+//         email = null,
+//         house = '...awaiting signup...',
+//         name = '...awaiting signup...',
+//         domicile = '...awaiting signup...',
+//         mobileNumber = '...awaiting signup...',
+//         socialLinks = null,
+//         professionalQualifications = null,
+//         achievements = null,
+//         profileImageUrl = '',
+//         photosOnFile = null;
+
+//   Cadet copyWith({
+//     String? kitNo,
+//     bool? hasSignedUp,
+//     String? email,
+//     String? house,
+//     String? name,
+//     String? domicile,
+//     String? mobileNumber,
+//     SocialLinks? socialLinks,
+//     List<Qualification>? professionalQualifications,
+//     List<Achievements>? achievements,
+//     String? profileImageUrl,
+//     List<String>? photosOnFile,
+//   }) {
+//     return Cadet(
+//       kitNo ?? this.kitNo,
+//       hasSignedUp ?? this.hasSignedUp,
+//       email ?? this.email,
+//       house ?? this.house,
+//       name ?? this.name,
+//       domicile ?? this.domicile,
+//       mobileNumber ?? this.mobileNumber,
+//       socialLinks ?? this.socialLinks,
+//       professionalQualifications ?? this.professionalQualifications,
+//       achievements ?? this.achievements,
+//       profileImageUrl ?? this.profileImageUrl,
+//       photosOnFile ?? this.photosOnFile,
+//     );
+//   }
+
+//   Map<String, dynamic> toMap() {
+//     final result = <String, dynamic>{};
+
+//     result.addAll({'kitNo': kitNo});
+//     if (email != null) {
+//       result.addAll({'email': email});
+//     }
+//     result.addAll({'house': house});
+//     result.addAll({'hasSignedUp': hasSignedUp});
+//     result.addAll({'name': name});
+//     result.addAll({'domicile': domicile});
+//     result.addAll({'mobileNumber': mobileNumber});
+//     if (socialLinks != null) {
+//       result.addAll({'socialLinks': socialLinks!.toMap()});
+//     }
+//     if (professionalQualifications != null) {
+//       result.addAll({
+//         'professionalQualifications':
+//             professionalQualifications!.map((x) => x.toMap()).toList()
+//       });
+//     }
+//     if (achievements != null) {
+//       result.addAll(
+//           {'achievements': achievements!.map((x) => x.toMap()).toList()});
+//     }
+//     if (profileImageUrl != null) {
+//       result.addAll({'profileImageUrl': profileImageUrl});
+//     }
+//     if (photosOnFile != null) {
+//       result.addAll({'photosOnFile': photosOnFile});
+//     }
+
+//     return result;
+//   }
+
+//   factory Cadet.fromMap(Map<String, dynamic> map) {
+//     return Cadet(
+//       map['kitNo'] ?? '',
+//       map['hasSignedUp'] ?? false,
+//       map['email'],
+//       map['house'] ?? '',
+//       map['name'] ?? '',
+//       map['domicile'] ?? '',
+//       map['mobileNumber'] ?? '',
+//       map['socialLinks'] != null
+//           ? SocialLinks.fromMap(map['socialLinks'])
+//           : null,
+//       map['professionalQualifications'] != null
+//           ? List<Qualification>.from(map['professionalQualifications']
+//               ?.map((x) => Qualification.fromMap(x)))
+//           : null,
+//       map['achievements'] != null
+//           ? List<Achievements>.from(
+//               map['achievements']?.map((x) => Achievements.fromMap(x)))
+//           : null,
+//       map['profileImageUrl'],
+//       map['photosOnFile'] != null
+//           ? List<String>.from(map['photosOnFile'])
+//           : null,
+//     );
+//   }
+
+//   String toJson() => json.encode(toMap());
+
+//   factory Cadet.fromJson(String source) => Cadet.fromMap(json.decode(source));
+
+//   @override
+//   String toString() {
+//     return 'Cadet(kitNo: $kitNo, email: $email, house: $house, name: $name, domicile: $domicile, mobileNumber: $mobileNumber, socialLinks: $socialLinks, professionalQualifications: $professionalQualifications, achievements: $achievements, profileImageUrl: $profileImageUrl, photosOnFile: $photosOnFile)';
+//   }
+
+//   @override
+//   bool operator ==(Object other) {
+//     if (identical(this, other)) return true;
+
+//     return other is Cadet &&
+//         other.kitNo == kitNo &&
+//         other.email == email &&
+//         other.house == house &&
+//         other.name == name &&
+//         other.domicile == domicile &&
+//         other.mobileNumber == mobileNumber &&
+//         other.socialLinks == socialLinks &&
+//         listEquals(
+//             other.professionalQualifications, professionalQualifications) &&
+//         listEquals(other.achievements, achievements) &&
+//         other.profileImageUrl == profileImageUrl &&
+//         listEquals(other.photosOnFile, photosOnFile);
+//   }
+
+//   @override
+//   int get hashCode {
+//     return kitNo.hashCode ^
+//         email.hashCode ^
+//         house.hashCode ^
+//         name.hashCode ^
+//         domicile.hashCode ^
+//         mobileNumber.hashCode ^
+//         socialLinks.hashCode ^
+//         professionalQualifications.hashCode ^
+//         achievements.hashCode ^
+//         profileImageUrl.hashCode ^
+//         photosOnFile.hashCode;
+//   }
+
+//   @override
+//   List<Object?> get props => [
+//         kitNo,
+//         email,
+//         house,
+//         name,
+//         domicile,
+//         mobileNumber,
+//         socialLinks,
+//         professionalQualifications,
+//         achievements,
+//         profileImageUrl,
+//         photosOnFile
+//       ];
+// }
+
+
+
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
-class Cadet extends Equatable {
-  final String kitNo;
+class Cadet {
+  final int kitNo;
   final bool hasSignedUp;
   final String? email;
   final String house;
@@ -17,25 +218,25 @@ class Cadet extends Equatable {
   final String? profileImageUrl;
   final List<String>? photosOnFile;
 
-  Cadet(
-      this.kitNo,
-        this.hasSignedUp,
-      this.email,
-      this.house,
-      this.name,
-      this.domicile,
-      this.mobileNumber,
-      this.socialLinks,
-      this.professionalQualifications,
-      this.achievements,
-      this.profileImageUrl,
-      this.photosOnFile);
+  Cadet({
+    required this.kitNo,
+    required this.house,
+    required this.name,
+    required this.domicile,
+    required this.mobileNumber,
+    this.email,
+    this.socialLinks,
+    this.hasSignedUp = false, // Default value for hasSignedUp
+    this.professionalQualifications,
+    this.achievements,
+    this.profileImageUrl,
+    this.photosOnFile,
+  });
 
-  Cadet.empty({
-    required String kitNo,
-})
-      : kitNo = kitNo,
-       hasSignedUp = false,
+Cadet.empty({
+    required int kitNo,
+  })  : kitNo = kitNo,
+        hasSignedUp = false,
         email = null,
         house = '...awaiting signup...',
         name = '...awaiting signup...',
@@ -48,8 +249,7 @@ class Cadet extends Equatable {
         photosOnFile = null;
 
   Cadet copyWith({
-    String? kitNo,
-    bool? hasSignedUp,
+    int? kitNo,
     String? email,
     String? house,
     String? name,
@@ -60,32 +260,34 @@ class Cadet extends Equatable {
     List<Achievements>? achievements,
     String? profileImageUrl,
     List<String>? photosOnFile,
+    bool? hasSignedUp,
   }) {
     return Cadet(
-      kitNo ?? this.kitNo,
-      hasSignedUp ?? this.hasSignedUp,
-      email ?? this.email,
-      house ?? this.house,
-      name ?? this.name,
-      domicile ?? this.domicile,
-      mobileNumber ?? this.mobileNumber,
-      socialLinks ?? this.socialLinks,
-      professionalQualifications ?? this.professionalQualifications,
-      achievements ?? this.achievements,
-      profileImageUrl ?? this.profileImageUrl,
-      photosOnFile ?? this.photosOnFile,
+      kitNo: kitNo ?? this.kitNo,
+      email: email ?? this.email,
+      house: house ?? this.house,
+      name: name ?? this.name,
+      domicile: domicile ?? this.domicile,
+      mobileNumber: mobileNumber ?? this.mobileNumber,
+      socialLinks: socialLinks ?? this.socialLinks,
+      professionalQualifications:
+          professionalQualifications ?? this.professionalQualifications,
+      achievements: achievements ?? this.achievements,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      photosOnFile: photosOnFile ?? this.photosOnFile,
+      hasSignedUp: hasSignedUp ?? this.hasSignedUp,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'kitNo': kitNo});
+    result.addAll({'kitNo': kitNo.toString()}); // Convert int to String
     if (email != null) {
       result.addAll({'email': email});
     }
     result.addAll({'house': house});
-    result.addAll({'hasSignedUp': hasSignedUp});
+    result.addAll({'hasSignedUp': hasSignedUp}); // No conversion needed
     result.addAll({'name': name});
     result.addAll({'domicile': domicile});
     result.addAll({'mobileNumber': mobileNumber});
@@ -111,29 +313,28 @@ class Cadet extends Equatable {
 
     return result;
   }
-
-  factory Cadet.fromMap(Map<String, dynamic> map) {
+factory Cadet.fromMap(Map<String, dynamic> map) {
     return Cadet(
-      map['kitNo'] ?? '',
-      map['hasSignedUp'] ?? false,
-      map['email'],
-      map['house'] ?? '',
-      map['name'] ?? '',
-      map['domicile'] ?? '',
-      map['mobileNumber'] ?? '',
-      map['socialLinks'] != null
+      kitNo: int.parse(map['kitNo'] ?? '0'), // Convert String to int
+      hasSignedUp: map['hasSignedUp'] ?? false,
+      email: map['email'],
+      house: map['house'] ?? '',
+      name: map['name'] ?? '',
+      domicile: map['domicile'] ?? '',
+      mobileNumber: map['mobileNumber'] ?? '',
+      socialLinks: map['socialLinks'] != null
           ? SocialLinks.fromMap(map['socialLinks'])
           : null,
-      map['professionalQualifications'] != null
+      professionalQualifications: map['professionalQualifications'] != null
           ? List<Qualification>.from(map['professionalQualifications']
               ?.map((x) => Qualification.fromMap(x)))
           : null,
-      map['achievements'] != null
+      achievements: map['achievements'] != null
           ? List<Achievements>.from(
               map['achievements']?.map((x) => Achievements.fromMap(x)))
           : null,
-      map['profileImageUrl'],
-      map['photosOnFile'] != null
+      profileImageUrl: map['profileImageUrl'],
+      photosOnFile: map['photosOnFile'] != null
           ? List<String>.from(map['photosOnFile'])
           : null,
     );
