@@ -16,6 +16,8 @@ export 'package:tuple/tuple.dart';
 export 'services/providers/entry_creation_provider.dart';
 export 'services/providers/entry_creation_notifier.dart';
 export './services/providers/entry_stream_provider.dart';
+export 'package:responsive_framework/responsive_framework.dart';
+
 
 //utils
 
@@ -55,3 +57,4 @@ export './widgets/createentrystep2.dart';
 export './widgets/dropzone_widget.dart';
 export './widgets/entry_streasmbuilder.dart';
 export './widgets/cadet_grid_tile.dart';
+

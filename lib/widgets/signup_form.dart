@@ -6,8 +6,8 @@ import 'package:kohatian_foundation/pages/sign-in_page.dart';
 import '../widget_export.dart';
 
 class SignupForm extends ConsumerStatefulWidget {
-  final String? kitNo; // Receive kitNo as argument
-  const SignupForm({this.kitNo, super.key});
+  final String? kitNoParam; // Receive kitNo as argument
+  const SignupForm({this.kitNoParam, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignupFormState();
@@ -15,15 +15,15 @@ class SignupForm extends ConsumerStatefulWidget {
 
 class _SignupFormState extends ConsumerState<SignupForm> {
   bool isSignupUsingGoogle = false;
-  bool isSignUpUdingEmail = false;
-  TextEditingController kitno = TextEditingController();
+  bool isSignUpUsingEmail = false;
+  TextEditingController kitNoController = TextEditingController();
   TextEditingController house = TextEditingController();
-  TextEditingController domicile = TextEditingController();
-  TextEditingController mobileNumber = TextEditingController();
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmpassword = TextEditingController();
+  TextEditingController domicileController = TextEditingController();
+  TextEditingController mobileNumberController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
   bool passwordIsHidden = true;
   var cadetFormKey = GlobalKey<FormState>();
   var emailFormKey = GlobalKey<FormState>();
@@ -33,251 +33,264 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    isSignUpUdingEmail = false;
+    isSignUpUsingEmail = false;
     isSignupUsingGoogle = false;
-    kitno.text = widget.kitNo ?? ''; // Get kitNo from widget
-    name.text = '';
+    kitNoController.text = widget.kitNoParam ?? ''; // Get kitNo from widget
+    nameController.text = '';
     house.text = '';
-    email.text = '';
-    password.text = '';
-    confirmpassword.text = '';
-    domicile.text = '';
-    mobileNumber.text = '';
+    emailController.text = '';
+    passwordController.text = '';
+    confirmpasswordController.text = '';
+    domicileController.text = '';
+    mobileNumberController.text = '';
   }
 
   @override
   void dispose() {
-    kitno.dispose();
-    name.dispose();
+    kitNoController.dispose();
+    nameController.dispose();
     house.dispose();
-    email.dispose();
-    password.dispose();
-    confirmpassword.dispose();
-    domicile.dispose();
-    mobileNumber.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmpasswordController.dispose();
+    domicileController.dispose();
+    mobileNumberController.dispose();
     super.dispose();
   }
 
 //cadet Details Form
-  Widget cadetDetailsForm() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Form(
-          key: cadetFormKey,
-          child: Card(
-            elevation: 15,
-            child: Column(
-              children: [
-                Text(
-                  'Cadet Details',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Spacer(),
-                    //Kit No Form Field
-                    SizedBox(
-                      // width: constraints.maxWidth / 2,
-                      width: 210,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: kitno,
-                          decoration: InputDecoration(
-                            hintText: 'e.g. 2924',
-                            border: const OutlineInputBorder(),
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.grey),
-                            labelStyle: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold),
-                            label: const Text('Kit No'),
-                          ),
-                          validator: (value) {
-                            if (value == '') {
-                              return 'Valid Kit Number is required';
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (value) {},
-                        ),
-                      ),
-                    ),
+  Widget cadetDetailsForm(BuildContext) {
+    double mediaWidth = MediaQuery.of(context).size.width;
+    double formWidth = 0;
 
-                    //House FormField
-                    SizedBox(
-                      // width: constraints.maxWidth / 2,
-                      width: 210,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: house,
-                          // maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                          decoration: InputDecoration(
-                            hintText: 'e.g. KH',
-                            border: const OutlineInputBorder(),
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.grey),
-                            labelStyle: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold),
-                            label: const Text('House'),
-                          ),
-                          validator: (value) {
-                            if (value != '') {
-                              value = value!.toUpperCase();
-                            }
+    if ((ResponsiveBreakpoints.of(context).isDesktop) && (mediaWidth > 1100)) {
+      formWidth = mediaWidth * .4;
+    } else if ((ResponsiveBreakpoints.of(context).isDesktop) &&
+        (mediaWidth < 1000)) {
+      formWidth = 200;
+    } else {
+      formWidth = mediaWidth * .6;
+    }
 
-                            if (value == '' ||
-                                !(value == 'JH' ||
-                                    value == 'KH' ||
-                                    value == 'IH' ||
-                                    value == 'AH' ||
-                                    value == 'MH' ||
-                                    value == 'RH')) {
-                              return 'valid input = KH,JH,IH,MH,RH';
-                            }
-                            return null;
-                          },
-                          onFieldSubmitted: (value) {},
+    // return LayoutBuilder(
+    //   builder: (context, constraints) {
+    return Form(
+      key: cadetFormKey,
+      child: Card(
+        elevation: 6.5,
+        child: SizedBox(
+          // height: 300,
+          width: formWidth,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Cadet Details',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Spacer(),
+                  //Kit No Form Field
+                  SizedBox(
+                    width: formWidth * .3,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: kitNoController,
+                        decoration: InputDecoration(
+                          hintText: 'e.g. 2924',
+                          border: const OutlineInputBorder(),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey),
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold),
+                          label: const Text('Kit #'),
                         ),
+                        validator: (value) {
+                          if (value == '') {
+                            return 'Valid Kit Number is required';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (value) {},
                       ),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-                // Name FormField
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: name,
-                      decoration: InputDecoration(
-                        hintText: 'e.g. Imtiaz Hussain Baloch',
-                        border: const OutlineInputBorder(),
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .labelSmall
-                            ?.copyWith(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.grey),
-                        labelStyle: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
-                        label: const Text('Cadet Name'),
-                      ),
-                      validator: (value) {
-                        if (value == '') {
-                          return 'Name is required';
-                        }
-                        return null;
-                      },
-                      onFieldSubmitted: (value) {},
                     ),
                   ),
-                ),
-                //Domicile
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: domicile,
-                      decoration: InputDecoration(
-                        hintText: 'e.g. Swat',
-                        border: const OutlineInputBorder(),
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .labelSmall
-                            ?.copyWith(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.grey),
-                        labelStyle: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
-                        label: const Text('Domicile'),
+
+                  //House FormField
+                  SizedBox(
+                    width: formWidth * .3,
+                    // width: 80,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: house,
+                        // maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        decoration: InputDecoration(
+                          hintText: 'e.g. KH',
+                          border: const OutlineInputBorder(),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.grey),
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold),
+                          label: const Text('House'),
+                        ),
+                        validator: (value) {
+                          if (value != '') {
+                            value = value!.toUpperCase();
+                          }
+
+                          if (value == '' ||
+                              !(value == 'JH' ||
+                                  value == 'KH' ||
+                                  value == 'IH' ||
+                                  value == 'AH' ||
+                                  value == 'MH' ||
+                                  value == 'RH')) {
+                            return 'valid input = KH,JH,IH,MH,RH';
+                          }
+                          return null;
+                        },
+                        onFieldSubmitted: (value) {},
                       ),
-                      validator: (value) {
-                        if (value == '') {
-                          return 'Domicile is required';
-                        }
-                        return null;
-                      },
-                      onFieldSubmitted: (value) {},
                     ),
                   ),
-                ),
-                //mobile number
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 400,
-                    child: TextFormField(
-                      controller: mobileNumber,
-                      decoration: InputDecoration(
-                        hintText: 'e.g. 0333 5364111',
-                        border: const OutlineInputBorder(),
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .labelSmall
-                            ?.copyWith(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.grey),
-                        labelStyle: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold),
-                        label: const Text('Mobile (preferebaly WhatsApp)'),
-                      ),
-                      validator: (value) {
-                        if (value == '' ||
-                            RegExp(r'[a-zA-Z]').hasMatch(value!) ||
-                            value.length != 11) {
-                          return 'invalid mobile number';
-                        }
-                        return null;
-                      },
-                      onFieldSubmitted: (value) {},
+                  const Spacer(),
+                ],
+              ),
+              // Name FormField
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: formWidth * .58,
+                  child: TextFormField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: 'e.g. Imtiaz Hussain Baloch',
+                      border: const OutlineInputBorder(),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          ?.copyWith(
+                              fontStyle: FontStyle.italic, color: Colors.grey),
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                      label: const Text('Cadet Name'),
                     ),
+                    validator: (value) {
+                      if (value == '') {
+                        return 'Name is required';
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (value) {},
                   ),
                 ),
-              ],
-            ),
+              ),
+              //Domicile
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: formWidth * .58,
+                  child: TextFormField(
+                    controller: domicileController,
+                    decoration: InputDecoration(
+                      hintText: 'e.g. Swat',
+                      border: const OutlineInputBorder(),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          ?.copyWith(
+                              fontStyle: FontStyle.italic, color: Colors.grey),
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                      label: const Text('Domicile'),
+                    ),
+                    validator: (value) {
+                      if (value == '') {
+                        return 'Domicile is required';
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (value) {},
+                  ),
+                ),
+              ),
+              //mobile number
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: formWidth * .58,
+                  child: TextFormField(
+                    controller: mobileNumberController,
+                    decoration: InputDecoration(
+                      hintText: 'e.g. 0333 5364111',
+                      border: const OutlineInputBorder(),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .labelSmall
+                          ?.copyWith(
+                              fontStyle: FontStyle.italic, color: Colors.grey),
+                      labelStyle: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                      label: const Text('Mobile (preferebaly WhatsApp)'),
+                    ),
+                    validator: (value) {
+                      if (value == '' ||
+                          RegExp(r'[a-zA-Z]').hasMatch(value!) ||
+                          value.length != 11) {
+                        return 'invalid mobile number';
+                      }
+                      return null;
+                    },
+                    onFieldSubmitted: (value) {},
+                  ),
+                ),
+              ),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
+    // },
+    // );
   }
 
 //Email Form
   Widget emailDetailsForm() {
     return Form(
       key: emailFormKey,
-      child: Container(
+      child: SizedBox(
         width: 500,
         child: Card(
           elevation: 15,
@@ -304,7 +317,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       child: SizedBox(
         width: 400,
         child: TextFormField(
-          controller: email,
+          controller: emailController,
           validator: (value) {
             final isValid = EmailValidator.validate(value!);
             if (!isValid) {
@@ -337,7 +350,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         width: 400,
         child: TextFormField(
             obscureText: passwordIsHidden,
-            controller: password,
+            controller: passwordController,
             decoration: InputDecoration(
               hintStyle: Theme.of(context)
                   .textTheme
@@ -360,7 +373,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               ),
             ),
             validator: (value) {
-              return password.text == '' ? ' password is required' : '';
+              return passwordController.text == ''
+                  ? ' password is required'
+                  : '';
             }),
       ),
     );
@@ -374,7 +389,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         width: 400,
         child: TextFormField(
           obscureText: passwordIsHidden,
-          controller: confirmpassword,
+          controller: confirmpasswordController,
           decoration: InputDecoration(
             hintStyle: Theme.of(context)
                 .textTheme
@@ -398,11 +413,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             label: const Text('Confirm Password'),
           ),
           validator: (value) {
-            if (password.text != confirmpassword.text) {
+            if (passwordController.text != confirmpasswordController.text) {
               return 'passwords do not macth';
             }
 
-            return confirmpassword.text == ''
+            return confirmpasswordController.text == ''
                 ? 'confirm password is required'
                 : '';
           },
@@ -430,11 +445,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           children: [
             Expanded(
               child: SizedBox(
-                  height: 50,
+                  height: 40,
                   child: ElevatedButton(
                       onPressed: () =>
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PublicHomePage(),
+                            builder: (context) => const PublicHomePage(),
                           )),
                       child: const Text('Back'))),
             ),
@@ -464,11 +479,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           children: [
             Expanded(
               child: SizedBox(
-                  height: 50,
+                  height: 40,
                   child: ElevatedButton(
                       onPressed: () =>
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PublicHomePage(),
+                            builder: (context) => const PublicHomePage(),
                           )),
                       child: const Text('Back'))),
             ),
@@ -481,7 +496,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   //form reset button
   Widget formResetButton() {
     return SizedBox(
-      height: 50,
+      height: 40,
       child: ElevatedButton(
         onPressed: () {},
         child: const Text('Reset '),
@@ -492,7 +507,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 //signup With GoogleButton
   Widget signUpWithGoogleButton() {
     return SizedBox(
-      height: 50,
+      height: 40,
       child: ElevatedButton.icon(
         icon: const FaIcon(
           FontAwesomeIcons.google,
@@ -508,43 +523,60 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 
             final userCredential = await authService.signupWithGoogle();
 
-            if (userCredential != null) {
-              if (kDebugMode) {
-                print('User created: ${userCredential.user}');
-              }
-              try {
-                final result = await authService.createAppUserInDb(UserProfile(
-                    uuid: userCredential.user!.uid,
-                    name: name.text,
-                    
-
-                    kitNo: kitno.text,
-                    house: house.text.toUpperCase(),
-                    domicile: domicile.text,
-                    mobileNumber: mobileNumber.text,
-                    email: userCredential.user!.email!,
-                    isValidated: false,
-                    roles: [UserRole.cadet()]));
-              } on FirebaseException catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(e.message!),
-                  ),
-                );
-              } catch (e) {
-                ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-                  SnackBar(
-                    content: Text(e.toString()),
-                  ),
-                );
-              }
-
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const SignUpSucess(),
-              ));
-            } else {
-              print('cadet Form is not valid');
+            if (kDebugMode) {
+              print('User created: ${userCredential.user}');
             }
+            try {
+              final result = await authService.createAppUserInDb(UserProfile(
+                  uuid: userCredential.user!.uid,
+                  name: nameController.text,
+                  kitNo: kitNoController.text,
+                  house: house.text.toUpperCase(),
+                  domicile: domicileController.text,
+                  mobileNumber: mobileNumberController.text,
+                  email: userCredential.user!.email!,
+                  isValidated: false,
+                  roles: [UserRole.cadet()]));
+
+              final cadetData = {
+                'domicile': domicileController.text,
+                'hasSignedUp': true,
+                'house': house.text.toUpperCase(),
+                'kitNo': kitNoController.text,
+                'mobileNumber': mobileNumberController.text,
+                'name': nameController.text,
+                'profileImageUrl': userCredential.user!.photoURL,
+                'email': userCredential.user!.email,
+              };
+              // Get the entryName from Firestore
+              getEntryName(kitNoController.text).then(
+                (value) {
+                  FirebaseFirestore.instance
+                      .collection('entrys')
+                      .doc(value)
+                      .collection('cadets')
+                      .doc(kitNoController.text)
+                      .set(cadetData, SetOptions(merge: true));
+                },
+              );
+              // Create a document in the Firestore collection
+            } on FirebaseException catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(e.message!),
+                ),
+              );
+            } catch (e) {
+              ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+                SnackBar(
+                  content: Text(e.toString()),
+                ),
+              );
+            }
+
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const SignUpSucess(),
+            ));
           }
         },
         label: const Padding(
@@ -553,6 +585,26 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         ),
       ),
     );
+  }
+
+  // Function to get entryName from Firestore based on kitNo
+  Future<String?> getEntryName(String kitNo) async {
+    // Extract the first two digits of the kit number
+    final firstTwoDigits = kitNo.substring(0, 2);
+
+    // Query the 'entrys' collection based on the first two digits
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('entrys')
+        .where('number', isEqualTo: firstTwoDigits)
+        .get();
+
+    // If a document is found, return the entryName
+    if (querySnapshot.docs.isNotEmpty) {
+      return querySnapshot.docs.first['name'];
+    }
+
+    // If no document is found, return null
+    return null;
   }
 
 //signup with Email Button
@@ -571,8 +623,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             print('Email Form is valid');
 
             // Get email and password
-            final emailValue = email.text.trim();
-            final passwordValue = password.text.trim();
+            final emailValue = emailController.text.trim();
+            final passwordValue = passwordController.text.trim();
 //TODO write code for this
             try {
               // Create user with email and password
@@ -609,7 +661,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 //signup USING Google Button
   Widget signUpUsingGoogleButton() {
     return SizedBox(
-      height: 50,
+      height: 30,
       child: ElevatedButton.icon(
         icon: const FaIcon(
           FontAwesomeIcons.google,
@@ -617,7 +669,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         onPressed: () {
           setState(() {
             isSignupUsingGoogle = true;
-            isSignUpUdingEmail = false;
+            isSignUpUsingEmail = false;
           });
         },
         label: const Text('Signup Using Google '),
@@ -628,7 +680,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 //signup USING  Email Button
   Widget signUpUsingEmailButton() {
     return SizedBox(
-      height: 50,
+      height: 30,
       child: ElevatedButton.icon(
         icon: const FaIcon(
           FontAwesomeIcons.envelope,
@@ -637,7 +689,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
         onPressed: () {
           setState(() {
             isSignupUsingGoogle = false;
-            isSignUpUdingEmail = true;
+            isSignUpUsingEmail = true;
           });
         },
         label: const Text('Signup Using Email '),
@@ -646,15 +698,19 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
   //Sign Up With Google Form
-  Widget gForm() {
-    return Column(
-      children: [
-        const SizedBox(height: 30),
-        cadetDetailsForm(),
-        const SizedBox(height: 30),
-        gmailButtonBar(),
-        const SizedBox(height: 30),
-      ],
+  Widget gForm(BuildContext context) {
+    return SizedBox(
+      width: 200,
+      height: 300,
+      child: Column(
+        children: [
+          // const SizedBox(height: 20),
+          cadetDetailsForm(context),
+          // const SizedBox(height: 30),
+          // gmailButtonBar(),
+          // const SizedBox(height: 30),
+        ],
+      ),
     );
   }
 
@@ -664,7 +720,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       child: Column(
         children: [
           const SizedBox(height: 30),
-          cadetDetailsForm(),
+          cadetDetailsForm(context),
           const SizedBox(height: 30),
           emailDetailsForm(),
           const SizedBox(height: 30),
@@ -677,57 +733,73 @@ class _SignupFormState extends ConsumerState<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Container(
-          width: 500,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(height: 5),
-              CachedNetworkImage(
-                  imageUrl:
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWlujQJd5orHdTsvq6_5sFz3Bmf9zkujaJhQ&s'),
-              const SizedBox(
-                height: 30,
-              ),
-              Text('Sign Up', style: Theme.of(context).textTheme.titleLarge),
-              //Signup Mode selector Gmail vs Email mode
-              const SizedBox(height: 24),
-              signUpUsingGoogleButton(),
-              const SizedBox(height: 24),
-
-              //Signup with Email Button
-              signUpUsingEmailButton(),
-              const SizedBox(height: 24),
-
-              SizedBox(
-                  height: 50,
-                  child: ElevatedButton.icon(
-                      icon: const Icon(
-                        Icons.info_outline_rounded,
-                        // color: Colors.red,
-                      ),
-                      onPressed: () =>
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => SignInPage(),
-                          )),
-                      label: Text(
-                          'Already have an Account!    Proceed to Login'))),
-
-              isSignupUsingGoogle ? gForm() : const SizedBox.shrink(),
-
-              //Signup with Email Button
-              isSignUpUdingEmail ? emailForm() : const SizedBox.shrink(),
-              // cadetDetailsForm(),
-
-              const SizedBox(
-                height: 8,
-              ),
-            ],
-          ),
+    return ResponsiveRowColumn(
+      layout: ResponsiveBreakpoints.of(context).smallerThan('DESKTOP')
+          ? ResponsiveRowColumnType.COLUMN
+          : ResponsiveRowColumnType.ROW,
+      //  rMainAxisAlignment: MainAxisAlignment.center,
+      rowMainAxisAlignment: MainAxisAlignment.center,
+      rowSpacing: 50,
+      // colSpacing: 10,
+      children: [
+        ResponsiveRowColumnItem(
+          child: signupArt(context),
         ),
+        // ResponsiveRowColumnItem(child: Spacer(),),
+        ResponsiveRowColumnItem(
+          child: cadetDetailsForm(context),
+        ),
+        // ResponsiveRowColumnItem(child: Spacer(),),
+      ],
+    );
+  }
+
+  Widget signupArt(BuildContext context) => CachedNetworkImage(
+      // height: 500,
+      fit: BoxFit.fill,
+      fadeInCurve: Curves.easeInCubic,
+      placeholder: (context, url) => Container(
+            color: Colors.grey.shade50,
+          ),
+      imageUrl:
+          'https://st3.depositphotos.com/35530942/37682/v/450/depositphotos_376824262-stock-illustration-online-registration-sign-concept-young.jpg');
+
+  SizedBox alreadyHaveAccount(BuildContext context) {
+    return SizedBox(height: 30, child: _alternateStyle1(context));
+  }
+
+  ElevatedButton _elevatedButton(BuildContext context) {
+    return ElevatedButton.icon(
+        icon: const Icon(
+          Icons.info_outline_rounded,
+          // color: Colors.red,
+        ),
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const SignInPage(),
+            )),
+        label: const Text('Already have an Account!    Proceed to Login'));
+  }
+
+  Widget _alternateStyle1(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const SignInPage(),
+      )),
+      child: Material(
+        color: Colors.blueGrey.shade200,
+        elevation: 5,
+        child: const Center(
+            child: Text('Already have an Account!    Proceed to Login')),
       ),
     );
+    // ElevatedButton.icon(
+    //     icon: const Icon(
+    //       Icons.info_outline_rounded,
+    //       // color: Colors.red,
+    //     ),
+    //     onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+    //           builder: (context) => SignInPage(),
+    //         )),
+    //     label: Text());
   }
 }

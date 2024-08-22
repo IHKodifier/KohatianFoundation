@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/services/providers/flexscheme_provider.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 import 'package:kohatian_foundation/widgets/start_up.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
@@ -11,31 +12,28 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentScheme = ref.watch(flexSchemeProvider);
-     final themeMode = ref.watch(themeModeProvider);
+    final themeMode = ref.watch(themeModeProvider);
     return MaterialApp(
       title: 'Kohatian Foundation',
       debugShowCheckedModeBanner: false,
-      
-      
-      
-    // Theme config for FlexColorScheme version 7.3.x. Make sure you use
-// same or higher package version, but still same major version. If you
-// use a lower package version, some properties may not be supported.
-// In that case remove them after copying this theme to your app.
       theme: FlexColorScheme.light(scheme: currentScheme).toTheme,
-      darkTheme: FlexColorScheme.dark(scheme: currentScheme).toTheme,
-// If you do not have a themeMode switch, uncomment this line
-// to let the device system mode control the theme mode:
-themeMode: themeMode,
-
-
-    initialRoute: '/', // Set the initial route
+      themeMode: themeMode,
+      initialRoute: '/', // Set the initial route
       routes: {
         '/': (context) => StartUp(), // Your initial page
         '/signup': (context) => SignupPage(
             kitNo: ModalRoute.of(context)!.settings.arguments
                 as String?), // Define the signup route
       },
+    builder: (context, child) => ResponsiveBreakpoints.builder(
+          child: child!,
+          breakpoints: [
+             const Breakpoint(start: 0, end: 450, name: 'not supported'),
+             const Breakpoint(start: 451, end: 800, name: MOBILE),
+          const Breakpoint(start: 801, end: 1200, name: TABLET),
+          const Breakpoint(start: 1201, end: 1920, name: DESKTOP),
+          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+          ],),
     );
   }
 }

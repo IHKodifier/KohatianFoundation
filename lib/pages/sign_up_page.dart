@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
@@ -10,10 +9,18 @@ class SignupPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
-        child: ListView(
-          children: [
-             SignupForm(kitNo: kitNo,),
-          ],
+        child: SingleChildScrollView(
+          child: Column( 
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('SignUp',
+              style: Theme.of(context).textTheme.displaySmall),
+              SignupForm(
+                kitNoParam: kitNo,
+              ),
+            ],
+          ),
         ),
       ),
     );

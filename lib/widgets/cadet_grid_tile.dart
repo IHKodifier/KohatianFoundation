@@ -107,7 +107,7 @@ class CadetGridTile extends StatelessWidget {
         ? ElevatedButton(
             onPressed: () {
               // Navigate to SignupPage and pass the kitNo
-              Navigator.pushNamed(context, '/signup', arguments: cadet.kitNo);
+              Navigator.pushNamed(context, '/signup', arguments: cadet.kitNo.toString());
             },
             child: Text('Signup as ${cadet.kitNo}'))
         : Container();
