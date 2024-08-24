@@ -235,7 +235,7 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
   }
 
   Text kitNumberText(UserProfile? data, BuildContext context) {
-    return Text(data!.kitNo,
+    return Text(data!.kitNo.toString(),
         style: Theme.of(context)
             .textTheme
             .titleMedium

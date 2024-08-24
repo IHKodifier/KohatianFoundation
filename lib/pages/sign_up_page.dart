@@ -9,17 +9,24 @@ class SignupPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
-        child: SingleChildScrollView(
-          child: Column( 
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('SignUp',
-              style: Theme.of(context).textTheme.displaySmall),
-              SignupForm(
-                kitNoParam: kitNo,
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Card(
+            elevation: 10,
+            child: SingleChildScrollView(
+              child: Column( 
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('SignUp',
+                  style: Theme.of(context).textTheme.displaySmall),
+                  SignupForm(
+                    kitNoParam: kitNo, 
+                  ),
+                  SizedBox(height: 30,),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

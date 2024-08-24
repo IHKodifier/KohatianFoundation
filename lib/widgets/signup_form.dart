@@ -72,12 +72,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       formWidth = mediaWidth * .6;
     }
 
-    // return LayoutBuilder(
-    //   builder: (context, constraints) {
+
     return Form(
       key: cadetFormKey,
-      child: Card(
-        elevation: 6.5,
+      child: Center(
+        // elevation: 6.5,
         child: SizedBox(
           // height: 300,
           width: formWidth,
@@ -277,6 +276,12 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                   ),
                 ),
               ),
+          Padding(
+            padding: const EdgeInsets.all(8), 
+            child: SizedBox(
+               width: formWidth * .58,
+              child: gmailButtonBar()),
+          ),
             ],
           ),
         ),
@@ -287,144 +292,144 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
 //Email Form
-  Widget emailDetailsForm() {
-    return Form(
-      key: emailFormKey,
-      child: SizedBox(
-        width: 500,
-        child: Card(
-          elevation: 15,
-          child: Column(
-            children: [
-              Text(
-                'Email & Password Details',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              emailFormField(),
-              passwordFormField(),
-              confirmPasswordFormField(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget emailDetailsForm() {
+  //   return Form(
+  //     key: emailFormKey,
+  //     child: SizedBox(
+  //       width: 500,
+  //       child: Card(
+  //         elevation: 15,
+  //         child: Column(
+  //           children: [
+  //             Text(
+  //               'Email & Password Details',
+  //               style: Theme.of(context).textTheme.titleLarge,
+  //             ),
+  //             // emailFormField(),
+  //             // passwordFormField(),
+  //             // confirmPasswordFormField(),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
 // Email Form Field
-  Padding emailFormField() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: 400,
-        child: TextFormField(
-          controller: emailController,
-          validator: (value) {
-            final isValid = EmailValidator.validate(value!);
-            if (!isValid) {
-              return 'badly formatted email';
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-            hintStyle: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
-            labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Theme.of(context).primaryColor,
-                fontWeight: FontWeight.bold),
-            hintText: 'Email address',
-            border: const OutlineInputBorder(),
-            label: const Text('Email'),
-          ),
-        ),
-      ),
-    );
-  }
+  // Padding emailFormField() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: SizedBox(
+  //       width: 400,
+  //       child: TextFormField(
+  //         controller: emailController,
+  //         validator: (value) {
+  //           final isValid = EmailValidator.validate(value!);
+  //           if (!isValid) {
+  //             return 'badly formatted email';
+  //           }
+  //           return null;
+  //         },
+  //         decoration: InputDecoration(
+  //           hintStyle: Theme.of(context)
+  //               .textTheme
+  //               .labelSmall
+  //               ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
+  //           labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+  //               color: Theme.of(context).primaryColor,
+  //               fontWeight: FontWeight.bold),
+  //           hintText: 'Email address',
+  //           border: const OutlineInputBorder(),
+  //           label: const Text('Email'),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-//Password FormField
-  Padding passwordFormField() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: 400,
-        child: TextFormField(
-            obscureText: passwordIsHidden,
-            controller: passwordController,
-            decoration: InputDecoration(
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .labelSmall
-                  ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
-              labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold),
-              hintText: 'at least 8 characters',
-              border: const OutlineInputBorder(),
-              label: const Text('Password'),
-              suffixIcon: IconButton(
-                icon: Icon(
-                    passwordIsHidden ? Icons.visibility : Icons.visibility_off),
-                onPressed: () {
-                  setState(() {
-                    passwordIsHidden = !passwordIsHidden;
-                  });
-                },
-              ),
-            ),
-            validator: (value) {
-              return passwordController.text == ''
-                  ? ' password is required'
-                  : '';
-            }),
-      ),
-    );
-  }
+// //Password FormField
+//   Padding passwordFormField() {
+//     return Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: SizedBox(
+//         width: 400,
+//         child: TextFormField(
+//             obscureText: passwordIsHidden,
+//             controller: passwordController,
+//             decoration: InputDecoration(
+//               hintStyle: Theme.of(context)
+//                   .textTheme
+//                   .labelSmall
+//                   ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
+//               labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+//                   color: Theme.of(context).primaryColor,
+//                   fontWeight: FontWeight.bold),
+//               hintText: 'at least 8 characters',
+//               border: const OutlineInputBorder(),
+//               label: const Text('Password'),
+//               suffixIcon: IconButton(
+//                 icon: Icon(
+//                     passwordIsHidden ? Icons.visibility : Icons.visibility_off),
+//                 onPressed: () {
+//                   setState(() {
+//                     passwordIsHidden = !passwordIsHidden;
+//                   });
+//                 },
+//               ),
+//             ),
+//             validator: (value) {
+//               return passwordController.text == ''
+//                   ? ' password is required'
+//                   : '';
+//             }),
+//       ),
+//     );
+//   }
 
 //Confirm Password Form Field
-  Padding confirmPasswordFormField() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: 400,
-        child: TextFormField(
-          obscureText: passwordIsHidden,
-          controller: confirmpasswordController,
-          decoration: InputDecoration(
-            hintStyle: Theme.of(context)
-                .textTheme
-                .labelSmall
-                ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
-            labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-            suffixIcon: IconButton(
-              icon: Icon(
-                  passwordIsHidden ? Icons.visibility : Icons.visibility_off),
-              onPressed: () {
-                setState(() {
-                  passwordIsHidden = !passwordIsHidden;
-                });
-              },
-            ),
-            hintText: 'confirm Password',
-            border: const OutlineInputBorder(),
-            label: const Text('Confirm Password'),
-          ),
-          validator: (value) {
-            if (passwordController.text != confirmpasswordController.text) {
-              return 'passwords do not macth';
-            }
+  // Padding confirmPasswordFormField() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: SizedBox(
+  //       width: 400,
+  //       child: TextFormField(
+  //         obscureText: passwordIsHidden,
+  //         controller: confirmpasswordController,
+  //         decoration: InputDecoration(
+  //           hintStyle: Theme.of(context)
+  //               .textTheme
+  //               .labelSmall
+  //               ?.copyWith(fontStyle: FontStyle.italic, color: Colors.grey),
+  //           labelStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+  //                 color: Theme.of(context).primaryColor,
+  //                 fontWeight: FontWeight.bold,
+  //               ),
+  //           suffixIcon: IconButton(
+  //             icon: Icon(
+  //                 passwordIsHidden ? Icons.visibility : Icons.visibility_off),
+  //             onPressed: () {
+  //               setState(() {
+  //                 passwordIsHidden = !passwordIsHidden;
+  //               });
+  //             },
+  //           ),
+  //           hintText: 'confirm Password',
+  //           border: const OutlineInputBorder(),
+  //           label: const Text('Confirm Password'),
+  //         ),
+  //         validator: (value) {
+  //           if (passwordController.text != confirmpasswordController.text) {
+  //             return 'passwords do not macth';
+  //           }
 
-            return confirmpasswordController.text == ''
-                ? 'confirm password is required'
-                : '';
-          },
-        ),
-      ),
-    );
-  }
+  //           return confirmpasswordController.text == ''
+  //               ? 'confirm password is required'
+  //               : '';
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 
 //Signup With Gmail  Button Bar
   Widget gmailButtonBar() {
@@ -434,8 +439,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded(child: signUpWithGoogleButton()),
-            const SizedBox(width: 10),
-            Expanded(child: formResetButton()),
+            // const SizedBox(width: 10),
+            // Expanded(child: formResetButton()),
           ],
         ),
         const SizedBox(
@@ -460,49 +465,49 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   }
 
   //Signup with Email Button Bar
-  Widget emailButtonBar() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(child: signUpWithEmailButton()),
-            const SizedBox(width: 10),
-            Expanded(child: formResetButton()),
-            const SizedBox(width: 10),
-          ],
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: SizedBox(
-                  height: 40,
-                  child: ElevatedButton(
-                      onPressed: () =>
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const PublicHomePage(),
-                          )),
-                      child: const Text('Back'))),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+  // Widget emailButtonBar() {
+  //   return Column(
+  //     children: [
+  //       Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //         children: [
+  //           // Expanded(child: signUpWithEmailButton()),
+  //           const SizedBox(width: 10),
+  //           Expanded(child: formResetButton()),
+  //           const SizedBox(width: 10),
+  //         ],
+  //       ),
+  //       const SizedBox(
+  //         height: 8,
+  //       ),
+  //       Row(
+  //         children: [
+  //           Expanded(
+  //             child: SizedBox(
+  //                 height: 40,
+  //                 child: ElevatedButton(
+  //                     onPressed: () =>
+  //                         Navigator.of(context).push(MaterialPageRoute(
+  //                           builder: (context) => const PublicHomePage(),
+  //                         )),
+  //                     child: const Text('Back'))),
+  //           ),
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   //form reset button
-  Widget formResetButton() {
-    return SizedBox(
-      height: 40,
-      child: ElevatedButton(
-        onPressed: () {},
-        child: const Text('Reset '),
-      ),
-    );
-  }
+  // Widget formResetButton() {
+  //   return SizedBox(
+  //     height: 40,
+  //     child: ElevatedButton(
+  //       onPressed: () {},
+  //       child: const Text('Reset '),
+  //     ),
+  //   );
+  // }
 
 //signup With GoogleButton
   Widget signUpWithGoogleButton() {
@@ -607,95 +612,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return null;
   }
 
-//signup with Email Button
-  Widget signUpWithEmailButton() {
-    return SizedBox(
-      height: 50,
-      child: ElevatedButton.icon(
-        icon: const FaIcon(
-          FontAwesomeIcons.envelope,
-          // color: Colors.red,
-        ),
-        onPressed: () async {
-          if (cadetFormKey.currentState!.validate() &&
-              emailFormKey.currentState!.validate()) {
-            print('cadet Form is valid');
-            print('Email Form is valid');
 
-            // Get email and password
-            final emailValue = emailController.text.trim();
-            final passwordValue = passwordController.text.trim();
-//TODO write code for this
-            try {
-              // Create user with email and password
-              final userCredential =
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                email: emailValue,
-                password: passwordValue,
-              );
-
-              // User created successfully
-              print('User created: ${userCredential.user}');
-
-              // You can now redirect the user to a different screen or perform other actions.
-            } on FirebaseAuthException catch (e) {
-              // Handle errors during sign-up
-              if (e.code == 'weak-password') {
-                print('The password provided is too weak.');
-              } else if (e.code == 'email-already-in-use') {
-                print('The account already exists for that email.');
-              }
-            } catch (e) {
-              print('Error during sign-up: $e');
-            }
-          }
-        },
-        label: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Signup '),
-        ),
-      ),
-    );
-  }
-
-//signup USING Google Button
-  Widget signUpUsingGoogleButton() {
-    return SizedBox(
-      height: 30,
-      child: ElevatedButton.icon(
-        icon: const FaIcon(
-          FontAwesomeIcons.google,
-        ),
-        onPressed: () {
-          setState(() {
-            isSignupUsingGoogle = true;
-            isSignUpUsingEmail = false;
-          });
-        },
-        label: const Text('Signup Using Google '),
-      ),
-    );
-  }
-
-//signup USING  Email Button
-  Widget signUpUsingEmailButton() {
-    return SizedBox(
-      height: 30,
-      child: ElevatedButton.icon(
-        icon: const FaIcon(
-          FontAwesomeIcons.envelope,
-          // color: Colors.red,
-        ),
-        onPressed: () {
-          setState(() {
-            isSignupUsingGoogle = false;
-            isSignUpUsingEmail = true;
-          });
-        },
-        label: const Text('Signup Using Email '),
-      ),
-    );
-  }
 
   //Sign Up With Google Form
   Widget gForm(BuildContext context) {
@@ -714,22 +631,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     );
   }
 
-//Sign up Using Email Form
-  Widget emailForm() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          const SizedBox(height: 30),
-          cadetDetailsForm(context),
-          const SizedBox(height: 30),
-          emailDetailsForm(),
-          const SizedBox(height: 30),
-          emailButtonBar(),
-          const SizedBox(height: 30),
-        ],
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
