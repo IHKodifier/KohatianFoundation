@@ -9,7 +9,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+//for error dumping
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details, forceReport: true);
+  };
+
   runApp(ProviderScope(child: const MyApp()));
 }
-
-

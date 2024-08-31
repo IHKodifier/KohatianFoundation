@@ -74,6 +74,6 @@ class UserFeedWidget extends ConsumerWidget {
   }
 
   Widget onData(UserProfile? data) {
-    return Text('Welcome to your user Feed  ${data?.kitNo}');
+    return Text('Welcome to your user Feed  ${data?.kitNo.toString()}');
   }
 }

@@ -12,12 +12,13 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentScheme = ref.watch(flexSchemeProvider);
-    final themeMode = ref.watch(themeModeProvider);
+ 
     return MaterialApp(
       title: 'Kohatian Foundation',
       debugShowCheckedModeBanner: false,
       theme: FlexColorScheme.light(scheme: currentScheme).toTheme,
-      themeMode: themeMode,
+      darkTheme: FlexColorScheme.dark(scheme: currentScheme).toTheme,
+      themeMode: ref.watch(themeModeProvider),
       initialRoute: '/', // Set the initial route
       routes: {
         '/': (context) => StartUp(), // Your initial page

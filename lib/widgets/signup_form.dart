@@ -451,7 +451,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             Expanded(
               child: SizedBox(
                   height: 40,
-                  child: ElevatedButton(
+                  child: TextButton(
                       onPressed: () =>
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const PublicHomePage(),
@@ -532,10 +532,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               print('User created: ${userCredential.user}');
             }
             try {
+               final int? kitNoInt = int.tryParse(kitNoController.text);
               final result = await authService.createAppUserInDb(UserProfile(
                   uuid: userCredential.user!.uid,
                   name: nameController.text,
-                  kitNo: kitNoController.text,
+                  kitNo: kitNoInt!,
                   house: house.text.toUpperCase(),
                   domicile: domicileController.text,
                   mobileNumber: mobileNumberController.text,
@@ -547,7 +548,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 'domicile': domicileController.text,
                 'hasSignedUp': true,
                 'house': house.text.toUpperCase(),
-                'kitNo': kitNoController.text,
+                'kitNo': int.tryParse(kitNoController.text!),
                 'mobileNumber': mobileNumberController.text,
                 'name': nameController.text,
                 'profileImageUrl': userCredential.user!.photoURL,
@@ -560,7 +561,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                       .collection('entrys')
                       .doc(value)
                       .collection('cadets')
-                      .doc(kitNoController.text)
+                      .doc(kitNoInt.toString())
                       .set(cadetData, SetOptions(merge: true));
                 },
               );
@@ -595,7 +596,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
   // Function to get entryName from Firestore based on kitNo
   Future<String?> getEntryName(String kitNo) async {
     // Extract the first two digits of the kit number
-    final firstTwoDigits = kitNo.substring(0, 2);
+    final firstTwoDigits = int.tryParse(kitNo.substring(0, 2));
 
     // Query the 'entrys' collection based on the first two digits
     final querySnapshot = await FirebaseFirestore.instance

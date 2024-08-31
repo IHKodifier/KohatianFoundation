@@ -1,17 +1,15 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
-class UserProfile {
+class UserProfile extends Equatable {
   final String uuid;
   final String name;
   final String email;
-  final String kitNo;
+  final int kitNo;
   final String house;
   final String domicile;
   final String mobileNumber;
-  // String? password;
   String profileImageUrl;
   final bool isValidated;
   List<UserRole> roles;
@@ -24,7 +22,6 @@ class UserProfile {
     required this.house,
     required this.domicile,
     required this.mobileNumber,
-    // this.password,
     required this.isValidated,
     required this.roles,
     this.profileImageUrl = '',
@@ -34,7 +31,7 @@ class UserProfile {
     String? uuid,
     String? name,
     String? email,
-    String? kitNo,
+    int? kitNo,
     String? house,
     String? domicile,
     String? mobileNumber,
@@ -50,7 +47,6 @@ class UserProfile {
       house: house ?? this.house,
       domicile: domicile ?? this.domicile,
       mobileNumber: mobileNumber ?? this.mobileNumber,
-      // password: password ?? this.password,
       isValidated: isValidated ?? this.isValidated,
       roles: roles ?? this.roles,
     );
@@ -66,11 +62,8 @@ class UserProfile {
     result.addAll({'house': house});
     result.addAll({'domicile': domicile});
     result.addAll({'mobileNumber': mobileNumber});
-    // if(password != null){
-    //   result.addAll({'password': password});
-    // }
     if (profileImageUrl.isNotEmpty) {
-      result.addAll({'profileImageUrl':result});
+      result.addAll({'profileImageUrl': profileImageUrl});
     }
     result.addAll({'isValidated': isValidated});
     result.addAll({'roles': roles.map((x) => x.toMap()).toList()});
@@ -101,38 +94,20 @@ class UserProfile {
 
   @override
   String toString() {
-    return '''AppUser(uuid: $uuid, name: $name, email: $email, kitNo: $kitNo, house: $house, domicile: $domicile, mobileNumber: $mobileNumber,
+    return '''AppUser(uuid: $uuid, name: $name, email: $email, kitNo: ${kitNo.toString()}, house: $house, domicile: $domicile, mobileNumber: $mobileNumber,
         isValidated: $isValidated, roles: $roles)''';
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is UserProfile &&
-        other.uuid == uuid &&
-        other.name == name &&
-        other.email == email &&
-        other.kitNo == kitNo &&
-        other.house == house &&
-        other.domicile == domicile &&
-        other.mobileNumber == mobileNumber &&
-        // other.password == password &&
-        other.isValidated == isValidated &&
-        listEquals(other.roles, roles);
-  }
-
-  @override
-  int get hashCode {
-    return uuid.hashCode ^
-        name.hashCode ^
-        email.hashCode ^
-        kitNo.hashCode ^
-        house.hashCode ^
-        domicile.hashCode ^
-        mobileNumber.hashCode ^
-        // password.hashCode ^
-        isValidated.hashCode ^
-        roles.hashCode;
-  }
+  List<Object> get props => [
+        uuid,
+        name,
+        email,
+        kitNo,
+        house,
+        domicile,
+        mobileNumber,
+        profileImageUrl,
+        isValidated,
+        roles,
+      ];
 }

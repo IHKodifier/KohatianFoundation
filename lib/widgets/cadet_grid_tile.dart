@@ -109,7 +109,7 @@ class CadetGridTile extends StatelessWidget {
               // Navigate to SignupPage and pass the kitNo
               Navigator.pushNamed(context, '/signup', arguments: cadet.kitNo.toString());
             },
-            child: Text('Signup as ${cadet.kitNo}'))
+            child: Text('Signup as ${cadet.kitNo.toString()}'))
         : Container();
   }
 }

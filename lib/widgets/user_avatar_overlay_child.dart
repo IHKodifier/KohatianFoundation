@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/pages/sign-in_page.dart';
 import 'package:kohatian_foundation/services/providers/flexscheme_provider.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/user_preview_small.dart';
 
 class UserAvatarOverlayChild extends ConsumerStatefulWidget {
   const UserAvatarOverlayChild({super.key});
@@ -55,37 +56,13 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
           // duration: Durations.medium1,
           builder: (context, child) => SizedBox(
             // Modified lines:
+            height:500,
             width: _animation.value *
                 1.5, // Directly use animation value for width
             // height: _animation.value, // Directly use animation value for height
             child: child,
           ),
-          child: Card(
-            elevation: 5,
-            // color: Colors.white,
-            child: Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                profilePic(data!),
-                //Kitno,Name and house
-                Column(
-                  children: [
-                    kitNumberText(data, context), // Display Kit Number
-                    cadetName(data, context), // Display Name
-                    cadetHouse(data, context), // Display House
-                  ],
-                ),
-
-                ThemesTile(),
-                const SizedBox(height: 10),
-                ThemeModeTile(),
-                accountTile(data, context),
-                accountTypeTile(profile, data, context),
-                SizedBox(height: 10),
-              ],
-            )),
-          ),
+          child: UserPreviewSmall(data!),
         ),
         error: (error, stackTrace) =>
             Text(error.toString() + stackTrace.toString()),
@@ -94,166 +71,171 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
     );
   }
 
-  Padding accountTypeTile(AsyncValue<UserProfile?> profile, UserProfile? data,
-      BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: Card(
-        // color: Colors.blueGrey.shade50,
-        elevation: 5,
-        child: ListTile(
-          leading: const Icon(Icons.person, size: 40),
+  // Padding accountTypeTile(AsyncValue<UserProfile?> profile, UserProfile? data,
+  //     BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
+  //     child: Card(
+  //       // color: Colors.blueGrey.shade50,
+  //       elevation: 5,
+  //       child: ListTile(
+  //         leading: const Icon(Icons.person, size: 40),
 
-          title: const Text('Account  Type'),
-          subtitle: Row(
-            children: profile.asData!.value!.roles
-                .map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.secondary,
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: Text(
-                            e.value,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary),
-                          ),
-                        )),
-                  ),
-                )
-                .toList(),
-          ),
-          // enabled: true,
-          trailing: (data!.roles.contains(UserRole.admin()))
-              ? // Check for Admin Role
-              TextButton(
-                  onPressed: () {
-                    //TODO
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AdminCenterPage(),
-                    ));
-                  },
-                  child: Text(
-                    'Admin Center',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          // color: Colors.red,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                )
-              : Container(),
-        ),
-      ),
-    );
-  }
+  //         title: const Text('Account  Type'),
+  //         subtitle: Row(
+  //           children: profile.asData!.value!.roles
+  //               .map(
+  //                 (e) => Flexible(
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
+  //                     child: Container(
+  //                         decoration: BoxDecoration(
+  //                           color: Theme.of(context).colorScheme.secondary,
+  //                           border: Border.all(),
+  //                           borderRadius: BorderRadius.circular(12),
+  //                         ),
+  //                         child: Padding(
+  //                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
+  //                           child: Text(
+  //                             e.value,
+  //                             style: Theme.of(context)
+  //                                 .textTheme
+  //                                 .titleSmall
+  //                                 ?.copyWith(
+  //                                     color: Theme.of(context)
+  //                                         .colorScheme
+  //                                         .onSecondary),
+  //                           ),
+  //                         )),
+  //                   ),
+  //                 ),
+  //               )
+  //               .toList(),
+  //         ),
+  //         // enabled: true,
+  //         trailing: (data!.roles.contains(UserRole.admin()))
+  //             ? // Check for Admin Role
+  //             SizedBox(
+  //               height: 50,
+  //               child: TextButton(
+  //                   onPressed: () {
+  //                     //TODO
+  //                     Navigator.of(context).push(MaterialPageRoute(
+  //                       builder: (context) => const AdminCenterPage(),
+  //                     ));
+  //                   },
+  //                   child: Text(
+  //                     'Admin Center',
+  //                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
+  //                           // color: Colors.red,
+  //                           fontWeight: FontWeight.w600,
+  //                         ),
+  //                   ),
+  //                 ),
+  //             )
+  //             : Container(),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Padding accountTile(UserProfile? data, BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: Card(
-        // color: Colors.blueGrey.shade50,
-        elevation: 5,
-        child: ListTile(
-          leading: const Icon(Icons.person, size: 40),
+  // Padding accountTile(UserProfile? data, BuildContext context) {
+  //   return Padding(
+  //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
+  //     child: Card(
+  //       // color: Colors.blueGrey.shade50,
+  //       elevation: 5,
+  //       child: ListTile(
+  //         leading: const Icon(Icons.person, size: 40),
 
-          title: const Text('Account '),
-          subtitle: Text('${data!.email}'),
-          // enabled: true,
-          trailing: TextButton(
-            onPressed: () {
-              //TODO
-              // Sign out the user
-              FirebaseAuth.instance.signOut();
+  //         title: const Text('Account '),
+  //         subtitle: Text(data!.email),
+  //         // enabled: true,
+  //         trailing: TextButton(
+  //           onPressed: () {
+  //             //TODO
+  //             // Sign out the user
+  //             FirebaseAuth.instance.signOut();
 
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const SignInPage()));
-            },
-            child: Text(
-              'SIGN OUT',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Colors.red,
-                    fontWeight: FontWeight.w900,
-                  ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  //             Navigator.of(context).push(
+  //                 MaterialPageRoute(builder: (context) => const SignInPage()));
+  //           },
+  //           child: Text(
+  //             'SIGN OUT',
+  //             style: Theme.of(context).textTheme.titleSmall?.copyWith(
+  //                   color: Colors.red,
+  //                   fontWeight: FontWeight.w900,
+  //                 ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  Text cadetHouse(UserProfile? data, BuildContext context) {
-    String houseName = '';
-     switch (data!.house) {
-      case 'JH':
-        houseName = 'Jinnah House';
-        break;
-      case 'KH':
-        houseName = 'Khushal House';
-        break;
-      case 'IH':
-        houseName = 'Iqbal House';
-        break;
-      case 'AH':
-        houseName = 'Ayub House';
-        break;
-      case 'MH':
-        houseName = 'Munawar House';
-        break;
-      case 'RH':
-        houseName = 'Rustam House';
-        break;
-      default:
-        houseName = data.house;
-    }
-    return Text(houseName,
-        style: Theme.of(context)
-            .textTheme
-            .titleMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
-  }
+  // Text cadetHouse(UserProfile? data, BuildContext context) {
+  //   String houseName = '';
+  //   switch (data!.house) {
+  //     case 'JH':
+  //       houseName = 'Jinnah House';
+  //       break;
+  //     case 'KH':
+  //       houseName = 'Khushal House';
+  //       break;
+  //     case 'IH':
+  //       houseName = 'Iqbal House';
+  //       break;
+  //     case 'AH':
+  //       houseName = 'Ayub House';
+  //       break;
+  //     case 'MH':
+  //       houseName = 'Munawar House';
+  //       break;
+  //     case 'RH':
+  //       houseName = 'Rustam House';
+  //       break;
+  //     default:
+  //       houseName = data.house;
+  //   }
+  //   return Text(houseName,
+  //       style: Theme.of(context)
+  //           .textTheme
+  //           .titleMedium
+  //           ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
+  // }
 
-  Text cadetName(UserProfile? data, BuildContext context) {
-    return Text(
-      data!.name,
-      style: Theme.of(context)
-          .textTheme
-          .titleLarge
-          ?.copyWith(color: Theme.of(context).colorScheme.primary),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-    );
-  }
+  // Text cadetName(UserProfile? data, BuildContext context) {
+  //   return Text(
+  //     data!.name,
+  //     style: Theme.of(context)
+  //         .textTheme
+  //         .titleLarge
+  //         ?.copyWith(color: Theme.of(context).colorScheme.primary),
+  //     maxLines: 2,
+  //     overflow: TextOverflow.ellipsis,
+  //   );
+  // }
 
-  Text kitNumberText(UserProfile? data, BuildContext context) {
-    return Text(data!.kitNo.toString(),
-        style: Theme.of(context)
-            .textTheme
-            .titleMedium
-            ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
-  }
+  // Text kitNumberText(UserProfile? data, BuildContext context) {
+  //   return Text(data!.kitNo.toString(),
+  //       style: Theme.of(context)
+  //           .textTheme
+  //           .titleMedium
+  //           ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
+  // }
 
-  Padding profilePic(UserProfile data) {
-    return Padding(
-      padding: EdgeInsets.all(12.0),
-      child: CircleAvatar(
-        radius: 58,
-        backgroundColor: Color.fromARGB(255, 4, 45, 92),
-        backgroundImage: data.profileImageUrl.isNotEmpty
-            ? NetworkImage(data!.profileImageUrl)
-            : AssetImage('assets/images/mo_user_avatar.png'),
-      ),
-    );
-  }
+  // Padding profilePic(UserProfile data) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(12.0),
+  //     child: CircleAvatar(
+  //       radius: 58,
+  //       backgroundColor: const Color.fromARGB(255, 4, 45, 92),
+  //       backgroundImage: data.profileImageUrl.isNotEmpty
+  //           ? NetworkImage(data.profileImageUrl)
+  //           : const AssetImage('assets/images/mo_user_avatar.png'),
+  //     ),
+  //   );
+  // }
 }
 
 class ThemesTile extends ConsumerWidget {

@@ -16,14 +16,13 @@ final flexSchemeProvider =
   return FlexSchemeController();
 });
 
-
 class ThemesList extends ConsumerWidget {
   const ThemesList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentScheme = ref.watch(flexSchemeProvider);
-   
+
     return Material(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -44,6 +43,7 @@ class ThemesList extends ConsumerWidget {
     );
   }
 }
+
 final themeModeProvider =
     StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
   return ThemeModeNotifier(ThemeMode.light);
@@ -54,10 +54,11 @@ class ThemeModeNotifier extends StateNotifier<ThemeMode> {
 
   void applyDarkTheme() {
     state = ThemeMode.dark;
+    
   }
 
   void applyLightTheme() {
     state = ThemeMode.light;
+   
   }
 }
-
