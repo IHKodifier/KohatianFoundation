@@ -175,31 +175,28 @@ class UserPreviewSmall extends ConsumerWidget {
                 ),
                 trailing: (data?.roles.contains(UserRole.admin()) ?? false)
                     ? // Check for Admin Role
-                    Container(
-                        // width: 50,
-                        child: SizedBox(
-                          height: 50,
-                          child: TextButton(
-                            onPressed: () {
-                              //TODO
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AdminCenterPage(),
-                              ));
-                            },
-                            child: Text(
-                              'Admin Center',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                    // color: Colors.red,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ),
+                    SizedBox(
+                      height: 50,
+                      child: TextButton(
+                        onPressed: () {
+                          //TODO
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const AdminCenterPage(),
+                          ));
+                        },
+                        child: Text(
+                          'Admin Center',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                // color: Colors.red,
+                                fontWeight: FontWeight.w600,
+                              ),
                         ),
-                      )
-                    : Container())));
+                      ),
+                    )
+                    : SizedBox.shrink())));
 
     //   ),
     // );

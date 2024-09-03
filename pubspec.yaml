@@ -2,7 +2,7 @@ name: kohatian_foundation
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+# publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 
 version: 1.0.0+1
@@ -18,26 +18,32 @@ dependencies:
 
   cupertino_icons: ^1.0.6
   flutter_riverpod: ^2.5.1
-  responsive_framework: ^1.4.0
-  firebase_core: ^3.2.0
+  responsive_framework: ^1.5.1
+  firebase_core: ^3.4.0
   font_awesome_flutter: ^10.7.0
   equatable: ^2.0.5
-  firebase_auth: ^5.1.2
-  cloud_firestore: ^5.1.0
+  firebase_auth: ^5.2.0
+  cloud_firestore: ^5.3.0
   google_sign_in: ^6.2.1
   email_validator: ^3.0.0
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
   tuple: ^2.0.2
-  cached_network_image: ^3.3.1
-  flutter_dropzone: ^4.0.1
+  cached_network_image: ^3.4.0
+  flutter_dropzone: ^4.0.2
   flex_color_scheme: ^7.3.1
+
+
+  #  * ADDED FOR EXCEL FUNCTIONALITY
+  html: ^0.15.4
+  excel: ^4.0.6
+  file_picker: ^8.0.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 
 

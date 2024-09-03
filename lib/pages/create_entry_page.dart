@@ -38,9 +38,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
 
     return Scaffold(
         appBar: AppBar(
-          title:
-              Text(' Entrys'), 
-              
+          title: Text(' Entrys'),
           centerTitle: true,
         ),
         // ),
@@ -50,11 +48,11 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
             child: Column(
               children: [
                 Container(
-                  // height: 250, 
+                  // height: 250,
                   child: Card(
-                  elevation: 15,
-                  child: entryList(),
-                                    ),
+                    elevation: 15,
+                    child: entryList(),
+                  ),
                 ),
                 Card(
                     elevation: 15,
@@ -76,7 +74,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                     )),
 
                 // addEntryCadetsDropzone(),
-                 SiteFooter(),
+                SiteFooter(),
               ],
             ),
           ),
@@ -263,7 +261,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
           height: 16,
         ),
         Container(
-          height: 80,
+          height: 120,
           width: 500,
           color: Colors.deepPurple,
           child: const Text('dropzone goes here'),
@@ -357,8 +355,8 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                 final cadets = List.generate(
                   entry.strength,
                   (index) => Cadet.empty(
-                    kitNo:
-                        int.parse('${entry.number}${index < 9 ? '0${index+1}' : index + 1}'
+                    kitNo: int.parse(
+                        '${entry.number}${index < 9 ? '0${index + 1}' : index + 1}'
                             .padLeft(2, '0')),
                   ),
                 );
@@ -395,4 +393,50 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
       ],
     );
   }
+
+// // Function to handle file dropping
+//   void _handleFileDrop(List<html.File> files) async {
+//     if (files.isNotEmpty) {
+//       html.File file = files.first;
+//       final reader = html.FileReader();
+
+//       reader.readAsArrayBuffer(file);
+
+//       reader.onLoad.listen((event) async {
+//         var bytes = reader.result as Uint8List;
+//         var excel = Excel.decodeBytes(bytes);
+
+//         // Assuming the first sheet is the one you want to read
+//         var sheet = excel.tables.values.first;
+
+//         // Get the entry name from your provider
+//         final entryName = ref.read(entryNameControllerProvider).text;
+
+//         // Iterate over rows, skipping the header row (index 0)
+//         for (var row in sheet.rows.skip(1)) {
+//           // Assuming your Excel columns are in this order:
+//           // Kit No, Name, House, ... other properties
+//           int kitNo = int.tryParse(row[0]?.value.toString() ?? '') ?? 0;
+//           String name = row[1]?.value.toString() ?? '';
+//           String house = row[2]?.value.toString() ?? '';
+//           // ... extract other properties similarly
+
+//           // Create a Cadet object
+//           Cadet cadet = Cadet(
+//             kitNo: kitNo,
+//             name: name,
+//             house: house,
+//             // ... set other properties
+//           );
+
+//           // Save the Cadet to Firestore
+//           await DbService().saveCadetToFirestore(entryName, cadet);
+//         }
+
+//         if (kDebugMode) {
+//           print('Cadets from Excel imported to Firestore');
+//         }
+//       });
+//     }
+//   }
 }
