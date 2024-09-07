@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/pages/create_entry_page.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/admin_center_tile.dart';
 import 'package:kohatian_foundation/widgets/create_entry_stepper.dart';
 
 // ... other imports
@@ -47,114 +48,211 @@ class AdminCenterCore extends ConsumerStatefulWidget {
 class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
   @override
   Widget build(BuildContext context) {
+    final maxWidth = MediaQuery.of(context).size.width;
+
     return SliverToBoxAdapter(
       child: Material(
-        child: Container(
-          margin: const EdgeInsets.only(top: 16.0),
-          padding: const EdgeInsets.all(16.0),
-          width: 250,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // Card for Admin Dashboard
-              adminDashboardCard(context),
-              const SizedBox(height: 16.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 64),
+          child: Container(
+            width: maxWidth - 128,
+            // height: 600 ,
+            // color: Colors.pink,
+            child: Column(
+              children: [
 
-              // Card for Entry model creation
-              createEntryCard(context),
-              const SizedBox(height: 16.0),
+                ResponsiveRowColumn( //Dashboard
+                  layout:
+                      ResponsiveBreakpoints.of(context).largerOrEqualTo(TABLET)
+                          ? ResponsiveRowColumnType.ROW
+                          : ResponsiveRowColumnType.COLUMN,
+                  rowMainAxisAlignment: MainAxisAlignment.center,
+                  rowCrossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ResponsiveRowColumnItem(
+                        child: adminDashboardCard(context, maxWidth)),
+                  ],
+                ),
 
-              // Card for EntryCoordinator settings
-              createEntryCoordinatorCard(context),
-              const SizedBox(height: 16.0),
-
-              // Card for other settings
-              otherSettingsCard(context),
-            ],
+                ResponsiveRowColumn( //Entry and Entry Coordinstors Tile
+                  layout:
+                      ResponsiveBreakpoints.of(context).largerOrEqualTo(TABLET)
+                          ? ResponsiveRowColumnType.ROW
+                          : ResponsiveRowColumnType.COLUMN,
+                  rowMainAxisAlignment: MainAxisAlignment.center,
+                  rowCrossAxisAlignment: CrossAxisAlignment.center,
+                  rowSpacing: 16,
+                  children: [
+                    ResponsiveRowColumnItem(
+                      child: AdminCenterTile(
+                        maxWidth: maxWidth,
+                        routeTarget: CreateEntryPage(),
+                        title: 'Entrys',
+                        subtitle: 'Create / update Edit Entrys....',
+                        icon: Icon(
+                          Icons.diversity_2_outlined,
+                          size: 60,
+                        ),
+                      ),
+                    ),
+                    ResponsiveRowColumnItem(
+                      child: AdminCenterTile(
+                        maxWidth: maxWidth,
+                        routeTarget: UserHomePage(),
+                        title: 'Entry Coordinators',
+                        subtitle: 'Set up Entry Coordinators....',
+                        icon: Icon(
+                          Icons.precision_manufacturing,
+                          size: 60,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                
+                ResponsiveRowColumn( // settings and About 
+                    layout: ResponsiveBreakpoints.of(context)
+                            .largerOrEqualTo(TABLET)
+                        ? ResponsiveRowColumnType.ROW
+                        : ResponsiveRowColumnType.COLUMN,
+                    rowCrossAxisAlignment: CrossAxisAlignment.center,
+                    rowMainAxisAlignment: MainAxisAlignment.center,
+                    rowSpacing: 16,
+                    children: [
+                      ResponsiveRowColumnItem(
+                        child: AdminCenterTile(
+                          maxWidth: maxWidth,
+                          routeTarget: UserHomePage(),
+                          title: 'settings',
+                          subtitle: 'application / user settings',
+                          icon: Icon(
+                            Icons.settings,
+                            size: 60,
+                          ),
+                        ),
+                      ),
+                      ResponsiveRowColumnItem(
+                        child: AdminCenterTile(
+                          maxWidth: maxWidth,
+                          routeTarget: UserHomePage(),
+                          title: 'About ',
+                          subtitle: 'Reserved for Future Functionality....',
+                          icon: Icon(
+                            Icons.precision_manufacturing,
+                            size: 60,
+                          ),
+                        ),
+                      ),
+                    ]),
+                //  Respon
+              ],
+            ),
           ),
         ),
+       
       ),
     );
   }
+  // Widget itemBuilder(BuildContext context, int index) {
+  //   var gridChildren = <Widget>[];
+  //   gridChildren = [
+  //     Container(height: 100,width: 100,color: Colors.red ),
+  //     Container(height: 100,width: 100,color: Colors.red ),
+  //   // createEntryCard(context),
+  //   // createEntryCoordinatorCard(context),
+  //   // otherSettingsCard(context),
+  //   ];
+  //   return gridChildren[index];
+  // }
 
   // Existing methods for card creation (unchanged)
 
-  InkWell createEntryCard(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        //TODO
-      },
-      child: Card(
-        elevation: 5,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: createEntryContent(context),
-            ),
-          ],
+  Widget createEntryCard(BuildContext context, double maxWidth) {
+    return Container(
+      width: maxWidth * 0.3,
+      height: 150,
+      child: InkWell(
+        onTap: () {
+          //TODO
+        },
+        child: Card(
+          elevation: 5,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: createEntryContent(context),
+              ),
+            ],
+          ),
+          //TODO  Entry creation content
         ),
-        //TODO  Entry creation content
       ),
     );
   }
 
-  InkWell createEntryCoordinatorCard(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        //TODO
-      },
-      child: Card(
-        elevation: 5,
-        child: Column(
-          children: [
-            InkWell(
-              onTap: () {
-                //TODO
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Row(
-                  children: [
-                    const Spacer(flex: 8),
-                    const Icon(Icons.precision_manufacturing,
-                        size: 60, 
+  Widget createEntryCoordinatorCard(BuildContext context, double maxWidth) {
+    return Container(
+      width: maxWidth * 0.3,
+      height: 150,
+      child: InkWell(
+        onTap: () {
+          //TODO
+        },
+        child: Card(
+          elevation: 5,
+          child: Column(
+            children: [
+              InkWell(
+                onTap: () {
+                  //TODO
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    children: [
+                      const Spacer(flex: 8),
+                      const Icon(
+                        Icons.precision_manufacturing,
+                        size: 60,
                         //color: Colors.black54,
-                        ),
-                    const Spacer(flex: 1),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Entry cordinators',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium
-                              ?.copyWith(
-                                  // fontWeight: FontWeight.w600,
-                                  // color: Colors.black,
-                                  ),
-                        ),
-                        Text(
-                          'Set up  Entry Coordinators....',
-                          style:
-                              Theme.of(context).textTheme.labelSmall?.copyWith(
+                      ),
+                      const Spacer(flex: 1),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Entry cordinators',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
                                     // fontWeight: FontWeight.w600,
-                                    fontStyle: FontStyle.italic,
-                                    // color: Colors.black54,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(flex: 8),
-                  ],
+                                    // color: Colors.black,
+                                    ),
+                          ),
+                          Text(
+                            'Set up  Entry Coordinators....',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                  // fontWeight: FontWeight.w600,
+                                  fontStyle: FontStyle.italic,
+                                  // color: Colors.black54,
+                                ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(flex: 8),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ), // ... your Entry creation content
+            ],
+          ), // ... your Entry creation content
+        ),
       ),
     );
   }
@@ -162,7 +260,7 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
   InkWell createEntryContent(BuildContext context) {
     return InkWell(
       onTap: () {
-       Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
@@ -173,8 +271,9 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
       child: Row(
         children: [
           const Spacer(flex: 8),
-          const Icon(Icons.diversity_2, size: 60, 
-          // color: Colors.black54,
+          const Icon(
+            Icons.diversity_2, size: 60,
+            // color: Colors.black54,
           ),
           const Spacer(flex: 1),
           Padding(
@@ -186,7 +285,7 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                 Text(
                   'Entrys',
                   style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      // fontWeight: FontWeight.w600, 
+                      // fontWeight: FontWeight.w600,
                       // color: Colors.black,
                       ),
                 ),
@@ -225,9 +324,10 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                 child: Row(
                   children: [
                     const Spacer(flex: 8),
-                    const Icon(Icons.settings, size: 60,
-                    //  color: Colors.black54,
-                     ),
+                    const Icon(
+                      Icons.settings, size: 60,
+                      //  color: Colors.black54,
+                    ),
                     const Spacer(flex: 1),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -265,13 +365,13 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
     );
   }
 
-  InkWell adminDashboardCard(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        //TODO
-      },
-      child: Card(
-        elevation: 5,
+  Widget adminDashboardCard(BuildContext context, double maxWidth) {
+    return Card(
+      elevation: 0.5,
+      child: Container(
+        height: 400,
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        width: maxWidth * 0.8,
         child: Column(
           children: [
             InkWell(
@@ -283,10 +383,11 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
                 child: Row(
                   children: [
                     const Spacer(flex: 8),
-                    const Icon(Icons.dashboard,
-                        size: 60,
-                        // color: Colors.black54,
-                        ),
+                    const Icon(
+                      Icons.dashboard,
+                      size: 60,
+                      // color: Colors.black54,
+                    ),
                     const Spacer(flex: 1),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,8 +420,8 @@ class _AdminCenterCoreState extends ConsumerState<AdminCenterCore> {
               ),
             ),
           ],
-        ), // ... your Entry creation content
-      ),
+        ),
+      ), // ... your Entry creation content
     );
   }
 

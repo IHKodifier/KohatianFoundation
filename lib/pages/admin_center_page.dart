@@ -67,6 +67,7 @@ class _AdminCenterPageState extends State<AdminCenterPage> {
             onNext: () {},
             onCancel: () {},
           ),
+       SliverToBoxAdapter(child: SiteFooter()),
         ],
       ),
     );
