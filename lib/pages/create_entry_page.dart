@@ -1,7 +1,11 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
+import 'dart:io';
+
+import 'package:excel/excel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class CreateEntryPage extends ConsumerStatefulWidget {
@@ -16,6 +20,9 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   final GlobalKey<FormState> formKeyEntryDetails = GlobalKey<FormState>();
   late EntryCreationStatus entryCreationStatus;
   late EntryCreationNotifier entryCreationNotifier;
+  late DropzoneViewController controller;
+
+  bool isHovered = false;
   bool formIsBusy = false;
   DateTime? _startDate;
   DateTime? _endDate;
@@ -254,17 +261,87 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   }
 
   addEntryCadetsDropzone() {
+    var hoverColor = Theme.of(context).colorScheme.primary;
     return Column(
       children: [
         ElevatedButton(onPressed: () {}, child: const Text('Select File')),
         const SizedBox(
           height: 16,
         ),
-        Container(
-          height: 120,
-          width: 500,
-          color: Colors.deepPurple,
-          child: const Text('dropzone goes here'),
+        Stack(
+          children: [
+            Container(
+              height: 120,
+              width: 500,
+              color: isHovered
+                  ? Theme.of(context).colorScheme.secondary.withOpacity(0.5)
+                  : hoverColor,
+              child: DropzoneView(
+                operation: DragOperation.copy,
+                cursor: CursorType.grab,
+                onCreated: (DropzoneViewController ctrl) => controller = ctrl,
+                onLoaded: () {},
+                onHover: () {
+                  setState(() => isHovered = true);
+                  print('zone is hovered');
+                },
+                onDrop: (value) async {
+                  print('Dropzone received dropped file named ${value.name}');
+                  final uploadedFile = await controller.getFileData(value);
+
+                  // Parse the Excel file
+                  var excel = Excel.decodeBytes(uploadedFile);
+
+                  //  read the first sheet
+                  var sheet = excel.tables.values.first;
+
+                  // Iterate over rows, skipping the header row (index 0)
+                  for (var row in sheet.rows.skip(1)) {
+                    // Assuming your Excel columns are in this order:
+                    // Kit No, Name, House, ... other properties
+                    int kitNo =
+                        int.tryParse(row[0]?.value.toString() ?? '') ?? 0;
+                    String name = row[1]?.value.toString() ?? '';
+                    String house = row[2]?.value.toString() ?? '';
+                    String domicile = row[3]?.value.toString() ?? '';
+                    String mobile = row[4]?.value.toString() ?? '';
+
+                    // Create a Cadet object
+                    Cadet cadet = Cadet(
+                      kitNo: kitNo,
+                      name: name,
+                      house: house,
+                      domicile: domicile,
+                      mobileNumber: mobile,
+                    );
+                    print(cadet.toString());
+                    //TODO
+                    // Save the Cadet to Firestore
+                    // await DbService().saveCadetToFirestore(
+                    //     ref.read(entryCreationProvider).entry!.name, cadet);
+                  }
+                },
+                onLeave: () {
+                  setState(() {
+                    isHovered = false;
+                  });
+                  print('zone has been left and number of files dropped ');
+                },
+                onDropMultiple: (value) {
+                  if (value!.length > 1) {
+                    print('Multiple files drag n drop is not supported ');
+                    return;
+                  }
+                },
+              ),
+            ),
+            Positioned(
+              left: 150,
+              top: 50,
+              bottom: 50,
+              child: Text('Drop a file here'),
+            ),
+          ],
         ),
       ],
     );

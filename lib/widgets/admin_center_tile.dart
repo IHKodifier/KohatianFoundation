@@ -23,6 +23,7 @@ class AdminCenterTile extends ConsumerWidget {
       width: maxWidth * 0.3,
       height: 180,
       child: InkWell(
+        hoverColor: Theme.of(context).colorScheme.secondaryContainer,
         onTap: () {
           //TODO
         },
@@ -48,6 +49,7 @@ class AdminCenterTile extends ConsumerWidget {
 
   adminCenterTileContent(BuildContext context) {
     return InkWell(
+      hoverColor: Theme.of(context).colorScheme.secondaryContainer,
       onTap: () {
         Navigator.push(
           context,
