@@ -11,4 +11,27 @@ class DbService {
       print(e);
     }
   }
+  Future<void> saveCadetToFirestore(
+      String entryName, List<Cadet?> cadets) async {
+    try {
+      final batch = FirebaseFirestore.instance.batch();
+
+      for (final cadet in cadets) {
+        batch.set(
+          FirebaseFirestore.instance
+              .collection('entrys')
+              .doc(entryName)
+              .collection('cadets')
+              .doc(cadet?.kitNo.toString()),
+          cadet?.toMap(),
+        );
+      }
+
+      await batch.commit();
+      print('Cadets written to Firestore');
+    } catch (e) {
+      print(e);
+    }
+  }
+
 }

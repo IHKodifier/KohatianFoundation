@@ -21,6 +21,8 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   late EntryCreationStatus entryCreationStatus;
   late EntryCreationNotifier entryCreationNotifier;
   late DropzoneViewController controller;
+  List<Cadet?> cadets = [];
+  bool cadetsBatchWrittensuccessfully = false;
 
   bool isHovered = false;
   bool formIsBusy = false;
@@ -45,7 +47,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(' Entrys'),
+          title: const Text(' Entrys'),
           centerTitle: true,
         ),
         // ),
@@ -70,11 +72,22 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Column(
                           children: [
-                            entryCreationForm(),
-                            buildSaveButton(),
+                            Visibility(
+                                visible: !cadetsBatchWrittensuccessfully,
+                                child: entryCreationForm()),
+                            Visibility(
+                              visible: !cadetsBatchWrittensuccessfully,
+                              child: buildSaveButton())
+                            ,
                             const SizedBox(
                               height: 12,
                             ),
+                            Visibility(
+                              visible: cadetsBatchWrittensuccessfully,
+                              child: Container(
+                                height:60,
+                                child: ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: Text('Done')))),
+                                SizedBox(height: 24,),
                           ],
                         ),
                       ),
@@ -89,7 +102,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
   }
 
   entryList() {
-    return EntryStreamBuilder();
+    return const EntryStreamBuilder();
   }
 
   entryCreationForm() {
@@ -198,7 +211,7 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
           )
         : ref.watch(entryCreationProvider).entry != null
             ? buildEntrySuccess()
-            : Center(child: const CircularProgressIndicator());
+            : const Center(child: CircularProgressIndicator());
   }
 
   buildSaveButton() {
@@ -264,84 +277,124 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
     var hoverColor = Theme.of(context).colorScheme.primary;
     return Column(
       children: [
-        ElevatedButton(onPressed: () {}, child: const Text('Select File')),
+        Visibility(
+            visible: !cadetsBatchWrittensuccessfully,
+            child: ElevatedButton(
+                onPressed: () {}, child: const Text('Select File'))),
         const SizedBox(
           height: 16,
         ),
-        Stack(
-          children: [
-            Container(
-              height: 120,
-              width: 500,
-              color: isHovered
-                  ? Theme.of(context).colorScheme.secondary.withOpacity(0.5)
-                  : hoverColor,
-              child: DropzoneView(
-                operation: DragOperation.copy,
-                cursor: CursorType.grab,
-                onCreated: (DropzoneViewController ctrl) => controller = ctrl,
-                onLoaded: () {},
-                onHover: () {
-                  setState(() => isHovered = true);
-                  print('zone is hovered');
-                },
-                onDrop: (value) async {
-                  print('Dropzone received dropped file named ${value.name}');
-                  final uploadedFile = await controller.getFileData(value);
+        Visibility(
+          visible: !cadetsBatchWrittensuccessfully,
+          child: Stack(
+            children: [
+              Container(
+                height: 120,
+                width: 500,
+                color: isHovered
+                    ? Theme.of(context).colorScheme.secondary.withOpacity(0.5)
+                    : hoverColor,
+                child: DropzoneView(
+                  operation: DragOperation.copy,
+                  cursor: CursorType.grab,
+                  onCreated: (DropzoneViewController ctrl) => controller = ctrl,
+                  onLoaded: () {},
+                  onHover: () {
+                    setState(() => isHovered = true);
+                    print('zone is hovered');
+                  },
+                  onDrop: (value) async {
+                    print('Dropzone received dropped file named ${value.name}');
+                    final uploadedFile = await controller.getFileData(value);
 
-                  // Parse the Excel file
-                  var excel = Excel.decodeBytes(uploadedFile);
+                    // Parse the Excel file
+                    var excel = Excel.decodeBytes(uploadedFile);
 
-                  //  read the first sheet
-                  var sheet = excel.tables.values.first;
+                    //  read the first sheet
+                    var sheet = excel.tables.values.first;
 
-                  // Iterate over rows, skipping the header row (index 0)
-                  for (var row in sheet.rows.skip(1)) {
-                    // Assuming your Excel columns are in this order:
-                    // Kit No, Name, House, ... other properties
-                    int kitNo =
-                        int.tryParse(row[0]?.value.toString() ?? '') ?? 0;
-                    String name = row[1]?.value.toString() ?? '';
-                    String house = row[2]?.value.toString() ?? '';
-                    String domicile = row[3]?.value.toString() ?? '';
-                    String mobile = row[4]?.value.toString() ?? '';
+                    // Iterate over rows, skipping the header row (index 0)
+                    for (var row in sheet.rows.skip(1)) {
+                      // Assuming your Excel columns are in this order:
+                      // Kit No, Name, House, ... other properties
+                      int kitNo =
+                          int.tryParse(row[0]?.value.toString() ?? '') ?? 0;
+                      String name = row[1]?.value.toString() ?? '';
+                      String house = row[2]?.value.toString() ?? '';
+                      String domicile = row[3]?.value.toString() ?? '';
+                      String mobile = row[4]?.value.toString() ?? '';
 
-                    // Create a Cadet object
-                    Cadet cadet = Cadet(
-                      kitNo: kitNo,
-                      name: name,
-                      house: house,
-                      domicile: domicile,
-                      mobileNumber: mobile,
-                    );
-                    print(cadet.toString());
-                    //TODO
-                    // Save the Cadet to Firestore
-                    // await DbService().saveCadetToFirestore(
-                    //     ref.read(entryCreationProvider).entry!.name, cadet);
-                  }
-                },
-                onLeave: () {
-                  setState(() {
-                    isHovered = false;
-                  });
-                  print('zone has been left and number of files dropped ');
-                },
-                onDropMultiple: (value) {
-                  if (value!.length > 1) {
-                    print('Multiple files drag n drop is not supported ');
-                    return;
-                  }
-                },
+                      // Create a Cadet object and add to cadets list
+                      cadets.add(Cadet(
+                        kitNo: kitNo,
+                        name: name,
+                        house: house,
+                        domicile: domicile,
+                        mobileNumber: mobile,
+                      ));
+
+                      //TODO
+                      // Save the Cadet to Firestore
+                      try {
+                        // Save all cadets in a batch
+                        await DbService().saveCadetToFirestore(
+                          ref.read(entryCreationProvider).entry!.name,
+                          cadets,
+                        );
+
+                        // Update the flag after successful batch write
+                        setState(() {
+                          cadetsBatchWrittensuccessfully = true;
+                        });
+                      } catch (e) {
+                        // Handle errors gracefully, e.g., show an error message
+                        print('Error saving cadets: $e');
+                        // You might want to set cadetsBatchWrittensuccessfully = false here
+                        // and display an error message to the user.
+                      }
+                    }
+                  },
+                  onLeave: () {
+                    setState(() {
+                      isHovered = false;
+                    });
+                    print('zone has been left and number of files dropped ');
+                  },
+                  onDropMultiple: (value) {
+                    if (value!.length > 1) {
+                      print('Multiple files drag n drop is not supported ');
+                      return;
+                    }
+                  },
+                ),
               ),
-            ),
-            Positioned(
-              left: 150,
-              top: 50,
-              bottom: 50,
-              child: Text('Drop a file here'),
-            ),
-          ],
+              Visibility(
+                visible: !cadetsBatchWrittensuccessfully,
+                child: const Positioned(
+                  left: 150,
+                  top: 50,
+                  bottom: 50,
+                  child: Text('Drop a file here'),
+                ),
+              ),
+              Visibility(
+                  visible: cadetsBatchWrittensuccessfully,
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Text(
+                            '${cadets.length.toString()} cadets written to ${ref.read(entryCreationProvider).entry?.name} written successfully'),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text('Done'))
+                      ],
+                    ),
+                  )),
+            ],
+          ),
         ),
       ],
     );
