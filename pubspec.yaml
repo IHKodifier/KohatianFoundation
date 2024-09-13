@@ -55,6 +55,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/banner_image.jpg
   #   - images/a_dot_ham.jpeg
   # entrypoint: web/main.dart
   # port: 29240 # Here's the port setting

@@ -12,7 +12,7 @@ class BannerImage extends ConsumerWidget {
         width: double.infinity,
         // height: 500,
         // color: Colors.deepOrange,
-        child: Image.asset('/images/banner_image.jpg',
+        child: Image.asset('assets/images/banner_image.jpg',
         width: double.infinity,
         height: 800,
         fit: BoxFit.cover,
