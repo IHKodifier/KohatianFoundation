@@ -61,19 +61,23 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const SignInPage()));
-            },
-            child: const Text('Sign In')),
+        Expanded(
+          child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => const SignInPage()));
+              },
+              child: FittedBox(child: const Text('Sign In'))),
+        ),
         const SizedBox(width: 10),
-        ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const SignupPage()));
-            },
-            child: const Text('Sign Up')),
+        Expanded(
+          child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => const SignupPage()));
+              },
+              child: FittedBox(child: const Text('Sign Up'))),
+        ),
       ],
     );
   }

@@ -33,34 +33,38 @@ class CadetGridTile extends StatelessWidget {
       default:
         houseName = cadet.house;
     }
-    return Expanded(
-      child: Card(
-        elevation: 12,
-        // color: Colors.blueGrey.shade50,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              cadetAvatar(context),
-              const SizedBox(height: 8),
-              kitNo(),
-              const SizedBox(height: 12),
-              name(),
-              const SizedBox(height: 8),
-              house(houseName),
-              const SizedBox(height: 4),
-              domicile(),
-              const SizedBox(height: 4),
-              mobileNumber(),
-              const SizedBox(height: 12),
-              signupButton(context),
-            ],
+    return Column(
+      children: [
+        Expanded(
+          child: Card(
+            elevation: 12,
+            // color: Colors.blueGrey.shade50,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  cadetAvatar(context),
+                  const SizedBox(height: 8),
+                  kitNo(),
+                  const SizedBox(height: 12),
+                  name(),
+                  const SizedBox(height: 8),
+                  house(houseName),
+                  const SizedBox(height: 4),
+                  domicile(),
+                  const SizedBox(height: 4),
+                  mobileNumber(),
+                  const SizedBox(height: 12),
+                  signupButton(context),
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 

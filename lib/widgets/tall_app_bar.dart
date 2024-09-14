@@ -6,34 +6,37 @@ class TallAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return  SliverAppBar(
+    final maxWidth = MediaQuery.of(context).size.width;
+
+    return SliverAppBar(
       // pinned: true,
       floating: true,
       toolbarHeight: 100,
-      expandedHeight: 700,
+      expandedHeight: ResponsiveBreakpoints.of(context).largerThan(MOBILE)?700:400,
       stretch: true,
-      automaticallyImplyLeading: false, 
+      automaticallyImplyLeading: false,
 
-      title: const NavBarRow(),
+      title: 
+          NavBarRow(),
+         
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(children: [
           const BannerImage(),
           Positioned(
-            top:350, 
-            left:300,
+            top: ResponsiveBreakpoints.of(context).largerThan(MOBILE)?350:250, 
+            left: maxWidth/4, 
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Once a Kohatian is  \nAlways a Kohatian', 
+                Text('Once a Kohatian is  \nAlways a Kohatian',
                     style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      fontSize: 96,
-                    )),
+                          fontWeight: FontWeight.w900,
+                          color: Theme.of(context).colorScheme.onPrimary, 
+                          fontSize: ResponsiveBreakpoints.of(context).largerThan(MOBILE)?96:42,
+                        )),
               ],
             ),
           ),
-         
         ]), // BannerImage as the background
       ),
     );
@@ -47,7 +50,48 @@ class NavBarRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    List<Widget> navBarItems = [
+      //Vision
+      Expanded(
+        child: TextButton(
+            child: const Text(
+              'Vision',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {}),
+      ),
+      //Mission
+      Expanded(
+        child: TextButton(
+            child: const Text(
+              'Mission',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {}),
+      ),
+      //Function
+      Expanded(
+        child: TextButton(
+            child: const Text(
+              'Function',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {}),
+      ),
+      //Pearls
+      TextButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => PearlsPage(),
+          ));
+        },
+        child: const Text(
+          'Pearls of CCK',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    ];
+
     return Center(
         child: Container(
       decoration: BoxDecoration(
@@ -58,60 +102,54 @@ class NavBarRow extends StatelessWidget {
       height: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        
         children: [
           //Kf logo
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              child: Image.asset(
-                'assets/images/kf-logo.png',
-                width: 200,
-                height: 80,
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const MyApp()));
-              },
-            ),
-          ),
-        //Vision
-          TextButton(
-              child: const Text(
-                'Vision',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {}),
-        //Mission
-          TextButton(
-              child: const Text(
-                'Mission',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {}),
-        //Function
-          TextButton(
-              child: const Text(
-                'Function',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {}),
-        //Pearls
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PearlsPage(),
-              ));
-            },
-            child: const Text(
-              'Pearls of CCK',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-         //UserAvatar
-          const UserAvatarWidget(),
+          ResponsiveBreakpoints.of(context).isMobile
+              ? PopupMenuButton(
+                  child: const Icon(Icons.menu),
+                  itemBuilder: (context) => navBarItems
+                      .map((e) => PopupMenuItem(
+                            child: e,
+                            value: e,
+                          ))
+                      .toList(),
+                )
+              : const FoundationLogo(),
+
+          ResponsiveBreakpoints.of(context).isMobile
+              ? const FoundationLogo()
+              : const SizedBox.shrink(),
+          ResponsiveBreakpoints.of(context).largerThan(MOBILE)
+              ? Row(children: navBarItems)
+              : Row(children: [SizedBox.shrink()]),
+          //UserAvatar
+          const Expanded(child: UserAvatarWidget()),
         ],
       ),
     ));
+  }
+}
+
+class FoundationLogo extends StatelessWidget {
+  const FoundationLogo({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        child: Image.asset(
+          'assets/images/kf-logo.png',
+          width: 200,
+          height: 80,
+        ),
+        onTap: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const MyApp()));
+        },
+      ),
+    );
   }
 }
