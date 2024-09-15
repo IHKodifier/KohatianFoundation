@@ -13,7 +13,8 @@ class SlimAppBar extends ConsumerWidget {
 
       automaticallyImplyLeading: false,
      
-      title: Padding(child: NavBarRow(),
+      title: Padding(
+        child: NavBar(),
       padding: EdgeInsets.all(8),
       ),
     

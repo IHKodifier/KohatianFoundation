@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:kohatian_foundation/widgets/flexible_banner.dart';
+import 'package:kohatian_foundation/widgets/kf-logo.dart';
 
 class TallAppBar extends ConsumerWidget {
   const TallAppBar({super.key});
@@ -11,73 +13,51 @@ class TallAppBar extends ConsumerWidget {
     return SliverAppBar(
       // pinned: true,
       floating: true,
-      toolbarHeight: 100,
-      expandedHeight: ResponsiveBreakpoints.of(context).largerThan(MOBILE)?700:400,
+      toolbarHeight: 80,
+      expandedHeight:
+          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 700 : 400,
       stretch: true,
       automaticallyImplyLeading: false,
 
-      title: 
-          NavBarRow(),
-         
-      flexibleSpace: FlexibleSpaceBar(
-        background: Stack(children: [
-          const BannerImage(),
-          Positioned(
-            top: ResponsiveBreakpoints.of(context).largerThan(MOBILE)?350:250, 
-            left: maxWidth/4, 
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Once a Kohatian is  \nAlways a Kohatian',
-                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: Theme.of(context).colorScheme.onPrimary, 
-                          fontSize: ResponsiveBreakpoints.of(context).largerThan(MOBILE)?96:42,
-                        )),
-              ],
-            ),
-          ),
-        ]), // BannerImage as the background
-      ),
+      title: const NavBar(),
+
+      flexibleSpace: const FlexibleBanner(),
     );
   }
 }
 
-class NavBarRow extends StatelessWidget {
-  const NavBarRow({
+class NavBar extends StatelessWidget {
+  const NavBar({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     List<Widget> navBarItems = [
+      const SizedBox(width: 24),
+      //Logo
+      const FoundationLogo(),
       //Vision
-      Expanded(
-        child: TextButton(
-            child: const Text(
-              'Vision',
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {}),
-      ),
+      TextButton(
+          child: Text(
+            'Vision',
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
+          onPressed: () {}),
       //Mission
-      Expanded(
-        child: TextButton(
-            child: const Text(
-              'Mission',
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {}),
-      ),
+      TextButton(
+          child: Text(
+            'Mission',
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
+          onPressed: () {}),
       //Function
-      Expanded(
-        child: TextButton(
-            child: const Text(
-              'Function',
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {}),
-      ),
+      TextButton(
+          child: Text(
+            'Function',
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          ),
+          onPressed: () {}),
       //Pearls
       TextButton(
         onPressed: () {
@@ -85,70 +65,72 @@ class NavBarRow extends StatelessWidget {
             builder: (context) => PearlsPage(),
           ));
         },
-        child: const Text(
+        child: Text(
           'Pearls of CCK',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     ];
 
-    return Center(
-        child: Container(
+    return ResponsiveBreakpoints.of(context).largerThan(MOBILE)
+        ? desktopAppBar(context, navBarItems)
+        : mobileAppBar(context, navBarItems);
+  }
+
+  mobileAppBar(BuildContext context, List<Widget> navBarItems) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      // height: 80,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.5), // Set the background color
-        borderRadius: BorderRadius.circular(50), // Add rounded corners
+        borderRadius: BorderRadius.circular(40), // Add rounded corners
       ),
-      width: double.infinity,
-      height: 80,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          //Kf logo
-          ResponsiveBreakpoints.of(context).isMobile
-              ? PopupMenuButton(
-                  child: const Icon(Icons.menu),
-                  itemBuilder: (context) => navBarItems
-                      .map((e) => PopupMenuItem(
-                            child: e,
-                            value: e,
-                          ))
-                      .toList(),
-                )
-              : const FoundationLogo(),
+      child: PopupMenuButton(
+        elevation: 15,
+        offset: Offset(-10, 40),
+        
+        child: const Icon(Icons.menu),
+        itemBuilder: (context) {
+          // navBarItems.removeAt(0);
 
-          ResponsiveBreakpoints.of(context).isMobile
-              ? const FoundationLogo()
-              : const SizedBox.shrink(),
-          ResponsiveBreakpoints.of(context).largerThan(MOBILE)
-              ? Row(children: navBarItems)
-              : Row(children: [SizedBox.shrink()]),
-          //UserAvatar
-          const Expanded(child: UserAvatarWidget()),
-        ],
-      ),
-    ));
-  }
-}
-
-class FoundationLogo extends StatelessWidget {
-  const FoundationLogo({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        child: Image.asset(
-          'assets/images/kf-logo.png',
-          width: 200,
-          height: 80,
-        ),
-        onTap: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const MyApp()));
+          var _list = navBarItems
+              .map((e) => PopupMenuItem(
+                    value: e,
+                    child: e,
+                  ))
+              .toList();
+          _list.add(PopupMenuItem(
+              child: UserAvatarWidget(flexDirection: Axis.horizontal)));
+          return _list;
         },
+      ),
+    );
+  }
+
+  desktopAppBar(
+    BuildContext context,
+    List<Widget> navBarItems,
+  ) {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: 80,
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.5), // Set the background color
+          borderRadius: BorderRadius.circular(40), // Add rounded corners
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ...navBarItems,
+            UserAvatarWidget(
+              flexDirection: Axis.vertical,
+            ),
+            SizedBox(
+              height: 24,
+            )
+          ],
+        ),
       ),
     );
   }

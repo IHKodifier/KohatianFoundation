@@ -4,7 +4,8 @@ import 'package:kohatian_foundation/widget_export.dart';
 import 'package:kohatian_foundation/widgets/user_avatar_overlay_child.dart';
 
 class UserAvatarWidget extends ConsumerStatefulWidget {
-  const UserAvatarWidget({super.key});
+  final   Axis flexDirection ;
+   UserAvatarWidget({required this.flexDirection, super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -15,7 +16,7 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
   Size startSize = const Size(100, 100);
   Size endSize = const Size(250, 250);
 
-  OverlayPortalController _controller = OverlayPortalController();
+  final OverlayPortalController _controller = OverlayPortalController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,30 +54,41 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
           );
   }
 
-  // Widget showUserAvatar(context) {
-  //   return
-  // }
+  
 
   Widget showSignInUpButtons(context) {
-    return Row(
+    return Flex(
+      direction: widget.flexDirection,
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
+         SizedBox(
+          height: widget.flexDirection == Axis.vertical ? 0 : 8,
+          width: widget.flexDirection == Axis.horizontal ? 0 : 0,
+          ),
         Expanded(
           child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (_) => const SignInPage()));
               },
-              child: FittedBox(child: const Text('Sign In'))),
+              child: const FittedBox(child: Text('Sign In'))),
         ),
-        const SizedBox(width: 10),
+       SizedBox(
+          height: widget.flexDirection == Axis.vertical ? 8 : 0,
+          width: widget.flexDirection == Axis.horizontal ? 8 : 0,
+          ),
         Expanded(
           child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (_) => const SignupPage()));
               },
-              child: FittedBox(child: const Text('Sign Up'))),
+              child: const FittedBox(child: Text('Sign Up'))),
+        ),
+       SizedBox(
+          height: widget.flexDirection == Axis.vertical ? 8 : 0,
+          width: widget.flexDirection == Axis.horizontal ? 8 : 0,
         ),
       ],
     );
