@@ -39,23 +39,42 @@ class NavBar extends StatelessWidget {
       const FoundationLogo(),
       //Vision
       TextButton(
-          child: Text(
-            'Vision',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          child: Container(
+            color:Theme.of(context).colorScheme.primaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              
+              child: Text(
+                'Vision',
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+            ),
           ),
           onPressed: () {}),
       //Mission
       TextButton(
-          child: Text(
-            'Mission',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          child: Container(
+            color:Theme.of(context).colorScheme.primaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Mission',
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+            ),
           ),
           onPressed: () {}),
       //Function
       TextButton(
-          child: Text(
-            'Function',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          child: Container(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Function',
+                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              ),
+            ),
           ),
           onPressed: () {}),
       //Pearls
@@ -65,9 +84,15 @@ class NavBar extends StatelessWidget {
             builder: (context) => PearlsPage(),
           ));
         },
-        child: Text(
-          'Pearls of CCK',
-          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+        child: Container(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Pearls of CCK',
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
+          ),
         ),
       ),
     ];
