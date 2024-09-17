@@ -17,6 +17,7 @@ export 'services/providers/entry_creation_provider.dart';
 export 'services/providers/entry_creation_notifier.dart';
 export './services/providers/entry_stream_provider.dart';
 export 'package:responsive_framework/responsive_framework.dart';
+export './services/providers/current_cadet_provider.dart';
 
 
 //utils
@@ -57,4 +58,9 @@ export './widgets/createentrystep2.dart';
 export './widgets/dropzone_widget.dart';
 export './widgets/entry_streasmbuilder.dart';
 export './widgets/cadet_grid_tile.dart';
+export './widgets/cadet_popup_widget.dart';
+export './widgets/cadet_popup_widget.dart';
+export './widgets/profile_banner_sliver.dart';
+export './widgets/profile_body_sliver.dart';
+export './widgets/cadet_profile_page.dart';
 

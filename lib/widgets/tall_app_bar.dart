@@ -15,7 +15,7 @@ class TallAppBar extends ConsumerWidget {
       floating: true,
       toolbarHeight: 80,
       expandedHeight:
-          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 700 : 400,
+          ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 580 : 400,
       stretch: true,
       automaticallyImplyLeading: false,
 
@@ -40,13 +40,13 @@ class NavBar extends StatelessWidget {
       //Vision
       TextButton(
           child: Container(
-            color:Theme.of(context).colorScheme.primaryContainer,
+            color:Theme.of(context).colorScheme.onInverseSurface,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               
               child: Text(
                 'Vision',
-                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ),
           ),
@@ -54,12 +54,12 @@ class NavBar extends StatelessWidget {
       //Mission
       TextButton(
           child: Container(
-            color:Theme.of(context).colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.onInverseSurface,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Mission',
-                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ),
           ),
@@ -67,12 +67,12 @@ class NavBar extends StatelessWidget {
       //Function
       TextButton(
           child: Container(
-            color: Theme.of(context).colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.onInverseSurface,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Function',
-                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ),
           ),
@@ -85,12 +85,12 @@ class NavBar extends StatelessWidget {
           ));
         },
         child: Container(
-          color: Theme.of(context).colorScheme.primaryContainer,
+          color: Theme.of(context).colorScheme.onInverseSurface,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               'Pearls of CCK',
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
           ),
         ),

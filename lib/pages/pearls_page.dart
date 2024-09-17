@@ -4,11 +4,17 @@ import './../services/providers/cadet_stream_provider.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 import 'package:kohatian_foundation/widgets/entrry_picker.dart';
 
+//  provider for the hover state
+final hoverProvider = StateProvider<int?>((ref) => null);
+
 class PearlsPage extends ConsumerWidget {
   late BuildContext _context;
+  late WidgetRef _ref;
   PearlsPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _ref = ref;
+    final hoverIndex = ref.watch(hoverProvider);
     _context = context;
     final selectedEntry = ref.watch(selectedEntryProvider);
     final cadetsAsync = ref.watch(cadetStreamProvider(selectedEntry));
@@ -21,8 +27,14 @@ class PearlsPage extends ConsumerWidget {
                 height: 850,
                 child: Column(
                   // mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(
+                      height: 24,
+                    ),
+                    Text('Pearls that CCK has produced over the years',
+                        style: Theme.of(context).textTheme.displaySmall),
+                    SizedBox(
                       height: 24,
                     ),
                     const Center(child: EntryPicker()),
@@ -57,17 +69,24 @@ class PearlsPage extends ConsumerWidget {
 
   Widget? onCadetGridData(List<Cadet> data) {
     return GridView.builder(
-      gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: ResponsiveBreakpoints.of(_context).largerThan(TABLET)?4:
-        2, // Adjust the number of columns as needed
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: ResponsiveBreakpoints.of(_context).largerThan(TABLET)
+            ? 4
+            : 2, // Adjust the number of columns as needed
         crossAxisSpacing: 16,
         mainAxisSpacing: 12,
         childAspectRatio: 0.8, // Adjust the aspect ratio as needed
       ),
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return CadetGridTile(cadet: data[index]);
+        return MouseRegion(
+          onEnter: (_) => _ref.read(hoverProvider.notifier).state = index,
+          onExit: (_) => _ref.read(hoverProvider.notifier).state = null,
+          child: CadetGridTile(cadet: data[index], index: index),
+        );
       },
     );
   }
-}
+} 
+
+

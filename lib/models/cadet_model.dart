@@ -16,6 +16,7 @@ class Cadet {
   final List<Achievements>? achievements;
   final String? profileImageUrl;
   final List<String>? photosOnFile;
+  final String? bannerImageUrl; // Added bannerImageUrl
 
   Cadet({
     required this.kitNo,
@@ -26,6 +27,7 @@ class Cadet {
     this.email,
     this.socialLinks,
     this.hasSignedUp = false, // Default value for hasSignedUp
+    this.bannerImageUrl, // Added bannerImageUrl to constructor
     this.professionalQualifications,
     this.achievements,
     this.profileImageUrl,
@@ -45,7 +47,9 @@ Cadet.empty({
         professionalQualifications = null,
         achievements = null,
         profileImageUrl = '',
-        photosOnFile = null;
+        photosOnFile = null,
+        bannerImageUrl = null; // Added bannerImageUrl to named constructor
+
 
   Cadet copyWith({
     int? kitNo,
@@ -60,6 +64,7 @@ Cadet.empty({
     String? profileImageUrl,
     List<String>? photosOnFile,
     bool? hasSignedUp,
+    String? bannerImageUrl, // Added bannerImageUrl to copyWith
   }) {
     return Cadet(
       kitNo: kitNo ?? this.kitNo,
@@ -75,6 +80,8 @@ Cadet.empty({
       profileImageUrl: profileImageUrl ?? this.profileImageUrl,
       photosOnFile: photosOnFile ?? this.photosOnFile,
       hasSignedUp: hasSignedUp ?? this.hasSignedUp,
+      bannerImageUrl: bannerImageUrl ??
+          this.bannerImageUrl, // Added bannerImageUrl to copyWith
     );
   }
 
@@ -109,6 +116,10 @@ Cadet.empty({
     if (photosOnFile != null) {
       result.addAll({'photosOnFile': photosOnFile});
     }
+    if (bannerImageUrl != null) {
+      // Added bannerImageUrl to toMap
+      result.addAll({'bannerImageUrl': bannerImageUrl});
+    }
 
     return result;
   }
@@ -136,6 +147,7 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
       photosOnFile: map['photosOnFile'] != null
           ? List<String>.from(map['photosOnFile'])
           : null,
+      bannerImageUrl: map['bannerImageUrl'], // Added bannerImageUrl to fromMap
     );
   }
 
@@ -145,7 +157,7 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
 
   @override
   String toString() {
-    return 'Cadet(kitNo: $kitNo, email: $email, house: $house, name: $name, domicile: $domicile, mobileNumber: $mobileNumber, socialLinks: $socialLinks, professionalQualifications: $professionalQualifications, achievements: $achievements, profileImageUrl: $profileImageUrl, photosOnFile: $photosOnFile)';
+    return 'Cadet(kitNo: $kitNo, email: $email, house: $house, name: $name, domicile: $domicile, mobileNumber: $mobileNumber, socialLinks: $socialLinks, professionalQualifications: $professionalQualifications, achievements: $achievements, profileImageUrl: $profileImageUrl, photosOnFile: $photosOnFile, bannerImageUrl: $bannerImageUrl)'; // Added bannerImageUrl to toString
   }
 
   @override
@@ -164,7 +176,10 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
             other.professionalQualifications, professionalQualifications) &&
         listEquals(other.achievements, achievements) &&
         other.profileImageUrl == profileImageUrl &&
-        listEquals(other.photosOnFile, photosOnFile);
+        listEquals(other.photosOnFile, photosOnFile) &&
+        other.bannerImageUrl ==
+            bannerImageUrl; // Added banner ImageUrl to Equality check
+
   }
 
   @override
@@ -179,7 +194,9 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
         professionalQualifications.hashCode ^
         achievements.hashCode ^
         profileImageUrl.hashCode ^
-        photosOnFile.hashCode;
+        photosOnFile.hashCode ^
+        bannerImageUrl.hashCode; // Added bannerImageUrl to hashCode
+
   }
 
   @override
@@ -194,6 +211,8 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
         professionalQualifications,
         achievements,
         profileImageUrl,
-        photosOnFile
+        photosOnFile,
+        bannerImageUrl // Added bannerImageUrl to props
+
       ];
 }
