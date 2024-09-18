@@ -8,33 +8,30 @@ class CadetPopupWidget extends StatelessWidget {
 
   const CadetPopupWidget({Key? key, required , required this.cadet}) : super(key: key);
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Center(
       child: Card(
         child: Column(
           children: [
             Stack(children: [
-             CachedNetworkImage(imageUrl: cadet?.bannerImageUrl ?? 'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
-  fit: BoxFit.cover,
-  height: 200,  
-   ),
+             buildBannerImage(),
    Positioned(
-    bottom: -75,
-    left:MediaQuery.of(context).size.width/2-75,
-    // right: MediaQuery.of(context).size.width / 2,
+    bottom: 0,
+    left:0,
+    right: 0,
     child: CircleAvatar( 
       // radius: 72, 
-      minRadius: 79,
-      maxRadius: 79,
+      minRadius: 52,
+      maxRadius: 52,
       backgroundColor: Theme.of(context).colorScheme.surface,
-
+      
       child: Center(
         child: CachedNetworkImage(imageUrl: 
         cadet?.profileImageUrl?? 'https://picsum.photos/300/300',
         fadeInDuration: Durations.medium4,
         fadeInCurve: Curves.easeInCirc,
-        height: 150,
+        height: 100,
         fit: BoxFit.contain,
         
         ),
@@ -52,4 +49,11 @@ class CadetPopupWidget extends StatelessWidget {
       ),
     );
   }
+
+CachedNetworkImage buildBannerImage() {
+  return CachedNetworkImage(imageUrl: cadet?.bannerImageUrl ?? 'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
+fit: BoxFit.contain,
+height: 100,  
+ );
+}
 }
