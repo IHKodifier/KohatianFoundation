@@ -22,10 +22,8 @@ class CadetPopupWidget extends StatelessWidget {
           const SizedBox(height:30),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Expanded(
-              child: Text(cadet.name,
-              style: Theme.of(context).textTheme.titleLarge,),
-            ), 
+            child: Text(cadet.name,
+            style: Theme.of(context).textTheme.titleLarge,), 
           ),
                const SizedBox(height:12),
           Text(cadet.domicile),
