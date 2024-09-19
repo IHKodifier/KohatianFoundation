@@ -5,7 +5,7 @@ import 'package:kohatian_foundation/widget_export.dart';
 class CadetPopupWidget extends StatelessWidget {
   final Cadet cadet;
 
-  const CadetPopupWidget({super.key, required, required this.cadet});
+  const CadetPopupWidget({super.key,  required this.cadet});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CadetPopupWidget extends StatelessWidget {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                    buildBannerImage(),
+                    buildBannerImage(constraints),
                     Positioned(
                       top: 50,
                       left: (maxWidth / 2) - 50,
@@ -31,7 +31,6 @@ class CadetPopupWidget extends StatelessWidget {
                         minRadius: 52,
                         maxRadius: 52,
                         backgroundColor: Theme.of(context).colorScheme.surface,
-
                         child: Center(
                           child: CachedNetworkImage(
                             imageUrl: cadet.profileImageUrl ??
@@ -58,12 +57,16 @@ class CadetPopupWidget extends StatelessWidget {
     );
   }
 
-  CachedNetworkImage buildBannerImage() {
-    return CachedNetworkImage(
-      imageUrl: cadet.bannerImageUrl ??
-          'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
-      fit: BoxFit.fitWidth,
+  Widget buildBannerImage(BoxConstraints constraints) {
+    return SizedBox(
+width: constraints.maxWidth,
       height: 100,
+      child: CachedNetworkImage(
+        imageUrl: cadet.bannerImageUrl ?? 
+            'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
+        fit: BoxFit.fitWidth,
+        height: 100,
+      ),
     );
   }
 }
