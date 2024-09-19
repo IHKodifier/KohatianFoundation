@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
 class CadetGridTile extends ConsumerWidget {
-  const CadetGridTile({required this.index, super.key, required this.cadet});
+  const CadetGridTile(
+      {required this.index, super.key, required this.cadet, required this.maxWidth});
 
   final Cadet cadet;
   final int index;
+  final double maxWidth;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,8 +44,12 @@ class CadetGridTile extends ConsumerWidget {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  ref.read(currentCadetProvider.notifier).setCurrentCadet(cadet);
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CadetProfilePage(),));
+                  ref
+                      .read(currentCadetProvider.notifier)
+                      .setCurrentCadet(cadet);
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const CadetProfilePage(),
+                  ));
                 },
                 child: Card(
                   elevation: 12,
@@ -84,8 +90,8 @@ class CadetGridTile extends ConsumerWidget {
             left: 10,
             child: Container(
                 color: Theme.of(context).colorScheme.surfaceContainerLowest,
-                child: CadetPopupWidget(cadet:cadet)),
-                //one more comment to fix up the git  push issue.
+                child: CadetPopupWidget(cadet: cadet,maxWidth: maxWidth,)),
+            //one more comment to fix up the git  push issue.
           ),
       ],
     );

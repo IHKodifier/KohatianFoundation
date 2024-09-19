@@ -75,14 +75,23 @@ class PearlsPage extends ConsumerWidget {
             : 2, // Adjust the number of columns as needed
         crossAxisSpacing: 16,
         mainAxisSpacing: 12,
-        childAspectRatio: 0.8, // Adjust the aspect ratio as needed
+        childAspectRatio: 1, // Adjust the aspect ratio as needed
       ),
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return MouseRegion(
-          onEnter: (_) => _ref.read(hoverProvider.notifier).state = index,
-          onExit: (_) => _ref.read(hoverProvider.notifier).state = null,
-          child: CadetGridTile(cadet: data[index], index: index),
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            return MouseRegion(
+              onEnter: (_) => _ref.read(hoverProvider.notifier).state = index,
+              onExit: (_) => _ref.read(hoverProvider.notifier).state = null,
+              child: CadetGridTile(
+                cadet: data[index],
+                index: index,
+                maxWidth:
+                    constraints.maxWidth, // Pass maxWidth to CadetGridTile
+              ),
+            );
+          },
         );
       },
     );
