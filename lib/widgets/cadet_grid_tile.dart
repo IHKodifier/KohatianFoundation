@@ -110,7 +110,7 @@ class CadetGridTile extends ConsumerWidget {
   CircleAvatar cadetAvatar(BuildContext context) {
     return CircleAvatar(
       backgroundColor: Theme.of(context).colorScheme.onPrimary,
-      radius: 40,
+      radius: 55,
       backgroundImage: cadet.hasSignedUp == false
           ? const AssetImage('assets/images/no_user_avatar.png')
           : NetworkImage(cadet.profileImageUrl!),

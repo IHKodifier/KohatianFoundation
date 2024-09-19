@@ -11,57 +11,78 @@ class CadetPopupWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Calculate a reasonable size for the popup based on constraints
-    final popupWidth = maxWidth * 0.8; // 80% of parent
+    final popupWidth = maxWidth ; // 80% of parent
 
     return Center(
         child: Card(
+          elevation: 150,
       child: Column(
         children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              buildBannerImage(popupWidth),
-              Positioned(
-                top: 50,
-                left: (popupWidth / 2) - 50,
-                right: (popupWidth / 2) - 50,
-                child: CircleAvatar(
-                  // radius: 72,
-                  minRadius: 52,
-                  maxRadius: 52,
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  child: Center(
-                    child: CachedNetworkImage(
-                      imageUrl: cadet.profileImageUrl ??
-                          'https://picsum.photos/300/300',
-                      fadeInDuration: Durations.medium4,
-                      fadeInCurve: Curves.easeInCirc,
-                      height: 100,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
+          _stack(popupWidth, context),
+          const SizedBox(height:30),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(cadet.name),
+            child: Expanded(
+              child: Text(cadet.name,
+              style: Theme.of(context).textTheme.titleLarge,),
+            ), 
           ),
+               const SizedBox(height:12),
+          Text(cadet.domicile),
+               const SizedBox(height: 12),
+          Text(cadet.mobileNumber),
+          const SizedBox(height:12),
+          const Text('Social '),
+          const SizedBox(height:12),
+          const Text('Social 2'),
+          const SizedBox(height:12),
+          const Text('Social 3'),
+          const SizedBox(height:12),
+       
         ],
       ),
     ));
   }
 
+  Stack _stack(double popupWidth, BuildContext context) {
+    return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            buildBannerImage(popupWidth),
+
+            Positioned(
+              top:38,
+              left: (popupWidth / 2) - 50,
+              right: (popupWidth / 2) - 50,
+              child: CircleAvatar(
+                radius: 38, 
+               
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                child: Center(
+                  child: CachedNetworkImage(
+                    imageUrl: cadet.profileImageUrl ??
+                        'https://picsum.photos/300/300',
+                    fadeInDuration: Durations.medium4,
+                    fadeInCurve: Curves.easeInCirc,
+                    // height: 100,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            )
+          ],
+        );
+  }
+
   Widget buildBannerImage(double popupWidth) {
     return SizedBox(
-      width: popupWidth * .8,
-      height: 100,
+      width: popupWidth ,
+      // height: 100,
       child: CachedNetworkImage(
         imageUrl: cadet.bannerImageUrl ??
             'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
-        fit: BoxFit.fitWidth,
-        height: 100,
+        fit: BoxFit.cover,
+        // height: 100,
       ),
     );
   }
