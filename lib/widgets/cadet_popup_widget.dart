@@ -14,12 +14,14 @@ class CadetPopupWidget extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            Stack(children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
              buildBannerImage(),
    Positioned(
-    bottom: 0,
-    left:0,
-    right: 0,
+    top: 50,
+    left:50,
+    right: 50,
     child: CircleAvatar( 
       // radius: 72, 
       minRadius: 52,
