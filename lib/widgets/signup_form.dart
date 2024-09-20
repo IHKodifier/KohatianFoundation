@@ -533,6 +533,8 @@ class _SignupFormState extends ConsumerState<SignupForm> {
             }
             try {
                final int? kitNoInt = int.tryParse(kitNoController.text);
+
+               //check if user profile already exists
               final result = await authService.createAppUserInDb(UserProfile(
                   uuid: userCredential.user!.uid,
                   name: nameController.text,
@@ -541,6 +543,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                   domicile: domicileController.text,
                   mobileNumber: mobileNumberController.text,
                   email: userCredential.user!.email!,
+                  profileImageUrl: userCredential.user!.photoURL!,
                   isValidated: false,
                   roles: [UserRole.cadet()]));
 
@@ -548,7 +551,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 'domicile': domicileController.text,
                 'hasSignedUp': true,
                 'house': house.text.toUpperCase(),
-                'kitNo': int.tryParse(kitNoController.text!),
+                'kitNo': int.tryParse(kitNoController.text),
                 'mobileNumber': mobileNumberController.text,
                 'name': nameController.text,
                 'profileImageUrl': userCredential.user!.photoURL,
@@ -559,7 +562,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 (value) {
                   FirebaseFirestore.instance
                       .collection('entrys')
-                      .doc(value)
+                      .doc(value) 
                       .collection('cadets')
                       .doc(kitNoInt.toString())
                       .set(cadetData, SetOptions(merge: true));
@@ -601,7 +604,7 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     // Query the 'entrys' collection based on the first two digits
     final querySnapshot = await FirebaseFirestore.instance
         .collection('entrys')
-        .where('number', isEqualTo: firstTwoDigits)
+        .where('number', isEqualTo: firstTwoDigits.toString())
         .get();
 
     // If a document is found, return the entryName

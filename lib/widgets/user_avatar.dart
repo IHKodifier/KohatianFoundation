@@ -21,7 +21,7 @@ class _UserAvatarWidgetState extends ConsumerState<UserAvatarWidget> {
   @override
   Widget build(BuildContext context) {
     final hasLoggedInUser = ref.watch(authServiceProvider).hasLoggedInUser;
-    final userId = ref.watch(authServiceProvider).getCurrentUser()?.uid;
+    final userId = ref.watch(authServiceProvider).getCurrentUser()?.email;
     final profileStream = ref.watch(userProfileProvider(userId ?? ''));
 
     return !hasLoggedInUser

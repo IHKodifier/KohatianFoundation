@@ -45,8 +45,8 @@ class AuthService {
     try {
       await firebaseInstance
           .collection('users')
-          .doc(appUser.uuid)
-          .set(appUser.toMap());
+          .doc(appUser.email)
+          .set(appUser.toMap(), SetOptions(merge: true));
       print('AppUser created successfully');
     } on FirebaseException catch (e) {
       // Handle Firebase errors
