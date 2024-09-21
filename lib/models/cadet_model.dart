@@ -88,7 +88,7 @@ Cadet.empty({
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'kitNo': kitNo.toString()}); // Convert int to String
+    result.addAll({'kitNo': kitNo}); 
     if (email != null) {
       result.addAll({'email': email});
     }
@@ -125,7 +125,7 @@ Cadet.empty({
   }
 factory Cadet.fromMap(Map<String, dynamic> map) {
     return Cadet(
-      kitNo: int.parse(map['kitNo'] ?? '0'), // Convert String to int
+      kitNo: map['kitNo'] ?? '0', // Convert String to int
       hasSignedUp: map['hasSignedUp'] ?? false,
       email: map['email'],
       house: map['house'] ?? '',
