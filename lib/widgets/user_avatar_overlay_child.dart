@@ -45,7 +45,7 @@ class _UserAvatarOverlayChildState extends ConsumerState<UserAvatarOverlayChild>
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(userProfileProvider(
-        ref.read(authServiceProvider).getCurrentUser()!.uid));
+        ref.read(authServiceProvider).getCurrentUser()!.email!));
 
     return Positioned(
       top: 50,
