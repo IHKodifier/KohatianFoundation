@@ -82,7 +82,9 @@ class PearlsPage extends ConsumerWidget {
         return LayoutBuilder(
           builder: (context, constraints) {
             return MouseRegion(
-              onEnter: (_) => _ref.read(hoverProvider.notifier).state = index,
+              onEnter: (_) { _ref.read(hoverProvider.notifier).state = index;
+              // get_socials
+              },
               onExit: (_) => _ref.read(hoverProvider.notifier).state = null,
               child: CadetGridTile(
                 cadet: data[index],

@@ -11,7 +11,7 @@ class Cadet {
   final String name;
   final String domicile;
   final String mobileNumber;
-  final SocialLinks? socialLinks;
+  final SocialLink? socialLinks;
   final List<Qualification>? professionalQualifications;
   final List<Achievements>? achievements;
   final String? profileImageUrl;
@@ -58,7 +58,7 @@ Cadet.empty({
     String? name,
     String? domicile,
     String? mobileNumber,
-    SocialLinks? socialLinks,
+    SocialLink? socialLinks,
     List<Qualification>? professionalQualifications,
     List<Achievements>? achievements,
     String? profileImageUrl,
@@ -132,9 +132,15 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
       name: map['name'] ?? '',
       domicile: map['domicile'] ?? '',
       mobileNumber: map['mobileNumber'] ?? '',
+
       socialLinks: map['socialLinks'] != null
-          ? SocialLinks.fromMap(map['socialLinks'])
+          ? SocialLink.fromMap(map['socialLinks'])
           : null,
+
+    
+
+
+
       professionalQualifications: map['professionalQualifications'] != null
           ? List<Qualification>.from(map['professionalQualifications']
               ?.map((x) => Qualification.fromMap(x)))

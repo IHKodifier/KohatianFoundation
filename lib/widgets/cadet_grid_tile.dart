@@ -64,7 +64,7 @@ class CadetGridTile extends ConsumerWidget {
                         cadetAvatar(context),
                         const SizedBox(height: 2),
                         kitNo(),
-                        const SizedBox(height: 2),
+                        // const SizedBox(height: 2),
                         name(),
                         const SizedBox(height: 2), 
                         house(houseName),
@@ -86,7 +86,7 @@ class CadetGridTile extends ConsumerWidget {
         // Show popup only when hovered
         if (isHovered)
           Positioned(
-            top: 10,
+            top: 0,
             left: 10,
             child: Container(
                 color: Theme.of(context).colorScheme.surfaceContainerLowest,
@@ -107,13 +107,15 @@ class CadetGridTile extends ConsumerWidget {
     );
   }
 
-  CircleAvatar cadetAvatar(BuildContext context) {
-    return CircleAvatar(
-      backgroundColor: Theme.of(context).colorScheme.onPrimary,
-      radius: 55,
-      backgroundImage: cadet.hasSignedUp == false
-          ? const AssetImage('assets/images/no_user_avatar.png')
-          : NetworkImage(cadet.profileImageUrl!),
+  Widget cadetAvatar(BuildContext context) {
+    return ClipOval(
+      child: CircleAvatar(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
+        radius: 55,
+        backgroundImage: cadet.hasSignedUp == false
+            ? const AssetImage('assets/images/no_user_avatar.png')
+            : NetworkImage(cadet.profileImageUrl!),
+      ),
     );
   }
 

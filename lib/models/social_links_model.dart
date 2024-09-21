@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class SocialLinks {
+class SocialLink {
   final String? facebook;
   final String? instagram;
   final String? twitter;
@@ -9,7 +9,7 @@ class SocialLinks {
   final String whatsapp;
   final String email;
 
-  SocialLinks({
+  SocialLink({
     this.facebook = 'not available',
     this.instagram = 'not available',
     this.twitter = 'not available',
@@ -19,7 +19,7 @@ class SocialLinks {
     required this.email,
   });
 
-  SocialLinks copyWith({
+  SocialLink copyWith({
     String? facebook,
     String? instagram,
     String? twitter,
@@ -28,7 +28,7 @@ class SocialLinks {
     String? whatsapp,
     String? email,
   }) {
-    return SocialLinks(
+    return SocialLink(
       facebook: facebook ?? this.facebook,
       instagram: instagram ?? this.instagram,
       twitter: twitter ?? this.twitter,
@@ -63,8 +63,8 @@ class SocialLinks {
     return result;
   }
 
-  factory SocialLinks.fromMap(Map<String, dynamic> map) {
-    return SocialLinks(
+  factory SocialLink.fromMap(Map<String, dynamic> map) {
+    return SocialLink(
       facebook: map['facebook'],
       instagram: map['instagram'],
       twitter: map['twitter'],
@@ -77,8 +77,8 @@ class SocialLinks {
 
   String toJson() => json.encode(toMap());
 
-  factory SocialLinks.fromJson(String source) =>
-      SocialLinks.fromMap(json.decode(source));
+  factory SocialLink.fromJson(String source) =>
+      SocialLink.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -89,7 +89,7 @@ class SocialLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is SocialLinks &&
+    return other is SocialLink &&
         other.facebook == facebook &&
         other.instagram == instagram &&
         other.twitter == twitter &&

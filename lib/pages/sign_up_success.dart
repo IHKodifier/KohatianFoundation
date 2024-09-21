@@ -6,12 +6,33 @@ class SignUpSucess extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return
-          CustomScrollView(
+    return CustomScrollView(
       slivers: [
-        TallAppBar(),
+        const TallAppBar(),
         //TODO  update UI,
-        SliverToBoxAdapter(child: Text('Signupped Successfully')),
+        SliverToBoxAdapter(
+            child: Card(
+                child: Column(
+          children: [
+            Text(
+              'You have signed up successfully',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Text(
+              'Your entry Coordinator will verify the details and let you into the fraternity',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            SizedBox(height: 12),
+            Text(
+                'You will also receive an email once the details are verified',
+                style: Theme.of(context).textTheme.titleLarge,
+                ),
+            SizedBox(height: 12),
+          ],
+        ))),
         // SliverToBoxAdapter(child: Text('user name  is ${user} and email is ${email}')),
         SliverToBoxAdapter(child: SiteFooter()),
       ],
