@@ -91,7 +91,7 @@ class CadetGridTile extends ConsumerWidget {
             child: Container(
                 color: Theme.of(context).colorScheme.surfaceContainerLowest,
                 child: CadetPopupWidget(cadet: cadet,maxWidth: maxWidth,)),
-            //one more comment to fix up the git  push issue.
+            //one more comment to fix up the git  push issssue.
           ),
       ],
     );
