@@ -18,38 +18,57 @@ class ProfileBannerSliver extends ConsumerWidget {
           clipBehavior: Clip.none,
           children: [
             bannerImage(cadet),
-            profileImage(cadet,context),
+            profileImage(cadet, context),
           ],
         ),
       ),
     );
   }
 
-  Positioned profileImage(Cadet? cadet,context) => Positioned(
-    bottom: -75,
-    left:MediaQuery.of(context).size.width/2-75,
-    // right: MediaQuery.of(context).size.width / 2,
-    child: CircleAvatar( 
-      // radius: 72, 
-      minRadius: 79,
-      maxRadius: 79,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+  Positioned profileImage(Cadet? cadet, context) => Positioned(
+        bottom: -75,
+        left: MediaQuery.of(context).size.width / 2 - 75,
+        // right: MediaQuery.of(context).size.width / 2,
+        child: CircleAvatar(
+          // radius: 72,
+          minRadius: 79,
+          maxRadius: 79,
+          backgroundColor: Theme.of(context).colorScheme.primary,
 
-      child: Center(
-        child: CachedNetworkImage(imageUrl: 
-        cadet?.profileImageUrl?? 'https://picsum.photos/300/300',
-        fadeInDuration: Durations.medium4,
-        fadeInCurve: Curves.easeInCirc,
-        height: 150,
-        fit: BoxFit.contain,
-        
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 50,
+                    blurStyle: BlurStyle.normal,
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                    spreadRadius: 30,
+                  ),
+                ],
+              ),
+              child: ClipOval(
+                child: Material(
+                  elevation: 25,
+                  child: CachedNetworkImage(
+                    imageUrl: cadet?.profileImageUrl ??
+                        'https://picsum.photos/300/300',
+                    fadeInDuration: Durations.medium4,
+                    fadeInCurve: Curves.easeInCirc,
+                    height: 150,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
-  CachedNetworkImage bannerImage(Cadet? cadet) => CachedNetworkImage(imageUrl: cadet?.bannerImageUrl ?? 'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
-  fit: BoxFit.cover,
-  height: 400, 
-   );
+  CachedNetworkImage bannerImage(Cadet? cadet) => CachedNetworkImage(
+        imageUrl: cadet?.bannerImageUrl ??
+            'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
+        fit: BoxFit.cover,
+        height: 400,
+      );
 }
