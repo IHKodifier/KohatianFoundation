@@ -11,7 +11,7 @@ class Cadet {
   final String name;
   final String domicile;
   final String mobileNumber;
-  final SocialLink? socialLinks;
+  SocialLink socialLinks;
   final List<Qualification>? professionalQualifications;
   final List<Achievements>? achievements;
   final String? profileImageUrl;
@@ -25,14 +25,27 @@ class Cadet {
     required this.domicile,
     required this.mobileNumber,
     this.email,
-    this.socialLinks,
+    SocialLink? socialLinks,
+        
     this.hasSignedUp = false, // Default value for hasSignedUp
     this.bannerImageUrl, // Added bannerImageUrl to constructor
     this.professionalQualifications,
     this.achievements,
     this.profileImageUrl,
     this.photosOnFile,
-  });
+  }) : socialLinks = socialLinks ??
+            SocialLink(
+              // Initialize with empty SocialLink if not provided
+              facebook: '',
+              instagram: '',
+              twitter: '',
+              youtube: '',
+              linkedin: '',
+              whatsapp:
+                  '', // These should not be nullable according to your SocialLink model
+              email:
+                  '', // These should not be nullable according to your SocialLink model
+            );
 
 Cadet.empty({
     required int kitNo,
@@ -43,7 +56,14 @@ Cadet.empty({
         name = '...awaiting signup...',
         domicile = '...awaiting signup...',
         mobileNumber = '...awaiting signup...',
-        socialLinks = null,
+        socialLinks =  SocialLink(
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            youtube: '',
+            linkedin: '',
+            whatsapp: '',
+            email: ''),
         professionalQualifications = null,
         achievements = null,
         profileImageUrl = '',
