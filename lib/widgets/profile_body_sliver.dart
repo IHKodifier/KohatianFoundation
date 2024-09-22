@@ -15,7 +15,7 @@ class ProfileBodySliver extends ConsumerWidget {
         child: Container(
       height: 300,
       width: 100,
-      color: Colors.deepOrange,
+      // color: Colors.deepOrange,
       child: bodyCard(context, ref),
     ));
   }
@@ -30,7 +30,7 @@ class ProfileBodySliver extends ConsumerWidget {
 
   dekstopChild(BuildContext context, WidgetRef ref) {
     return Container(
-        color: Colors.amber,
+        // color: Colors.amber,
         child:  Center(
             child: Column(
           children: [
@@ -50,7 +50,7 @@ class ProfileBodySliver extends ConsumerWidget {
 
   tabletChild(BuildContext context, WidgetRef ref) {
     return Container(
-        color: Colors.green,
+        // color: Colors.green,
         child: Center(
             child: Column(
           children: [
@@ -70,7 +70,7 @@ class ProfileBodySliver extends ConsumerWidget {
 
   mobileChild(BuildContext context, WidgetRef ref) {
     return Container(
-        color: Colors.blue.shade200,
+        // color: Colors.blue.shade200,
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -161,25 +161,38 @@ class ProfileBodySliver extends ConsumerWidget {
   socialLinks(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
+        cadet.socialLinks!.linkedin!.isNotEmpty?
         Link(
           uri: Uri.parse(cadet.socialLinks!.linkedin!),
-          target: LinkTarget.blank,
+          target: LinkTarget.defaultTarget,
           builder: (context, followLink) => TextButton(
               onPressed: followLink, child: Text(cadet.socialLinks!.linkedin!)),
-        ),
+        ):const SizedBox.shrink(),
+         cadet.socialLinks!.facebook!.isNotEmpty?
         Link(
           uri: Uri.parse(cadet.socialLinks!.facebook!),
-          target: LinkTarget.blank,
+          target: LinkTarget.defaultTarget,
           builder: (context, followLink) => TextButton(
               onPressed: followLink, child: Text(cadet.socialLinks!.facebook!)),
-        ),
+        ):const SizedBox.shrink(),
+        cadet.socialLinks!.instagram!.isNotEmpty?
         Link(
           uri: Uri.parse(cadet.socialLinks!.instagram!),
-          target: LinkTarget.blank,
+          target: LinkTarget.defaultTarget,
           builder: (context, followLink) => TextButton(
               onPressed: followLink,
               child: Text(cadet.socialLinks!.instagram!)),
-        ),
+        ):const SizedBox.shrink(),
+          cadet.socialLinks!.youtube!.isNotEmpty
+            ? Link(
+                uri: Uri.parse(cadet.socialLinks!.youtube!),
+                target: LinkTarget.defaultTarget,
+                builder: (context, followLink) => TextButton(
+                    onPressed: followLink,
+                    child: Text(cadet.socialLinks!.youtube!)),
+              )
+            : const SizedBox.shrink(),
+            SizedBox.shrink(),
       ],
     );
   }

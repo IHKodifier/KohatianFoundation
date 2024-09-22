@@ -46,15 +46,15 @@ class CadetPopupWidget extends ConsumerWidget {
               children: [
 
                 Link(uri: Uri.parse(cadet.socialLinks!.linkedin!),
-                target: LinkTarget.blank,
+                target: LinkTarget.defaultTarget,
                 builder: (context, followLink) => TextButton(onPressed: followLink, child: Text(cadet.socialLinks!.linkedin!)),),
 
                 Link(uri: Uri.parse(cadet.socialLinks!.facebook!),
-                target: LinkTarget.blank,
+                target: LinkTarget.defaultTarget,
                 builder: (context, followLink) => TextButton(onPressed: followLink, child: Text(cadet.socialLinks!.facebook!)),),
 
                 Link(uri: Uri.parse(cadet.socialLinks!.instagram!),
-                target: LinkTarget.blank,
+                target: LinkTarget.defaultTarget,
                 builder: (context, followLink) => TextButton(onPressed: followLink, child: Text(cadet.socialLinks!.instagram!)),),
                 
            
