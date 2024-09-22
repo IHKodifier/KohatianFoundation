@@ -28,7 +28,7 @@ class CadetPopupWidget extends ConsumerWidget {
         child: Column(
           children: [
             _stack(popupWidth, context),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -36,27 +36,35 @@ class CadetPopupWidget extends ConsumerWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 4),
             Text(cadet.domicile),
-            const SizedBox(height: 12),
-            Text(cadet.mobileNumber),
-            const SizedBox(height: 12),
+            const SizedBox(height: 4),
+            // Text(cadet.mobileNumber),
+            const SizedBox(height: 4),
             cadet.socialLinks!=null?
              Column(
               children: [
 
                 Link(uri: Uri.parse(cadet.socialLinks!.linkedin!),
-                target: LinkTarget.defaultTarget,
+                target: LinkTarget.blank,
                 builder: (context, followLink) => TextButton(onPressed: followLink, child: Text(cadet.socialLinks!.linkedin!)),),
+
+                Link(uri: Uri.parse(cadet.socialLinks!.facebook!),
+                target: LinkTarget.blank,
+                builder: (context, followLink) => TextButton(onPressed: followLink, child: Text(cadet.socialLinks!.facebook!)),),
+
+                Link(uri: Uri.parse(cadet.socialLinks!.instagram!),
+                target: LinkTarget.blank,
+                builder: (context, followLink) => TextButton(onPressed: followLink, child: Text(cadet.socialLinks!.instagram!)),),
                 
            
               ],
             ):Container(),
              
-            const SizedBox(height: 12),
+            const SizedBox(height: 4),
           
             signupButton(context),
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
           ],
         ),
       )),
