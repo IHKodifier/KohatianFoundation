@@ -10,9 +10,9 @@ class SignInForm extends ConsumerStatefulWidget {
 }
 
 class _SignInFormState extends ConsumerState<SignInForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  // final _formKey = GlobalKey<FormState>();
+  // final _emailController = TextEditingController();
+  // final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,145 +35,68 @@ class _SignInFormState extends ConsumerState<SignInForm> {
         ],
       );
     } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),  
-          CachedNetworkImage(
-            imageUrl:
-                'https://cdni.iconscout.com/illustration/premium/thumb/user-login-7209363-5861790.png?f=webp',
-            width: 300,
-            height: 200,
-          ),
-          Text(
-            'Sign In ',
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SingleChildScrollView(
-            child: Column(
+      return Card(
+        margin: const EdgeInsets.all(24),
+        elevation: 50,
+        child: Flex(
+          direction: MediaQuery.of(context).size.width > 800
+              ? Axis.horizontal
+              :  Axis.vertical
+                 ,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // Sign In Art
+            CachedNetworkImage(
+              imageUrl:
+                  'https://cdni.iconscout.com/illustration/premium/thumb/user-login-7209363-5861790.png?f=webp',
+              width: 400,
+              height: 300,
+            ),
+        
+            // Sign In with Google button
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                authService.hasLoggedInUser
-                    ? const Text('You are already logged in')
-                    : Container(),
+                Text('Login with Google',
+                    style: Theme.of(context).textTheme.displaySmall),
+                    SizedBox(height: 20,),
+                Text('To Sign In to Kohatian Foundation, Login with your Google Account',
+                    style: Theme.of(context).textTheme.titleSmall),
+                    SizedBox(height: 20,),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (_) => PublicHomePage()));
+                  onPressed: () async {
+                    await ref.read(authServiceProvider).signInWithGoogle();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => UserHomePage(),
+                    ));
                   },
-                  child: const Text('Back to home'),
+                  child: const Text('Sign In'),
                 ),
-                authService.hasLoggedInUser
-                    ? ElevatedButton(
-                        onPressed: () {
-                          ref.read(authServiceProvider).signOut();
-                          // ref.read(userProfileProvider)
-                        },
-                        child: const Text('Sign Out'),
-                      )
-                    : const SizedBox.shrink(),
               ],
             ),
-          ),
-          Form(
-            key: _formKey,
-            child: SizedBox(
-              width: 500,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // Email field
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        if (!value.contains('@')) {
-                          return 'Please enter a valid email';
-                        }
-                        return null;
-                      },
-                    ),
-
-                    // Password field
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                    ),
-
-                    // Sign In with Email/Password button
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              _signInWithEmailAndPassword();
-                            }
-                          },
-                          child: const Text('Sign In with Email'),
-                        ),
-                        ElevatedButton(
-                          // onPressed: null,
-                          onPressed: () async {
-                            await ref
-                                .read(authServiceProvider)
-                                .signInWithGoogle();
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => UserHomePage(),
-                            ));
-                          },
-                          child: const Text('Sign In with Google'),
-                        ),
-                      ],
-                    ),
-
-                    
-                  ],
-                ),
-              ),
-            ),
-          ),
-        // SiteFooter()
-        ],
+        
+            // Email sign-in functionality removed as requested
+            // ... (rest of the email sign-in code removed)
+          ],
+        ),
       );
     }
   }
 
   
 
-  Future<void> _signInWithGoogle() async {
-    ref.read(authServiceProvider);
-    // try {
-    //   // await authService.signInWithGoogle();
-    //   // Update userProfileProvider and other providers as needed
-    //   ref.read(userProfileProvider.notifier).update((state) => state);
-    // } catch (e) {
-    //   // Handle sign-in errors (e.g., display an error message)
-    //   print('Error signing in with Google: $e');
-    // }
-  }
+  // Future<void> _signInWithGoogle() async {
+  //   ref.read(authServiceProvider);
+  //   // try {
+  //   //   // await authService.signInWithGoogle();
+  //   //   // Update userProfileProvider and other providers as needed
+  //   //   ref.read(userProfileProvider.notifier).update((state) => state);
+  //   // } catch (e) {
+  //   //   // Handle sign-in errors (e.g., display an error message)
+  //   //   print('Error signing in with Google: $e');
+  //   // }
+  // }
 
-//TODO implement this
-  Future<void> _signInWithEmailAndPassword() async {
-    ref.read(authServiceProvider);
-  
-  }
+
 }
