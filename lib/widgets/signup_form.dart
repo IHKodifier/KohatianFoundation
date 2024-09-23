@@ -72,7 +72,6 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       formWidth = mediaWidth * .6;
     }
 
-
     return Form(
       key: cadetFormKey,
       child: Center(
@@ -276,12 +275,11 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                   ),
                 ),
               ),
-          Padding(
-            padding: const EdgeInsets.all(8), 
-            child: SizedBox(
-               width: formWidth * .58,
-              child: gmailButtonBar()),
-          ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child:
+                    SizedBox(width: formWidth * .58, child: gmailButtonBar()),
+              ),
             ],
           ),
         ),
@@ -532,9 +530,9 @@ class _SignupFormState extends ConsumerState<SignupForm> {
               print('User created: ${userCredential.user}');
             }
             try {
-               final int? kitNoInt = int.tryParse(kitNoController.text);
+              final int? kitNoInt = int.tryParse(kitNoController.text);
 
-               //check if user profile already exists
+              //check if user profile already exists
               final result = await authService.createAppUserInDb(UserProfile(
                   uuid: userCredential.user!.uid,
                   name: nameController.text,
@@ -556,13 +554,24 @@ class _SignupFormState extends ConsumerState<SignupForm> {
                 'name': nameController.text,
                 'profileImageUrl': userCredential.user!.photoURL,
                 'email': userCredential.user!.email,
+                'socialLinks': {
+                  'email': userCredential.user!.email,
+                  'facebook':'',
+                  'instagram':'',
+                  'linkedin':'',
+                  'twitter':'',
+                  'youtube':'',
+                  'whatsapp':mobileNumberController.text,
+
+
+                }
               };
               // Get the entryName from Firestore
               getEntryName(kitNoController.text).then(
                 (value) {
                   FirebaseFirestore.instance
                       .collection('entrys')
-                      .doc(value) 
+                      .doc(value)
                       .collection('cadets')
                       .doc(kitNoInt.toString())
                       .set(cadetData, SetOptions(merge: true));
@@ -616,8 +625,6 @@ class _SignupFormState extends ConsumerState<SignupForm> {
     return null;
   }
 
-
-
   //Sign Up With Google Form
   Widget gForm(BuildContext context) {
     return SizedBox(
@@ -634,8 +641,6 @@ class _SignupFormState extends ConsumerState<SignupForm> {
       ),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
