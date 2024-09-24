@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 import 'package:kohatian_foundation/widgets/flexible_banner.dart';
@@ -40,17 +41,41 @@ class NavBar extends StatelessWidget {
       //Vision
       TextButton(
           child: Container(
-            color:Theme.of(context).colorScheme.onInverseSurface,
+            color: Theme.of(context).colorScheme.onInverseSurface,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              
               child: Text(
                 'Vision',
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ),
           ),
-          onPressed: () {}),
+          onPressed: () {
+            showDialog(context: context, builder:(context) => AlertDialog(
+                content: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                  CachedNetworkImage(
+                        imageUrl:
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvEdR5W2eXboMtBC49GW9PqLft_QXoCamNFQ&s')
+                    ],
+                  ),
+                ),
+                actions: [Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton(
+                      child: Text('OK I Understand'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                )],
+              ),);
+          },
+          ),
       //Mission
       TextButton(
           child: Container(
@@ -63,7 +88,37 @@ class NavBar extends StatelessWidget {
               ),
             ),
           ),
-          onPressed: () {}),
+            onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                   CachedNetworkImage(
+                        imageUrl:
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvEdR5W2eXboMtBC49GW9PqLft_QXoCamNFQ&s')
+                  ],
+                ),
+              ),
+              actions: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton(
+                      child: Text('OK I Understand'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
       //Function
       TextButton(
           child: Container(
@@ -76,7 +131,36 @@ class NavBar extends StatelessWidget {
               ),
             ),
           ),
-          onPressed: () {}),
+            onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                   
+                    CachedNetworkImage(imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvEdR5W2eXboMtBC49GW9PqLft_QXoCamNFQ&s')
+                  ],
+                ),
+              ),
+              actions: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton(
+                      child: Text('OK I Understand'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
       //Pearls
       TextButton(
         onPressed: () {
@@ -113,7 +197,6 @@ class NavBar extends StatelessWidget {
       child: PopupMenuButton(
         elevation: 15,
         offset: Offset(-10, 40),
-        
         child: const Icon(Icons.menu),
         itemBuilder: (context) {
           // navBarItems.removeAt(0);
