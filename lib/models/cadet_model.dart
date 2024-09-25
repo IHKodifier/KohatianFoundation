@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 
+///adding the functionality for listing [Qualification],[Achievements],profile Editing etc.
+
 class Cadet {
   final int kitNo;
   final bool hasSignedUp;
