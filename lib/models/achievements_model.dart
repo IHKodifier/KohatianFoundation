@@ -1,25 +1,25 @@
 import 'dart:convert';
 
-class Achievements {
+class Achievement {
   final String title;
   final String year;
   final String description;
   final String conferringbody;
 
-  Achievements(
+  Achievement(
     this.title,
     this.year,
     this.description,
     this.conferringbody,
   );
 
-  Achievements copyWith({
+  Achievement copyWith({
     String? title,
     String? year,
     String? description,
     String? conferringbody,
   }) {
-    return Achievements(
+    return Achievement(
       title ?? this.title,
       year ?? this.year,
       description ?? this.description,
@@ -38,8 +38,8 @@ class Achievements {
     return result;
   }
 
-  factory Achievements.fromMap(Map<String, dynamic> map) {
-    return Achievements(
+  factory Achievement.fromMap(Map<String, dynamic> map) {
+    return Achievement(
       map['title'] ?? '',
       map['year'] ?? '',
       map['description'] ?? '',
@@ -49,8 +49,8 @@ class Achievements {
 
   String toJson() => json.encode(toMap());
 
-  factory Achievements.fromJson(String source) =>
-      Achievements.fromMap(json.decode(source));
+  factory Achievement.fromJson(String source) =>
+      Achievement.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -61,7 +61,7 @@ class Achievements {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Achievements &&
+    return other is Achievement &&
         other.title == title &&
         other.year == year &&
         other.description == description &&

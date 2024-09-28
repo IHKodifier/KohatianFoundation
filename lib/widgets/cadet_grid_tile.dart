@@ -111,10 +111,8 @@ class CadetGridTile extends ConsumerWidget {
     return ClipOval(
       child: CircleAvatar(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        radius: 55,
-        backgroundImage: cadet.hasSignedUp == false
-            ? const AssetImage('assets/images/no_user_avatar.png')
-            : NetworkImage(cadet.profileImageUrl!),
+        radius: 35,
+        backgroundImage:  NetworkImage(cadet.profileImageUrl!),
       ),
     );
   }

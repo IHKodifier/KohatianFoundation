@@ -67,7 +67,7 @@ class ProfileBannerSliver extends ConsumerWidget {
 
   CachedNetworkImage bannerImage(Cadet? cadet) => CachedNetworkImage(
         imageUrl: cadet?.bannerImageUrl ??
-            'https://cbx-prod.b-cdn.net/COLOURBOX52709581.jpg?width=800&height=800&quality=70',
+            'https://picsum.photos/800/150',
         fit: BoxFit.cover,
         height: 400,
       );

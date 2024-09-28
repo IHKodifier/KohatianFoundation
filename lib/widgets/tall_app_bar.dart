@@ -12,8 +12,8 @@ class TallAppBar extends ConsumerWidget {
     final maxWidth = MediaQuery.of(context).size.width;
 
     return SliverAppBar(
-      // pinned: true,
-      floating: true,
+      pinned: true,
+      // floating: true,
       toolbarHeight: 80,
       expandedHeight:
           ResponsiveBreakpoints.of(context).largerThan(MOBILE) ? 580 : 400,

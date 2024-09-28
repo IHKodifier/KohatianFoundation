@@ -68,34 +68,37 @@ class PearlsPage extends ConsumerWidget {
   }
 
   Widget? onCadetGridData(List<Cadet> data) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: ResponsiveBreakpoints.of(_context).largerThan(TABLET)
-            ? 4
-            : 2, // Adjust the number of columns as needed
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1, // Adjust the aspect ratio as needed
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: ResponsiveBreakpoints.of(_context).largerThan(TABLET)
+              ? 5
+              : 2, // Adjust the number of columns as needed
+          crossAxisSpacing: 24,
+          mainAxisSpacing: 12,
+          childAspectRatio: 1, // Adjust the aspect ratio as needed
+        ),
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              return MouseRegion(
+                onEnter: (_) { _ref.read(hoverProvider.notifier).state = index;
+                // get_socials
+                },
+                onExit: (_) => _ref.read(hoverProvider.notifier).state = null,
+                child: CadetGridTile(
+                  cadet: data[index],
+                  index: index,
+                  maxWidth:
+                      constraints.maxWidth, // Pass maxWidth to CadetGridTile
+                ),
+              );
+            },
+          );
+        },
       ),
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return MouseRegion(
-              onEnter: (_) { _ref.read(hoverProvider.notifier).state = index;
-              // get_socials
-              },
-              onExit: (_) => _ref.read(hoverProvider.notifier).state = null,
-              child: CadetGridTile(
-                cadet: data[index],
-                index: index,
-                maxWidth:
-                    constraints.maxWidth, // Pass maxWidth to CadetGridTile
-              ),
-            );
-          },
-        );
-      },
     );
   }
 } 

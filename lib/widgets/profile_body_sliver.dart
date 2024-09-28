@@ -13,7 +13,7 @@ class ProfileBodySliver extends ConsumerWidget {
     maxWidth = MediaQuery.of(context).size.width;
     return SliverToBoxAdapter(
         child: Container(
-      height: 300,
+      height: 800,
       width: 100,
       // color: Colors.deepOrange,
       child: bodyCard(context, ref),
@@ -41,8 +41,12 @@ class ProfileBodySliver extends ConsumerWidget {
             house(context, ref),
             domicile(context, ref),
             cadet.socialLinks != null
+                
                 ? socialLinks(context, ref)
                 : const SizedBox.shrink(),
+                 cadet.professionalQualifications!.length > 0
+            ? Qualifications(cadet: cadet)
+            : const SizedBox.shrink(),
          
           ],
         )));
@@ -63,6 +67,8 @@ class ProfileBodySliver extends ConsumerWidget {
             cadet.socialLinks != null
                 ? socialLinks(context, ref)
                 : const SizedBox.shrink(),
+                cadet.professionalQualifications!.length>0?
+                Qualifications(cadet: cadet):const SizedBox.shrink(),
            
           ],
         )));
@@ -110,6 +116,9 @@ class ProfileBodySliver extends ConsumerWidget {
             cadet.socialLinks != null
                 ? socialLinks(context, ref)
                 : const SizedBox.shrink(),
+                cadet.professionalQualifications!.length > 0
+            ? Qualifications(cadet: cadet)
+            : const SizedBox.shrink(),
           ],
         )));
   }

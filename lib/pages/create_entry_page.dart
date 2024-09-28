@@ -331,6 +331,10 @@ class _CreateEntryPageState extends ConsumerState<CreateEntryPage> {
                         house: house,
                         domicile: domicile,
                         mobileNumber: mobile,
+                        professionalQualifications: [],
+                        achievements: [],
+                        photosOnFile: [],
+
                       ));
 
                       //TODO

@@ -63,4 +63,5 @@ export './widgets/cadet_popup_widget.dart';
 export './widgets/profile_banner_sliver.dart';
 export './widgets/profile_body_sliver.dart';
 export './widgets/cadet_profile_page.dart';
+export 'package:kohatian_foundation/widgets/qualifications.dart';
 

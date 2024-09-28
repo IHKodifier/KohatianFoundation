@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:kohatian_foundation/widget_export.dart';
+import 'package:collection/collection.dart'; // Import collection package
 
-///adding the functionality for listing [Qualification],[Achievements],profile Editing etc.
+///adding the functionality for listing [Qualification],[Achievement],profile Editing etc.
 
 class Cadet {
   final int kitNo;
@@ -15,7 +16,7 @@ class Cadet {
   final String mobileNumber;
   SocialLink socialLinks;
   final List<Qualification>? professionalQualifications;
-  final List<Achievements>? achievements;
+  final List<Achievement>? achievements;
   final String? profileImageUrl;
   final List<String>? photosOnFile;
   final String? bannerImageUrl; // Added bannerImageUrl
@@ -28,12 +29,12 @@ class Cadet {
     required this.mobileNumber,
     this.email,
     SocialLink? socialLinks,
-        
     this.hasSignedUp = false, // Default value for hasSignedUp
-    this.bannerImageUrl, // Added bannerImageUrl to constructor
+    this.bannerImageUrl =
+            'https://picsum.photos/800/150?random=2',
     this.professionalQualifications,
     this.achievements,
-    this.profileImageUrl,
+   this.profileImageUrl = 'https://picsum.photos/300/300?random =2',
     this.photosOnFile,
   }) : socialLinks = socialLinks ??
             SocialLink(
@@ -43,13 +44,11 @@ class Cadet {
               twitter: '',
               youtube: '',
               linkedin: '',
-              whatsapp:
-                  '', // These should not be nullable according to your SocialLink model
-              email:
-                  '', // These should not be nullable according to your SocialLink model
+              whatsapp: '',
+              email: '',
             );
 
-Cadet.empty({
+  Cadet.empty({
     required int kitNo,
   })  : kitNo = kitNo,
         hasSignedUp = false,
@@ -58,7 +57,7 @@ Cadet.empty({
         name = '...awaiting signup...',
         domicile = '...awaiting signup...',
         mobileNumber = '...awaiting signup...',
-        socialLinks =  SocialLink(
+        socialLinks = SocialLink(
             facebook: '',
             instagram: '',
             twitter: '',
@@ -66,12 +65,12 @@ Cadet.empty({
             linkedin: '',
             whatsapp: '',
             email: ''),
-        professionalQualifications = null,
-        achievements = null,
-        profileImageUrl = '',
-        photosOnFile = null,
-        bannerImageUrl = null; // Added bannerImageUrl to named constructor
-
+        professionalQualifications = [],
+        achievements = [],
+        profileImageUrl = 'https://picsum.photos/300/300?random =2',
+        photosOnFile = [],
+        bannerImageUrl =
+            'https://picsum.photos/800/150?random=2';
 
   Cadet copyWith({
     int? kitNo,
@@ -82,7 +81,7 @@ Cadet.empty({
     String? mobileNumber,
     SocialLink? socialLinks,
     List<Qualification>? professionalQualifications,
-    List<Achievements>? achievements,
+    List<Achievement>? achievements,
     String? profileImageUrl,
     List<String>? photosOnFile,
     bool? hasSignedUp,
@@ -110,7 +109,7 @@ Cadet.empty({
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'kitNo': kitNo}); 
+    result.addAll({'kitNo': kitNo});
     if (email != null) {
       result.addAll({'email': email});
     }
@@ -145,7 +144,8 @@ Cadet.empty({
 
     return result;
   }
-factory Cadet.fromMap(Map<String, dynamic> map) {
+
+  factory Cadet.fromMap(Map<String, dynamic> map) {
     return Cadet(
       kitNo: map['kitNo'] ?? '0', // Convert String to int
       hasSignedUp: map['hasSignedUp'] ?? false,
@@ -159,28 +159,24 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
           ? SocialLink.fromMap(map['socialLinks'])
           : null,
 
-    
-
-
-
       professionalQualifications: map['professionalQualifications'] != null
           ? List<Qualification>.from(map['professionalQualifications']
               ?.map((x) => Qualification.fromMap(x)))
-          : null,
+          : [], // Initialize as empty list if null
       achievements: map['achievements'] != null
-          ? List<Achievements>.from(
-              map['achievements']?.map((x) => Achievements.fromMap(x)))
-          : null,
-      profileImageUrl: map['profileImageUrl'],
+          ? List<Achievement>.from(
+              map['achievements']?.map((x) => Achievement.fromMap(x)))
+          : [], // Initialize as empty list if null
+
       photosOnFile: map['photosOnFile'] != null
           ? List<String>.from(map['photosOnFile'])
-          : null,
+          : [], // Initialize as empty list if null
       bannerImageUrl: map['bannerImageUrl'], // Added bannerImageUrl to fromMap
+      profileImageUrl: map['profileImageUrl'],
     );
   }
 
   String toJson() => json.encode(toMap());
-
   factory Cadet.fromJson(String source) => Cadet.fromMap(json.decode(source));
 
   @override
@@ -188,44 +184,42 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
     return 'Cadet(kitNo: $kitNo, email: $email, house: $house, name: $name, domicile: $domicile, mobileNumber: $mobileNumber, socialLinks: $socialLinks, professionalQualifications: $professionalQualifications, achievements: $achievements, profileImageUrl: $profileImageUrl, photosOnFile: $photosOnFile, bannerImageUrl: $bannerImageUrl)'; // Added bannerImageUrl to toString
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
 
-    return other is Cadet &&
-        other.kitNo == kitNo &&
-        other.email == email &&
-        other.house == house &&
-        other.name == name &&
-        other.domicile == domicile &&
-        other.mobileNumber == mobileNumber &&
-        other.socialLinks == socialLinks &&
-        listEquals(
-            other.professionalQualifications, professionalQualifications) &&
-        listEquals(other.achievements, achievements) &&
-        other.profileImageUrl == profileImageUrl &&
-        listEquals(other.photosOnFile, photosOnFile) &&
-        other.bannerImageUrl ==
-            bannerImageUrl; // Added banner ImageUrl to Equality check
+  //   return other is Cadet &&
+  //       other.kitNo == kitNo &&
+  //       other.email == email &&
+  //       other.house == house &&
+  //       other.name == name &&
+  //       other.domicile == domicile &&
+  //       other.mobileNumber == mobileNumber &&
+  //       other.socialLinks == socialLinks &&
+  //       listEquals(
+  //           other.professionalQualifications, professionalQualifications) &&
+  //       listEquals(other.achievements, achievements) &&
+  //       other.profileImageUrl == profileImageUrl &&
+  //       listEquals(other.photosOnFile, photosOnFile) &&
+  //       other.bannerImageUrl ==
+  //           bannerImageUrl; // Added banner ImageUrl to Equality check
+  // }
 
-  }
-
-  @override
-  int get hashCode {
-    return kitNo.hashCode ^
-        email.hashCode ^
-        house.hashCode ^
-        name.hashCode ^
-        domicile.hashCode ^
-        mobileNumber.hashCode ^
-        socialLinks.hashCode ^
-        professionalQualifications.hashCode ^
-        achievements.hashCode ^
-        profileImageUrl.hashCode ^
-        photosOnFile.hashCode ^
-        bannerImageUrl.hashCode; // Added bannerImageUrl to hashCode
-
-  }
+  // @override
+  // int get hashCode {
+  //   return kitNo.hashCode ^
+  //       email.hashCode ^
+  //       house.hashCode ^
+  //       name.hashCode ^
+  //       domicile.hashCode ^
+  //       mobileNumber.hashCode ^
+  //       socialLinks.hashCode ^
+  //       professionalQualifications.hashCode ^
+  //       achievements.hashCode ^
+  //       profileImageUrl.hashCode ^
+  //       photosOnFile.hashCode ^
+  //       bannerImageUrl.hashCode; // Added bannerImageUrl to hashCode
+  // }
 
   @override
   List<Object?> get props => [
@@ -241,6 +235,11 @@ factory Cadet.fromMap(Map<String, dynamic> map) {
         profileImageUrl,
         photosOnFile,
         bannerImageUrl // Added bannerImageUrl to props
-
       ];
+  bool isEqualDeeply(Cadet other) {
+    return const DeepCollectionEquality().equals(
+            professionalQualifications, other.professionalQualifications) &&
+        const DeepCollectionEquality().equals(achievements, other.achievements);
+    // ... other deep equality checks ...;
+  }
 }
