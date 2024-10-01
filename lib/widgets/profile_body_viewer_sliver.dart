@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kohatian_foundation/widget_export.dart';
 import 'package:url_launcher/link.dart';
 
-class ProfileBodySliver extends ConsumerWidget {
+class ProfileBodyViewerSliver extends ConsumerWidget {
   late double maxWidth;
-  ProfileBodySliver({super.key});
+  ProfileBodyViewerSliver({super.key});
   late Cadet cadet;
 
   @override

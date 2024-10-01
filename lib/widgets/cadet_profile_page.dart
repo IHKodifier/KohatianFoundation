@@ -16,7 +16,7 @@ class __CadetProfilePageState extends ConsumerState<CadetProfilePage> {
       body:CustomScrollView(
         slivers: [
           ProfileBannerSliver(),
-          ProfileBodySliver(),
+          ProfileBodyViewerSliver(),
           SliverToBoxAdapter(child: SiteFooter()),
           
         ],

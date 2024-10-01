@@ -21,13 +21,14 @@ class UserPreviewSmall extends ConsumerWidget {
         children: [
           profilePic(),
           kitNumberText(context), // Display Kit Number
-          cadetName(context), // Display Name
+          cadetName(context, ref), // Display Name
           cadetHouse(context),
+
           ThemesTile(),
           const SizedBox(height: 10),
           ThemeModeTile(themeNotifier: ref.read(themeModeProvider.notifier)),
           accountTile(data, context),
-          accountTypeTile( data, context),
+          accountTypeTile(data, context),
         ],
       )),
     );
@@ -46,7 +47,7 @@ class UserPreviewSmall extends ConsumerWidget {
     );
   }
 
-  Text kitNumberText(BuildContext context) {
+  Widget kitNumberText(BuildContext context) {
     return Text(data.kitNo.toString(),
         style: Theme.of(context)
             .textTheme
@@ -54,15 +55,56 @@ class UserPreviewSmall extends ConsumerWidget {
             ?.copyWith(color: Theme.of(context).colorScheme.tertiary));
   }
 
-  Text cadetName(BuildContext context) {
-    return Text(
-      data.name,
-      style: Theme.of(context)
-          .textTheme
-          .titleLarge
-          ?.copyWith(color: Theme.of(context).colorScheme.primary),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
+  Widget cadetName(BuildContext context, WidgetRef ref) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Spacer(flex: 2),
+          Text(
+            data.name,
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(color: Theme.of(context).colorScheme.primary),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Spacer(flex: 2),
+          Tooltip(
+            message: 'Edit Profile',
+            child: IconButton(
+               onPressed: () async {
+                  // Get the entryName from Firestore
+                  final entryName = await getEntryName(data.kitNo);
+
+                  if (entryName != null) {
+                    // Fetch the Cadet object from Firestore
+                    final cadet = await DbService()
+                        .getCadetFromFirestore(
+                            entryName, data.kitNo.toString());
+
+                    // Set the current cadet
+                   ref.read(currentCadetProvider.notifier).setCurrentCadet(cadet);
+
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditCadetProfilePage()));
+                  } else {
+                    // Handle case where entryName is not found
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content:
+                          Text('Entry not found for Kit No: ${data.kitNo}'),
+                    ));
+                  }
+                },
+                icon: Icon(
+                  Icons.edit,
+                  color: Theme.of(context).primaryColor,
+                )),
+          ),
+          Spacer(flex: 2),
+        ],
+      ),
     );
   }
 
@@ -148,8 +190,9 @@ class UserPreviewSmall extends ConsumerWidget {
                                     const EdgeInsets.symmetric(horizontal: 4.0),
                                 child: Container(
                                     decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.secondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       border: Border.all(),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -176,31 +219,48 @@ class UserPreviewSmall extends ConsumerWidget {
                 trailing: (data?.roles.contains(UserRole.admin()) ?? false)
                     ? // Check for Admin Role
                     SizedBox(
-                      height: 50,
-                      child: TextButton(
-                        onPressed: () {
-                          //TODO
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const AdminCenterPage(),
-                          ));
-                        },
-                        child: Text(
-                          'Admin Center',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(
-                                // color: Colors.red,
-                                fontWeight: FontWeight.w600,
-                              ),
+                        height: 50,
+                        child: TextButton(
+                          onPressed: () {
+                            //TODO
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AdminCenterPage(),
+                            ));
+                          },
+                          child: Text(
+                            'Admin Center',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall
+                                ?.copyWith(
+                                  // color: Colors.red,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
                         ),
-                      ),
-                    )
+                      )
                     : SizedBox.shrink())));
-
-    //   ),
-    // );
   }
+  // Function to get entryName from Firestore based on kitNo
+  Future<String?> getEntryName(int kitNo) async {
+    // Extract the first two digits of the kit number
+    final firstTwoDigits = kitNo.toString().substring(0, 2);
+
+    // Query the 'entrys' collection based on the 'number' field
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('entrys')
+        .where('number', isEqualTo: firstTwoDigits)
+        .get();
+
+    // If a document is found, return the entryName
+    if (querySnapshot.docs.isNotEmpty) {
+      return querySnapshot.docs.first['name'];
+    }
+
+    // If no document is found, return null
+    return null;
+  }
+
 }
 
 class ThemesTile extends ConsumerWidget {

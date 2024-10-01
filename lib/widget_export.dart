@@ -19,7 +19,6 @@ export './services/providers/entry_stream_provider.dart';
 export 'package:responsive_framework/responsive_framework.dart';
 export './services/providers/current_cadet_provider.dart';
 
-
 //utils
 
 //models
@@ -61,7 +60,8 @@ export './widgets/cadet_grid_tile.dart';
 export './widgets/cadet_popup_widget.dart';
 export './widgets/cadet_popup_widget.dart';
 export './widgets/profile_banner_sliver.dart';
-export './widgets/profile_body_sliver.dart';
+export 'widgets/profile_body_viewer_sliver.dart';
 export './widgets/cadet_profile_page.dart';
 export 'package:kohatian_foundation/widgets/qualifications.dart';
-
+export './widgets/cadet_edit_profile_page.dart';
+export './widgets/profile_body_editor_sliver.dart';
